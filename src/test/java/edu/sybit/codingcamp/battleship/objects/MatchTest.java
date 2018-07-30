@@ -11,6 +11,7 @@ import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 public class MatchTest {
 
@@ -26,11 +27,13 @@ public class MatchTest {
         this.sampleUser2 = new Player("p2");
     }
 
+    @Ignore
     @Test
     public void constructorTest() {
         assertThat(match, is(notNullValue()));
     }
 
+    @Ignore
     @Test
     public void getterSetterTest() {
         assertThat(match.getPlayer1(),is(nullValue()));
@@ -48,6 +51,7 @@ public class MatchTest {
         assertThat(match.getLastModificationDate(),is(lastModDate));
     }
 
+    @Ignore
     @Test
     public void addPlayerTest_bothNull() throws Exception {
         match.addPlayer(sampleUser1);
@@ -55,6 +59,7 @@ public class MatchTest {
         assertThat(match.getPlayer2(), is(nullValue()));
     }
 
+    @Ignore
     @Test
     public void addPlayerTest_OnlyPlayer2Null() throws Exception {
         match.addPlayer(sampleUser1);
@@ -63,6 +68,7 @@ public class MatchTest {
         assertThat(match.getPlayer2(), is(sampleUser2));
     }
 
+    @Ignore
     @Test(expected = Exception.class)
     public void addPlayerTest_BothSet() throws Exception {
         match.addPlayer(sampleUser1);
@@ -70,6 +76,7 @@ public class MatchTest {
         match.addPlayer(new Player("someOtherUser"));
     }
 
+    @Ignore
     @Test
     public void getOpponent_player1() throws Exception {
         match.addPlayer(sampleUser1);
@@ -78,6 +85,7 @@ public class MatchTest {
         assertThat(opponent, is(sampleUser2));
     }
 
+    @Ignore
     @Test
     public void getOpponent_player2() throws Exception {
         match.addPlayer(sampleUser1);
