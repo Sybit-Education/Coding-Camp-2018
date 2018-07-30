@@ -5,7 +5,7 @@ let Message = require('./Message');
 module.exports = class Box extends createjs.Shape {
     constructor(id, posX, posY, pixel, color, field) {
         super();
-        //TODO Sinnvolle eigenschaften �berlegen
+        //TODO Sinnvolle eigenschaften überlegen
 
         if (field === true) {
             this.on("click", function (evt) {
