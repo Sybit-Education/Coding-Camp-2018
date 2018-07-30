@@ -1,0 +1,7 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix} (c) 2017 Sybit GmbH
+<#if licenseLast??>
+${licenseLast}
+</#if>

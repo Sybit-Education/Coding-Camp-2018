@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+
+    <springProfile name="default, development, staging">
+        <logger name="org.springframework" level="WARN" additivity="false">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+
+
+        <logger name="org.springframework.web" level="INFO" additivity="false">
+            <appender-ref ref="FILE"/>
+        </logger>
+
+        <logger name="org.springframework.web.socket" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger name="edu.sybit.codingcamp.battleship" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE"/>
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+
+        <root level="WARN" additivity="false">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="production">
+    
+        <logger name="edu.sybit.codingcamp.battleship" level="DEBUG" additivity="false">
+            <appender-ref ref="FILE"/>
+        </logger>
+
+        <root level="WARN" additivity="false">
+            <appender-ref ref="FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>
