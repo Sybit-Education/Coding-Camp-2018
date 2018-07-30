@@ -30,7 +30,7 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let gamefield = new Gamefield(gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color);
+let gamefield = undefined;
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
