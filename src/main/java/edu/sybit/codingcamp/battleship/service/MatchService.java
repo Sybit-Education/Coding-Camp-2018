@@ -101,9 +101,13 @@ public class MatchService {
     public void addNewPlayerToMatch(Match match, Player player) throws MatchNotFoundException, PlayerException {
         LOGGER.debug("--> addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
         //TODO ein Spieler einem Match hinzufügen
-        LOGGER.debug("<-- addNewPlayerToMatch");
+        playerService.update(player);
+        match.addPlayer(player);
+        this.updateMatch(match);
+        LOGGER.debug("<-- addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
+      
     }
-
+   
     /**
      * Get a match by given id.
      *
