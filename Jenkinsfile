@@ -16,9 +16,9 @@ node{
             sh 'mkdir -p ~/.gradle && echo "org.gradle.daemon=false" >> ~/.gradle/gradle.properties'
 
             checkout (
-                scm,
-                changelog: true, 
-                poll: true,
+                scm
+                changelog: true
+                poll: true
             )
             sh 'chmod +x gradlew'
         }
