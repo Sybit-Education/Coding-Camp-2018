@@ -2,7 +2,7 @@ node{
     try{
 
         properties: [
-          //disableConcurrentBuilds(),
+          disableConcurrentBuilds(),
           buildDiscarder(logRotator(numToKeepStr: '10'))
         ]
 
