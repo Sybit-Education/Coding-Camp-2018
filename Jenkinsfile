@@ -34,6 +34,7 @@ node{
         }
 
         stage('Docker') {
+            //if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
            
             def branchName = env.BRANCH_NAME.toLowerCase()
             if (branchName.contains("/")) {
@@ -58,8 +59,8 @@ node{
                     customImage.push()                        
                     customImage.push("latest")
                 }
-            
             }
+            //}
         }
 
         stage('Deploy'){
