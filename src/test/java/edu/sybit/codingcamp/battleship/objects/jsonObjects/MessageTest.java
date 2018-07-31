@@ -23,7 +23,6 @@ public class MessageTest {
         this.message = new Message();
     }
 
-    @Ignore
     @Test
     public void constructorTest() {
         this.message = new Message(messageType, messageContent);
@@ -31,7 +30,6 @@ public class MessageTest {
         assertThat(message.getMessageContent(), is(messageContent));
     }
     
-    @Ignore
     @Test
     public void getterSetterTest() {
         String matchId = "matchId";

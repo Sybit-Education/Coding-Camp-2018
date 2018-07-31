@@ -43,7 +43,6 @@ public class MatchControllerTest {
             .build();
     }
 
-    @Ignore
     @Test
     public void matchTest() throws Exception {
         String matchId = UUID.randomUUID().toString();
@@ -55,7 +54,6 @@ public class MatchControllerTest {
         assertThat(mvcResult.getResponse().getCookie("matchId").getValue(), is(matchId));
     }
 
-    @Ignore
     @Test
     public void newMatchTest() throws Exception {
         MockHttpServletRequestBuilder request = get("/match/newmatch");

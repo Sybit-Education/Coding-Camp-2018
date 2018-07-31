@@ -60,7 +60,6 @@ public class MatchServiceTest {
         return matchList;
     }
 
-    @Ignore
     @Test
     public void addNewPlayerToMatchTest() throws Exception {
         List<Match> matchList = generateSampleMatches();
@@ -72,7 +71,6 @@ public class MatchServiceTest {
         verify(mockedMatchRepository).saveAndFlush(any(Match.class));
     }
 
-    @Ignore
     @Test(expected = Exception.class)
     public void addNewPlayerToMatch_throwsException() throws Exception {
         String mockedMatchId = "matchId";
