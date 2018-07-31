@@ -3,7 +3,7 @@
 let Message = require('./Message');
 
 module.exports = class Box extends createjs.Shape {
-    constructor(id, posX, posY, pixel, color, field, status, content, name) {
+    constructor(id, posX, posY, pixel, color, field) {
         super();
         this.id = id;
         this.name = id;
@@ -14,9 +14,9 @@ module.exports = class Box extends createjs.Shape {
         this.field = field;
         this.status = "";
         this.content = "";
-        this.graphics.beginFill("blue").drawRect(posX, posY, pixel, pixel);
+        this.graphics.beginFill("green").drawRect(posX, posY, pixel, pixel);
         this.graphics.setStrokeStyle(1).beginStroke(color).rect(posX, posY, pixel, pixel);
-        //TODO um setBounce erweitern
+        this.setBounds (posX, posY, pixel, pixel);
 
         if (field === true) {
             this.on("click", function (evt) {

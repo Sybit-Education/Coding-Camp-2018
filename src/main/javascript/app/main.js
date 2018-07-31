@@ -30,7 +30,7 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color);
+let field = false;
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
@@ -39,12 +39,14 @@ let ships = [];
 
 function init() {
     //TODO Beachten ob man initialisiert/eigenes Spielfeld
-    
+    let canvas = document.getElementById("canvas");
+    let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
+    let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+    gameZone = new HarbourZone(canvas, gamefield, harbour);
     //TODO Hafen/Gamefield erzeugen
     //TODO Spielzone Hafenzone erzeugen
     //TODO Eine Schiff Factory benutzen um Schiffe zu erzeugen
     //TODO Die Schiffe der Spielzone Hafenzone hinzufügen
-    let harbour = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color)
     
 }
 

@@ -4,17 +4,17 @@ let Box = require('./Box');
 
 module.exports = class Gamefield {
 
-    constructor(posX, posY, boxPixel, boxXCount, boxYCount, color) {
+    constructor(posX, posY, boxPixel, boxXCount, boxYCount, color, field) {
         this.posX = posX;
         this.posY = posY;
         this.boxPixel = boxPixel;
         this.boxXCount = boxXCount;
         this.boxYCount = boxYCount;
         this.color = color;
+        this.field = field;
         this.boxes = [];
         this.initBoxes();
     }
-   //todo Gamefield um field erweitern
 
     initBoxes() {
         let posX = this.posX;
@@ -22,21 +22,18 @@ module.exports = class Gamefield {
         let color = this.color;
         let field = this.field;
         let boxPixel = this.boxPixel;
-        //TODO boxen erzeugen
 
-        for (let i = 0; i < this.boxYCount; i++) {
+        for (let j = 0; j < this.boxYCount; j++) {
             for (let i = 0; i < this.boxXCount; i++) {
-                let box = new Box (id, posX, posY, pixel, color, field, status);
+                let name = Gamefield.convertToNumberingScheme(i) + (j+1);
+                let box = new Box (name, posX, posY, boxPixel, color, field);
                 this.boxes.push (box);
                 posX = posX + boxPixel;
                 
             }
             posY = posY + boxPixel;
             posX = this.posX;
-
         }
-
-
     }
 
     getBoxes() {
