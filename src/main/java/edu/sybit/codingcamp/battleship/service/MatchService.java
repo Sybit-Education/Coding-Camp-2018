@@ -25,6 +25,7 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -62,12 +63,18 @@ public class MatchService {
         return null;
     }
 
-    public Match createNewMatch(String id, Player player) {
+    public Match createNewMatch(String id, Player player) throws PlayerException {
         LOGGER.debug("--> createNewMatch");
-        //TODO Mithilfe der Id ein neues Match erzeugen
-        //TODO Den Spieler dem Match zuweisen
+        Match match = null;
+        
+        try {
+            match = new Match(id);
+            addNewPlayerToMatch(match,player);
+        } catch (MatchNotFoundException ex) {
+            LOGGER.error("Match konnte nicht gefunden werden. Exception:" + ex.getMessage());
+        } 
         LOGGER.debug("<-- createNewMatch match=");
-        return null;
+        return match;
     }
 
     /**
@@ -101,9 +108,13 @@ public class MatchService {
     public void addNewPlayerToMatch(Match match, Player player) throws MatchNotFoundException, PlayerException {
         LOGGER.debug("--> addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
         //TODO ein Spieler einem Match hinzufügen
-        LOGGER.debug("<-- addNewPlayerToMatch");
+        playerService.update(player);
+        match.addPlayer(player);
+        this.updateMatch(match);
+        LOGGER.debug("<-- addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
+      
     }
-
+   
     /**
      * Get a match by given id.
      *

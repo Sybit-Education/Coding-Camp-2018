@@ -82,8 +82,8 @@ function allShipsOnStage() {
 }
 
 function sendCurrentPlayer() {
-//TODO Das Message Objekt bauen 
-//TODO Mit dem WebSocketHandler die Message verschiken
+let message = new Message("currentPlayerMessage", 1);
+webSocketHandler.sendCurrentPlayer(message);
 }
 
 function saveGamefield() {
@@ -120,9 +120,9 @@ function receiveMessagesFromWebSocket(message) {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
             if(playerId !== utilHandler.getCookie("userName")){
-                lockOpponentGameField();
+                lockOpponentGameField(playerId);
             }else{
-                unlockOpponentGameField();
+                unlockOpponentGameField(playerId);
             }
             console.log(messageContent);
             break;
@@ -139,12 +139,15 @@ function receiveMessagesFromWebSocket(message) {
 
 }
 
-function lockOpponentGameField(){
-//TODO Das Spielfeld sperren und eine Message anzeigen
+function lockOpponentGameField(playerId){
+ownGameZone.disableMouse();
+document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - '+playerId;
+
 }
 
-function unlockOpponentGameField(){
-//TODO Das Spielfeld sperren und eine Message anzeigen
+function unlockOpponentGameField(playerId){
+ownGameZone.enableMouse();
+document.getElementById('turn-field').innerHTML = 'Du bist dran! - '+playerId;
 }
 
 function updateGameFields(content, init) {
