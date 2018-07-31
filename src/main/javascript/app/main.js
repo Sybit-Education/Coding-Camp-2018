@@ -42,6 +42,7 @@ let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCo
 function init() {
     //TODO Beachten ob man initialisiert/eigenes Spielfeld
     let canvas = document.getElementById("canvas");
+    let field = false;
     let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
     gameZone = new HarbourZone(canvas, gamefield, harbour);
     let shipfactory = new ShipFactory (gameZone, boxPixel);
@@ -64,6 +65,7 @@ function init() {
     for (let ship of ships){
         gameZone.addShip(ship);
     }
+    countAllShipParts(ships);
 }
 
 function countAllShipParts(ships) {
@@ -88,7 +90,7 @@ function countAllShipParts(ships) {
 
 function allShipsOnStage() {
    
-    let boxes = Gamefield.getBoxes();
+    let boxes = gamefield.getBoxes();
     let allShipParts = 0;
     for(let i=0; i < boxes.length; i++){
         if (boxes[i].content !== ""){
