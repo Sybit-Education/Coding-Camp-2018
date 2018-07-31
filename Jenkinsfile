@@ -37,17 +37,15 @@ node{
            
             def branchName = env.BRANCH_NAME.toLowerCase()
             if (branchName.contains("/")) {
-            // ignore branch type
-            branchName = branchName.split("/")[1]
+              // ignore branch type
+              branchName = branchName.split("/")[1]
             }
             branchName = branchName.replace("-", "")
-                        
+
             def imageName = dockerInstanceName + ":" +
-                ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
-                env.BUILD_ID
-
+              ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
+              env.BUILD_ID
             echo "Build Docker ${imageName}"
-
             def customImage = docker.build("${imageName}")
 
             timeout(time: 20, unit: 'MINUTES') {
@@ -101,24 +99,7 @@ node{
                     sshCommand remote: remote, command: 'docker rm -f battleship', failOnError: false
                     sshCommand remote: remote, command: 'docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:latest'
                
-                }
-
-                // withCredentials([usernamePassword(credentialsId: 'coding-camp.sybit.de', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    
-                //     sh 'sshpass -p "$PASSWORD" ssh $USERNAME@coding-camp.sybit.de -o StrictHostKeyChecking=no "docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:develop"'
-                //     //sh 'sshpass -p "$PASSWORD" scp ${WORKSPACE}/target/r750explorer.war $USERNAME@r750explorer.me:/var/r750explorer/'
-                //     //sh 'sshpass -p "$PASSWORD" ssh $USERNAME@coding-camp.sybit.de -o StrictHostKeyChecking=no "service r750explorer start"'
-                    
-                // }
-
-                // docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-
-                //     docker.withServer('tcp://192.168.1.241:2375', 'coding-camp.sybit.de') {
-                //         docker.image('coding-camp.artifactory.sybit.de/battleship:latest').withRun('-p 12000:8080') {
-                //             /* do things */
-                //         }
-                //     }  
-                // }              
+                }            
                 
             }
         }   
