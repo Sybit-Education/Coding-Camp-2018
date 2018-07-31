@@ -12,6 +12,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 public class GameFieldTest {
 
@@ -22,6 +23,7 @@ public class GameFieldTest {
         this.gameField = new GameField();
     }
 
+    @Ignore
     @Test
     public void getterSetterTest(){
         List<Box> boxes = new ArrayList<>();

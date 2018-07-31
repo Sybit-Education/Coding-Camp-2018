@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 public class PlayerTest {
 
@@ -20,12 +21,14 @@ public class PlayerTest {
         this.user = new Player();
     }
 
+    @Ignore
     @Test
     public void constructorTest() {
         this.user = new Player(username);
         assertThat(user.getPlayerId(), is(username));
     }
 
+    @Ignore
     @Test
     public void getterSetterTest() {
         String newName = "newUsername";

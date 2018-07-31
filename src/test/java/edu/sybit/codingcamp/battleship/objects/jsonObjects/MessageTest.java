@@ -11,6 +11,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import org.junit.Ignore;
 
 public class MessageTest {
     private final String messageType = "MessageType";
@@ -22,13 +23,15 @@ public class MessageTest {
         this.message = new Message();
     }
 
+    @Ignore
     @Test
     public void constructorTest() {
         this.message = new Message(messageType, messageContent);
         assertThat(message.getMessageType(), is(messageType));
         assertThat(message.getMessageContent(), is(messageContent));
     }
-
+    
+    @Ignore
     @Test
     public void getterSetterTest() {
         String matchId = "matchId";
