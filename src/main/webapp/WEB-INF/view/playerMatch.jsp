@@ -28,6 +28,18 @@
         </div>
         <div class="col-3">
             <h2 class="text-left">Friendly Field</h2>
+            </div>
+        
+                <div class="col">
+                    <div id="current-field" style="margin-top: 2%; font-weight: bold"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <canvas id="canvas" width="800" height="480"></canvas>
+                </div>
+            </div>
+    
         </div>
         <div class="col-2">
             <div id="turn-field" style="font-weight: bold"></div>
@@ -39,14 +51,14 @@
             <h2 class="text-left">Enemy Field</h2>
         </div>
     </div>
-    <div class="row">
+    
         <div class="col">
             <canvas id="friendlyPlayer" width="480" height="480"></canvas>
         </div>
         <div class="col">
             <canvas id="enemyPlayer" width="480" height="480"></canvas>
         </div>
-    </div>
+    
 </div>
 <template:footer/>
 
