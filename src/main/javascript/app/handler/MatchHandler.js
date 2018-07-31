@@ -9,7 +9,6 @@ module.exports = {
         newMatch.open("GET", "match/newmatch", true);
         newMatch.send();
     },
-
     saveGamefield: function(matchId, message) {
            //TODO Abfrage um das Spielfeld zu speichern
     }
