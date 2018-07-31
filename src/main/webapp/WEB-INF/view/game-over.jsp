@@ -9,23 +9,54 @@
     <head>
         <template:header title="Battleships"/>
     </head>
-    <body>
+    
         <template:navigation/>
 
         <div class="container">
-            <h1>Game over</h1>
-            <p>${winner.id}</p>
-            <div class="row">
-                <div class="col">
-                    <div class="form-group">
-                        <label for="message">The Message</label>
-                        <input type="text" id="message" class="form-control">
-                    </div>
-                    <button id="send" class="btn btn-primary" onclick="Battleship.webSocketHandler.sendMessage()">Send</button>
-                </div>
-            </div>
+        
+            <p>Winner ${winner}</p>
+ 
+                <h1 style = "color: #e74c3c; text-align: center;"> <b> Spiel beendet! </b> </h1>
+        
+                <br>
+                <h2 style = " text-align: center;"> Spieler... hat gewonnen </h2>
+                <br>
+                <h3 style = " text-align: center;">   Spieler... hat verloren </h3>
+                <br>
+                <h4 style = " text-align: center;"> Spielzeit: </h4>
+                <br>
+                   
+
+                <table class="table">
+
+                <tr>
+                  <th scope="col"></th>
+                  <th scope="col">getroffene Schiffe</th>
+                  <th scope="col">Schüsse insgesamt</th>
+                  <th scope="col">davon Treffer</th>
+                </tr>
+
+
+                <tr>
+                  <th scope="row">Spieler 1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">Spieler 2</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+
+
+            </table>
+                        
+               
+  
         </div>
-        <hr>
+        
        
         <template:footer/>
 
@@ -37,8 +68,8 @@
                 Battleship.webSocketHandler.connect().then(function () {
                     Battleship.webSocketHandler.subscribeToMatch();
                     Battleship.saveGamefield();
-                })
+                });
             };
         </script>
-    </body>
+    
 </html>
