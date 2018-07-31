@@ -64,18 +64,17 @@ public class MatchService {
     }
 
     public Match createNewMatch(String id, Player player) throws PlayerException {
+        LOGGER.debug("--> createNewMatch");
+        Match match = null;
+        
         try {
-            LOGGER.debug("--> createNewMatch");
-            Match match = new Match(id);
+            match = new Match(id);
             addNewPlayerToMatch(match,player);
-            //TODO Mithilfe der Id ein neues Match erzeugen
-            //TODO Den Spieler dem Match zuweisen
-            LOGGER.debug("<-- createNewMatch match=");
-            return null;
         } catch (MatchNotFoundException ex) {
             LOGGER.error("Match konnte nicht gefunden werden. Exception:" + ex.getMessage());
         } 
-        return null;
+        LOGGER.debug("<-- createNewMatch match=");
+        return match;
     }
 
     /**
