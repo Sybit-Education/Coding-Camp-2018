@@ -21,8 +21,8 @@ public class MessagingService {
     private SimpMessagingTemplate messagingTemplate;
 
     public void sendMessageToUser(String destination, Player user, Message message) {
-        LOGGER.debug("--> sendMessageToUser destionation=" + destination + ", user=" + user);
-        //TODO Auf dem messaging Template die Send to User Funktion aufrufen
+        LOGGER.debug("--> sendMessageToUser destionation=" + destination + ", user=" + user);        
+        message.setSendTo(user);
         LOGGER.debug("<-- sendMessageToUser");
     }
 

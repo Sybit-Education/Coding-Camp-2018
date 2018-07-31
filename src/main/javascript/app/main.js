@@ -79,8 +79,8 @@ function allShipsOnStage() {
 }
 
 function sendCurrentPlayer() {
-//TODO Das Message Objekt bauen 
-//TODO Mit dem WebSocketHandler die Message verschiken
+let message = new Message("currentPlayerMessage", 1);
+webSocketHandler.sendCurrentPlayer(message);
 }
 
 function saveGamefield() {
@@ -138,6 +138,7 @@ function receiveMessagesFromWebSocket(message) {
 
 function lockOpponentGameField(){
 //TODO Das Spielfeld sperren und eine Message anzeigen
+
 }
 
 function unlockOpponentGameField(){
