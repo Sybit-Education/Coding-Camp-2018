@@ -27,31 +27,8 @@
         <div class="col">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shareLinkModal">
-                share link ...
+                Share Match Link
             </button>
-            <!-- Modal share link -->
-            <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true"> 
-             <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                 <div class="modal-header">
-                   <h5 class="modal-title" id="exampleModalLabel">Share Link</h5>
-                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                   </button>
-                 </div>
-                 <div class="modal-body">
-                     <textarea rows="2" cols="55" id="Url" style="resize: none"></textarea>
-                 </div>
-                 <div class="modal-footer">
-                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                   <button type="button" class="btn btn-primary" onclick="copyUrl()">
-                       Copy to clipboard ...
-                   </button>
-                 </div>
-               </div>
-             </div>
-                <!-- Modal share link end -->
-            </div>
             <button id="checkShips" class="btn btn-default" onclick="Battleship.allShipsOnStage();">Weiter</button>
         </div>
         <div class="col">
@@ -72,6 +49,10 @@
             Toast
         </button>
 
+        <button id="toastShipNonPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="2000" data-content="Alle Schiffe auf das Spielfeld setzen">
+            Toast
+        </button>
+
         <button id="toastShipRotation" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="2000" data-content="Schiff kann nicht gedreht werden">
             Toast
         </button>
@@ -80,17 +61,7 @@
         <template:javascript/>
 
 <script>
-    let url;
-    url = window.location.href;
-    document.getElementById("Url").value = url;
-</script>
-     
-<script>
-    function copyUrl(){
-    let copyUrl = document.getElementById("Url");
-    copyUrl.select();
-    document.execCommand("copy");
-    }
+//TODO Link kopieren
 </script>
 
 <script>
@@ -104,11 +75,15 @@
 
             let showSnackbarShipPlacementNotPossible = function(){
                 $('#toastShipPlacement').snackbar("show");
-            }
+            };
+            
+            let showSnackbarNotAllShipsArePlaced = function (){
+                $('#toastShipNonPlacement').snackbar("show");
+            };
 
             let showSnackbarShipRotationNotPossible = function () {
                 $('#toastShipRotation').snackbar("show");
-            }
+            };
         </script>
     </body>
 </html>

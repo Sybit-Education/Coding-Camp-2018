@@ -69,13 +69,26 @@ function countAllShipParts(ships) {
 }
 
 function allShipsOnStage() {
-    //TODO Alle Boxen holen
+   
+    let boxes = Gamefield.getBoxes();
+    let allShipParts = 0;
+    for(let i=0; i < boxes.length; i++){
+        if (boxes[i].content !== ""){
+            allShipParts++;
+        }
+    }
+    if (countAllShipParts(ships)=== allShipParts) {    
+        let gamefieldJSON = gameZone.gameField.convertToJSON();
+        window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
+        let matchId = utilHandler.getCookie("matchId");
+        window.localStorage.href = 'playermatch/' + matchId;
+    }
+    else {
+        showSnackbarNotAllShipsArePlaced();
+    }
 
-    //TODO Prüfen ob die Schiffe platziert sind
 
-    //TODO Wenn alle Schiffe gefunden wurden (Tipp: let gamefieldJSON = gameZone.gameField.convertToJSON();)
-
-    //TODO Andernfalls eine Snackbar anzeigen (Tipp: Auf der jps/html nachschauen)
+   
 }
 
 function sendCurrentPlayer() {
@@ -175,17 +188,38 @@ function buildShips(innerGameField, gameField, gameZone) {
     let shipFactory = new ShipFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.content.shipType && !usedIds.includes(box.content.id)) {
-                //TODO "Submarine" currentShips.push(shipFactory.createSubmarineClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-
-                //TODO "Cruiser" currentShips.push(shipFactory.createCruiserClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-
-                //TODO "Battleship" currentShips.push(shipFactory.createBattleshipClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-        
-                //TODO "Carrier" currentShips.push(shipFactory.createCarrierClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));      
+            switch (box.content.shipType) {
+                case "Submarine": {
+                    currentShips.push(shipFactory.createSubmarineClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Cruiser": {
+                    currentShips.push(shipFactory.createCruiserClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Battleship": {
+                    currentShips.push(shipFactory.createBattleshipClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Carrier": {
+                    currentShips.push(shipFactory.createCarrierClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                default: {
+                    console.log('ShipType not found!');
+                    break;
+                }
             }
+        }
     });
-    //TODO Der Gamezone die Schiffe hinzufügen 
-    //TODO Mithilfe des Collision Handlers die Schiffposition setzen
+    for (let ship of currentShips) {
+        gameZone.addShip(ship);
+        collisionHandler.setShipPositionInGamefield(gameField, ship);
+    }
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
@@ -193,14 +227,30 @@ function buildShot(innerGameField, gameField, gameZone) {
     let shotFactory = new ShotFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.status) {
-            //TODO "x" currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
- 
-            //TODO "v" currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
-   
-            //TODO "o" currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));   
+            switch (box.status) {
+                case "x": {
+                    currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "v": {
+                    currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "o": {
+                    currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                default: {
+                    console.log('ShotType not found!');
+                    break;
+                }
+            }
         }
     });
-    //TODO Die Schüsse dem Gamefield hinzufügen
+    for (let shot of currentShots) {
+        gameZone.addShot(shot);
+
+    }
 }
 
 module.exports = {
