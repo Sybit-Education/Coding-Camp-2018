@@ -63,7 +63,7 @@ public class MatchService {
         return null;
     }
 
-    public Match createNewMatch(String id, Player player) {
+    public Match createNewMatch(String id, Player player) throws PlayerException {
         try {
             LOGGER.debug("--> createNewMatch");
             Match match = new Match(id);
@@ -73,10 +73,8 @@ public class MatchService {
             LOGGER.debug("<-- createNewMatch match=");
             return null;
         } catch (MatchNotFoundException ex) {
-            System.out.println("konnte nicht zugewiesen werden");
-        } catch (PlayerException ex) {
-            System.err.println("");
-        }
+            LOGGER.error("Match konnte nicht gefunden werden. Exception:" + ex.getMessage());
+        } 
         return null;
     }
 
