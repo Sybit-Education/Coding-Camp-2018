@@ -44,7 +44,6 @@ public class WebSocketMappigsTest {
     }
 
 
-    @Ignore
     @Test
     public void gamefieldTest() throws Exception {
         Player sentFrom = new Player();

@@ -31,7 +31,6 @@ public class MessagingServiceTest {
         initMocks(this);
     }
 
-    @Ignore
     @Test
     public void sendMessageToUserTest() {
         String destination = "destination";
