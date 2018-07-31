@@ -22,7 +22,7 @@ public class MessagingService {
 
     public void sendMessageToUser(String destination, Player user, Message message) {
         LOGGER.debug("--> sendMessageToUser destionation=" + destination + ", user=" + user);        
-        message.setSendTo(user);
+        messagingTemplate.convertAndSendToUser(user.getPlayerId(), destination, message);
         LOGGER.debug("<-- sendMessageToUser");
     }
 
