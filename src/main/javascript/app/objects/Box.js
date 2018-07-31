@@ -14,7 +14,7 @@ module.exports = class Box extends createjs.Shape {
         this.field = field;
         this.status = "";
         this.content = "";
-        this.graphics.beginFill("green").drawRect(posX, posY, pixel, pixel);
+        this.graphics.beginFill("#37b6ee").drawRect(posX, posY, pixel, pixel);
         this.graphics.setStrokeStyle(1).beginStroke(color).rect(posX, posY, pixel, pixel);
         this.setBounds (posX, posY, pixel, pixel);
 
@@ -22,6 +22,7 @@ module.exports = class Box extends createjs.Shape {
             this.on("click", function (evt) {
                 let message = new Message('shot', this);
                 Battleship.webSocketHandler.sendShot(message);
+                //TODO turn player function
             });
         }
 

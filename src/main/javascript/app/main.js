@@ -37,11 +37,12 @@ let opponentGameField = undefined;
 let opponentGameZone = undefined;
 let ships = [];
 
+let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+
 function init() {
     //TODO Beachten ob man initialisiert/eigenes Spielfeld
     let canvas = document.getElementById("canvas");
     let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
-    let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
     gameZone = new HarbourZone(canvas, gamefield, harbour);
     //TODO Hafen/Gamefield erzeugen
     //TODO Spielzone Hafenzone erzeugen
