@@ -1,9 +1,18 @@
 let Box = require('./Box');
 
+
+
 module.exports = class Gamefield {
 
     constructor(posX, posY, boxPixel, boxXCount, boxYCount, color, field) {
-        //TODO sinnvolle Attribute überlegen
+        this.posX = posX;
+        this.posY = posY;
+        this.boxPixel = boxPixel;
+        this.boxXCount = boxXCount;
+        this.boxYCount = boxYCount;
+        this.color = color;
+        this.field = field;
+        this.boxes = [];
         this.initBoxes();
     }
 
@@ -13,7 +22,18 @@ module.exports = class Gamefield {
         let color = this.color;
         let field = this.field;
         let boxPixel = this.boxPixel;
-        //TODO boxen erzeugen
+
+        for (let j = 0; j < this.boxYCount; j++) {
+            for (let i = 0; i < this.boxXCount; i++) {
+                let name = Gamefield.convertToNumberingScheme(i) + (j+1);
+                let box = new Box (name, posX, posY, boxPixel, color, field);
+                this.boxes.push (box);
+                posX = posX + boxPixel;
+                
+            }
+            posY = posY + boxPixel;
+            posX = this.posX;
+        }
     }
 
     getBoxes() {
@@ -31,7 +51,7 @@ module.exports = class Gamefield {
 
     static convertToNumberingScheme(number) {
         let baseChar = ("A").charCodeAt(0),
-            letters = "";
+                letters = "";
         do {
             letters = String.fromCharCode(baseChar + (number % 26)) + letters;
             number = (number / 26) >> 0; // quick `floor`
