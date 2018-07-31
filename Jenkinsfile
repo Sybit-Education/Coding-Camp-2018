@@ -34,33 +34,34 @@ node{
         }
 
         stage('Docker') {
-            //if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
+            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
            
-            def branchName = env.BRANCH_NAME.toLowerCase()
-            if (branchName.contains("/")) {
-              // ignore branch type
-              branchName = branchName.split("/")[1]
-            }
-            branchName = branchName.replace("-", "")
+                def branchName = env.BRANCH_NAME.toLowerCase()
+                if (branchName.contains("/")) {
+                  // ignore branch type
+                  branchName = branchName.split("/")[1]
+                }
+                branchName = branchName.replace("-", "")
 
-            def imageName = dockerInstanceName + ":" +
-              ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
-              env.BUILD_ID
-            echo "Build Docker ${imageName}"
-            def customImage = docker.build("${imageName}")
+                def imageName = dockerInstanceName + ":" +
+                  ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
+                  env.BUILD_ID
+                echo "Build Docker ${imageName}"
+                def customImage = docker.build("${imageName}")
 
-            timeout(time: 20, unit: 'MINUTES') {
-                //Push the Docker image to registry with Tag
-                docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-                    /* Finally, we'll push the image with two tags:
-                    * First, the incremental build number from Jenkins
-                    * Second, the 'latest' tag.
-                    * Pushing multiple tags is cheap, as all the layers are reused. */
-                    customImage.push()                        
-                    customImage.push("latest")
+                timeout(time: 20, unit: 'MINUTES') {
+                    //Push the Docker image to registry with Tag
+                    docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
+                        /* Finally, we'll push the image with two tags:
+                        * First, the incremental build number from Jenkins
+                        * Second, the 'latest' tag.
+                        * Pushing multiple tags is cheap, as all the layers are reused. */
+                        customImage.push("${branchName}-${env.BUILD_NUMBER}")                        
+                        customImage.push("latest")
+                    }
+
                 }
             }
-            //}
         }
 
         stage('Deploy'){
