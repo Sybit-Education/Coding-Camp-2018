@@ -1,20 +1,38 @@
 module.exports = {
     getAffectedBoxes: function (boxes, ship) {
         return new Promise(function (resolve, reject) {
-            //TODO die affected Boxes herausfinden
+            let affectedBoxes = [];
+            for (let i = 0; i < boxes.length; i++) {
+                if (compareValues(boxes[i], ship)) {
+                    affectedBoxes.push(boxes[i]);
+                }
+            }
+            if (affectedBoxes.length > 0) {
+                resolve(affectedBoxes);
+            } else {
+                reject();
+            }
 
-            //TODO Prüfen ob die affected Boxes größer 0 sind
         });
     },
 
     isActionValid: function (affectedBoxes, ship) {
         return new Promise(function (resolve, reject) {
 
-            //TODO Überprufen ob die Schiffboxen mehr als die betroffenenBoxen sind
+            if (affectedBoxes.length < ship.boxSize) {
+                reject();
+            }
 
             affectedBoxes.forEach(function (box){
                 ship.parent.gameField.boxes.filter(function (field) {
-                    //TODO die Field ids prüfen und prüfen ob ein Feld außenherum frei ist
+                    if(field.id === box.id) {
+                        if(field.content !== '' && JSON.parse(field.content)["id"] !== JSON.parse(ship.toJSON())["id"]){
+                            reject();
+                        }
+                        if(!oneFieldFreeAroundShip(box, ship)){
+                            reject();
+                        }
+                    }
                 })
             });
             resolve();
