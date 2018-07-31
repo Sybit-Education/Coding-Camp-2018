@@ -38,80 +38,206 @@ let opponentGameZone = undefined;
 let ships = [];
 
 function init() {
-//TODO init Methode templating
-}
-
-function handleResize() {
-    //TODO Resizing
+    
+    //TODO Beachten ob man initialisiert/eigenes Spielfeld
+    
+    //TODO Hafen/Gamefield erzeugen
+    //TODO Spielzone Hafenzone erzeugen
+    //TODO Eine Schiff Factory benutzen um Schiffe zu erzeugen
+    //TODO Die Schiffe der Spielzone Hafenzone hinzufügen
+  
 }
 
 function countAllShipParts(ships) {
-//TODO init Methode templating
+    let ShipParts = 0;
 
+    for (let i = 0; i < ships.length; i++) {
+        if (Math.ceil(ships[i].boxSize) === 2) {
+            ShipParts = ShipParts + 2;
+        }
+        else if (Math.ceil(ships[i].boxSize) === 3) {
+            ShipParts = ShipParts + 3;
+        }
+        else if (Math.ceil(ships[i].boxSize) === 4) {
+            ShipParts = ShipParts + 4;
+        }
+        else if (Math.ceil(ships[i].boxSize) === 5) {
+            ShipParts = ShipParts + 5;
+        }
+    }
+    return ShipParts;
 }
 
 function allShipsOnStage() {
-//TODO init Methode templating
+    //TODO Alle Boxen holen
 
+    //TODO Prüfen ob die Schiffe platziert sind
+
+    //TODO Wenn alle Schiffe gefunden wurden (Tipp: let gamefieldJSON = gameZone.gameField.convertToJSON();)
+
+    //TODO Andernfalls eine Snackbar anzeigen (Tipp: Auf der jps/html nachschauen)
 }
 
 function sendCurrentPlayer() {
-//TODO init Methode templating
-
+//TODO Das Message Objekt bauen 
+//TODO Mit dem WebSocketHandler die Message verschiken
 }
 
 function saveGamefield() {
-//TODO init Methode templating
-
+//TODO Tipp Das Spielfeld aus dem LocalStorage laden
+//TODO die Message bauen und mit dem WebSocketHandler verschiken
+//TODO Tipp am Ende return Promise.resolve 
 }
 
 function requestGamefieldData() {
-//TODO init Methode templating
-
+//TODO Message bauen
+//TODO Den WebsocketHander benutzen um die Message zu senden
 }
 
 function receiveMessagesFromWebSocket(message) {
-//TODO init Methode templating
+    switch (message.messageType) {
+        case "saveResponse": {
+            let messageContent = JSON.parse(message.messageContent);
+            if (messageContent.saveState === true) {
+                requestGamefieldData();
+            }
+            break;
+        }
+        case "gamefieldDataInit":{
+            let messageContent = JSON.parse(message.messageContent);
+            updateGameFields(messageContent, true);
+            break;
+        }
+        case "gamefieldData": {
+            let messageContent = JSON.parse(message.messageContent);
+            updateGameFields(messageContent, false);
+            break;
+        }
+        case "matchInfo": {
+            let messageContent = JSON.parse(message.messageContent);
+            let playerId = messageContent.currentPlayer;
+            if(playerId !== utilHandler.getCookie("userName")){
+                lockOpponentGameField();
+            }else{
+                unlockOpponentGameField();
+            }
+            console.log(messageContent);
+            break;
+        }
+        case "gameOver":{
+            window.location = window.location.origin+'/playermatch/'+utilHandler.getCookie('matchId')+'/over';
+            break;
+        }
+        default: {
+            console.log('MessageType not found!');
+            break;
+        }
+    }
 
 }
 
 function lockOpponentGameField(){
-//TODO init Methode templating
-
+//TODO Das Spielfeld sperren und eine Message anzeigen
 }
 
 function unlockOpponentGameField(){
-//TODO init Methode templating
-
+//TODO Das Spielfeld sperren und eine Message anzeigen
 }
 
 function updateGameFields(content, init) {
-//TODO init Methode templating
-
+    if(init === true){
+        updateOwnGameFieldInit(content.ownGameField.gameField, ownGameField, ownGameZone);
+        if(JSON.stringify(content.opponentGameField) !== "{}"){
+            updateOpponentGameField(content.opponentGameField.gameField, opponentGameField, opponentGameZone);
+        }
+    }else{
+        updateOwnGameField(content.ownGameField.gameField, ownGameField, ownGameZone);
+        updateOpponentGameField(content.opponentGameField.gameField, opponentGameField, opponentGameZone);
+    }
 }
 
 function updateOpponentGameField(innerGameField, gameField, gameZone) {
-//TODO init Methode templating
-
+    buildShot(innerGameField, gameField, gameZone);
 }
 
 function updateOwnGameFieldInit(innerGameField, gameField, gameZone) {
-//TODO init Methode templating
-
+    buildShips(innerGameField, gameField, gameZone);
+    buildShot(innerGameField, gameField, gameZone);
 }
 
 function updateOwnGameField(innerGameField, gameField, gameZone) {
-//TODO init Methode templating
-
+    buildShot(innerGameField, gameField, gameZone);
 }
 
 function buildShips(innerGameField, gameField, gameZone) {
-//TODO init Methode templating
-
+    let currentShips = [];
+    let usedIds = [];
+    let shipFactory = new ShipFactory(gameZone, boxPixel);
+    innerGameField.forEach(function (box) {
+        if (box.content.shipType && !usedIds.includes(box.content.id)) {
+            switch (box.content.shipType) {
+                case "Submarine": {
+                    currentShips.push(shipFactory.createSubmarineClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Cruiser": {
+                    currentShips.push(shipFactory.createCruiserClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Battleship": {
+                    currentShips.push(shipFactory.createBattleshipClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Carrier": {
+                    currentShips.push(shipFactory.createCarrierClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                default: {
+                    console.log('ShipType not found!');
+                    break;
+                }
+            }
+        }
+    });
+    for (let ship of currentShips) {
+        gameZone.addShip(ship);
+        collisionHandler.setShipPositionInGamefield(gameField, ship);
+    }
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
-   //TODO
+    let currentShots = [];
+    let shotFactory = new ShotFactory(gameZone, boxPixel);
+    innerGameField.forEach(function (box) {
+        if (box.status) {
+            switch (box.status) {
+                case "x": {
+                    currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "v": {
+                    currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "o": {
+                    currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                default: {
+                    console.log('ShotType not found!');
+                    break;
+                }
+            }
+        }
+    });
+    for (let shot of currentShots) {
+        gameZone.addShot(shot);
+
+    }
 }
 
 module.exports = {
