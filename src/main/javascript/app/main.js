@@ -44,11 +44,26 @@ function init() {
     let canvas = document.getElementById("canvas");
     let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
     gameZone = new HarbourZone(canvas, gamefield, harbour);
-    //TODO Hafen/Gamefield erzeugen
-    //TODO Spielzone Hafenzone erzeugen
-    //TODO Eine Schiff Factory benutzen um Schiffe zu erzeugen
-    //TODO Die Schiffe der Spielzone Hafenzone hinzufügen
+    let shipfactory = new ShipFactory (gameZone, boxPixel);
     
+    ships.push(shipfactory.createSubmarineClass(0, 8*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 4*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 6*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 8*boxPixel, 0, false, undefined));
+    
+
+    ships.push(shipfactory.createCruiserClass(0*boxPixel, 5*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createCruiserClass(1*boxPixel, 4*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createCruiserClass(1*boxPixel, 7*boxPixel, 0, false, undefined));
+    
+
+    ships.push(shipfactory.createBattleshipClass(1*boxPixel, 0*boxPixel, 0, false, undefined));
+    ships.push(shipfactory.createBattleshipClass(2*boxPixel, 0*boxPixel, 0, false, undefined));
+    
+    ships.push(shipfactory.createCarrierClass(0*boxPixel, 0*boxPixel, 0, false, undefined));
+    for (let ship of ships){
+        gameZone.addShip(ship);
+    }
 }
 
 function countAllShipParts(ships) {

@@ -16,38 +16,46 @@ module.exports = class ShipFactory {
     }
 
     createSubmarineClass(startPosX, startPosY, rotation, lock, parent) {
-        //TODO Ein Schiff der Submarine Klasse erzeugen. Beachte die Größe des Schiffes, eine Submarine soll 1 Box groß sein.
-
-        // scaleY = scaleX (boxPixel / 100)
-
-        //TODO Rotation beachten
+        let image = new createjs.Bitmap(ShipFactory.getImageSrc("Submarine"));
+        image.scaleX = this.scaleX;
+        image.scaleY = image.scaleX + (this.boxPixel *1 / 100);
+        let ship = new Ship ("Submarine", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
+        if (rotation!==0&&parent) {
+            ship.loadRotation(parent);
+        }
         return ship;
     }
 
     createCruiserClass(startPosX, startPosY, rotation, lock, parent) {
-        //TODO Ein Schiff der Cruiser Klasse erzeugen. Beachte die Größe des Schiffes, eine Submarine soll 2 Box groß sein.
-
-        // scaleY = scaleX (boxPixel *2 / 100)
-
-        //TODO Rotation beachten
+        let image = new createjs.Bitmap(ShipFactory.getImageSrc("Cruiser"));
+        image.scaleX = this.scaleX;
+        image.scaleY = image.scaleX  + (this.boxPixel *2 /100);
+        let ship = new Ship ("Cruiser", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
+        if (rotation!==0&&parent) {
+            ship.loadRotation(parent);
+        }
         return ship;
     }
 
     createBattleshipClass(startPosX, startPosY, rotation, lock, parent) {
-        //TODO Ein Schiff der Battleship Klasse erzeugen. Beachte die Größe des Schiffes, eine Submarine soll 3 Box groß sein.
-
-        // scaleY = scaleX (boxPixel *3 / 100)
-
-        //TODO Rotation beachten
+        let image = new createjs.Bitmap(ShipFactory.getImageSrc("Battleship"));
+        image.scaleX = this.scaleX;
+        image.scaleY = image.scaleX  + (this.boxPixel *3 /100);
+        let ship = new Ship ("BattleShip", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
+        if (rotation!==0&&parent) {
+            ship.loadRotation(parent);
+        }
         return ship;
     }
 
     createCarrierClass(startPosX, startPosY, rotation, lock, parent) {
-        //TODO Ein Schiff der Carrier Klasse erzeugen. Beachte die Größe des Schiffes, eine Submarine soll 1 Box groß sein.
-
-        // scaleY = scaleX (boxPixel *4 / 100)
-
-        //TODO Rotation beachten
+        let image = new createjs.Bitmap(ShipFactory.getImageSrc("Carrier"));
+        image.scaleX = this.scaleX;
+        image.scaleY = image.scaleX  + (this.boxPixel *4 /100);
+        let ship = new Ship ("Carrier", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
+        if (rotation!==0&&parent) {
+            ship.loadRotation(parent);
+        }
         return ship;
     }
 

@@ -34,14 +34,17 @@ node{
         }
 
         stage('Docker') {
+
+            def branchName = env.BRANCH_NAME.toLowerCase()
+            if (branchName.contains("/")) {
+              // ignore branch type
+              branchName = branchName.split("/")[1]
+            }
+            branchName = branchName.replace("-", "")
+
             if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
            
-                def branchName = env.BRANCH_NAME.toLowerCase()
-                if (branchName.contains("/")) {
-                  // ignore branch type
-                  branchName = branchName.split("/")[1]
-                }
-                branchName = branchName.replace("-", "")
+
 
                 def imageName = dockerInstanceName + ":" +
                   ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
@@ -62,16 +65,14 @@ node{
 
                 }
             }
-        }
 
-        stage('Deploy'){
 
             if(env.BRANCH_NAME == 'develop'){
                 try {
                     sh 'docker rm -f battleship-test'
                 } catch (e) { }
                 docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-                    sh 'docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:latest'
+                    sh 'docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}'
                 }
             }
 
@@ -99,7 +100,7 @@ node{
      
                     sshCommand remote: remote, command: 'uname -a'
                     sshCommand remote: remote, command: 'docker rm -f battleship', failOnError: false
-                    sshCommand remote: remote, command: 'docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:latest'
+                    sshCommand remote: remote, command: 'docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}'
                
                 }            
                 
