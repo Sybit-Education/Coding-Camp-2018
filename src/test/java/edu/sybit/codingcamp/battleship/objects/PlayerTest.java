@@ -21,14 +21,12 @@ public class PlayerTest {
         this.user = new Player();
     }
 
-    @Ignore
     @Test
     public void constructorTest() {
         this.user = new Player(username);
         assertThat(user.getPlayerId(), is(username));
     }
 
-    @Ignore
     @Test
     public void getterSetterTest() {
         String newName = "newUsername";
