@@ -18,7 +18,6 @@ module.exports = class Ship extends createjs.Container {
 
         if (!lock) {
             this.on("dblclick", function (evt) {
-                //TODO fires 2 pressup events
                 rotateShip(this, evt);
             });
 
