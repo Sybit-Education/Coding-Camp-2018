@@ -56,7 +56,7 @@ node{
                         * First, the incremental build number from Jenkins
                         * Second, the 'latest' tag.
                         * Pushing multiple tags is cheap, as all the layers are reused. */
-                        customImage.push("${env.BUILD_NUMBER}")                        
+                        customImage.push("${env.BRANCH_NAME}-${env.BUILD_NUMBER}")                        
                         customImage.push("latest")
                     }
 
