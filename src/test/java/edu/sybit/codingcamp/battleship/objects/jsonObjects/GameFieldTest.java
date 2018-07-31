@@ -23,7 +23,6 @@ public class GameFieldTest {
         this.gameField = new GameField();
     }
 
-    @Ignore
     @Test
     public void getterSetterTest(){
         List<Box> boxes = new ArrayList<>();
