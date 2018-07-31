@@ -1,6 +1,5 @@
 module.exports = {
     connectToMatch: function () {
-        //TODO Abfrage um ein neues spiel zu generieren
         let newMatch = new XMLHttpRequest();
         newMatch.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200){
