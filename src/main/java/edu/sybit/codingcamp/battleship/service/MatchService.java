@@ -63,14 +63,13 @@ public class MatchService {
         return null;
     }
 
-    public Match createNewMatch(String id, Player player) throws PlayerException {
+    public Match createNewMatch(String id, Player player) {
         LOGGER.debug("--> createNewMatch");
         Match match = null;
-        
         try {
             match = new Match(id);
             addNewPlayerToMatch(match,player);
-        } catch (MatchNotFoundException ex) {
+        } catch (MatchNotFoundException | PlayerException ex) {
             LOGGER.error("Match konnte nicht gefunden werden. Exception:" + ex.getMessage());
         } 
         LOGGER.debug("<-- createNewMatch match=");
@@ -107,7 +106,6 @@ public class MatchService {
 
     public void addNewPlayerToMatch(Match match, Player player) throws MatchNotFoundException, PlayerException {
         LOGGER.debug("--> addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
-        //TODO ein Spieler einem Match hinzufügen
         playerService.update(player);
         match.addPlayer(player);
         this.updateMatch(match);
