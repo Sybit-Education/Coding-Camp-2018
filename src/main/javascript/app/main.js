@@ -40,19 +40,32 @@ let ships = [];
 let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
 
 function init() {
-    if (document.getElementById("canvas")){
-    let canas = document.getElementById("canvas");
-    let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
-    gameZone = new HarbourZone(canvas, gamefield, harbour);    
-    }else if(document.getElementById("enemyPlayer")){
-       let canas = document.getElementById("enemyPlayer");
-    let harbour = new Gamefield(boxPixel, color, field);
-    gameZone = new HarbourZone(canvas, gamefield, harbour);  
-    }else if (document.getElementById("friendlyPlayer")){
+    console.log("HACKS");
+    let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
+    let enemyPlayerCanvas = document.getElementById("enemyPlayer");
+    let canvas = document.getElementById("canvas");
+    let field = false;
+    console.log("canvas: "+canvas);
+    console.log("enemyPlayer: "+enemyPlayerCanvas);
+    console.log("freindlyPlayer: "+ friendlyPlayerCanvas);
+    if (canvas){
+        let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
+        gameZone = new HarbourZone(canvas, gamefield, harbour);
         
+    }else if (friendlyPlayerCanvas){ 
+        console.log("HACKS2");
+        let field = false;
+        ownGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+        ownGameZone = new GameZone(friendlyPlayerCanvas, ownGameField);  
+        
+        if(enemyPlayerCanvas){
+            console.log("HACKS3");
+            let field = true;
+            opponentGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+            opponentGameZone = new GameZone(enemyPlayerCanvas, opponentGameField);
+        }
     }
-  
-
+ }
 
 
 
