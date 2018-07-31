@@ -40,7 +40,7 @@
                    </button>
                  </div>
                  <div class="modal-body">
-                     <textarea rows="2" cols="55" id="Url"></textarea>
+                     <textarea rows="2" cols="55" id="Url" style="resize: none"></textarea>
                  </div>
                  <div class="modal-footer">
                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
