@@ -5,13 +5,24 @@ let Message = require('./Message');
 module.exports = class Box extends createjs.Shape {
     constructor(id, posX, posY, pixel, color, field) {
         super();
-        //TODO Sinnvolle eigenschaften überlegen
+        this.id = id;
+        this.name = id;
+        this.posX = posX;
+        this.posY = posY;
+        this.boxPixel = pixel;
+        this.color = color;
+        this.field = field;
+        this.status = "";
+        this.content = "";
+        this.graphics.beginFill("#37b6ee").drawRect(posX, posY, pixel, pixel);
+        this.graphics.setStrokeStyle(1).beginStroke(color).rect(posX, posY, pixel, pixel);
+        this.setBounds (posX, posY, pixel, pixel);
 
         if (field === true) {
             this.on("click", function (evt) {
                 let message = new Message('shot', this);
                 Battleship.webSocketHandler.sendShot(message);
-                //TODO turn player function aufrufen
+                //TODO turn player function
             });
         }
 
