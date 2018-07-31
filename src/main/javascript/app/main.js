@@ -30,7 +30,7 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let gamefield = undefined;
+let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color);
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
@@ -38,6 +38,9 @@ let opponentGameZone = undefined;
 let ships = [];
 
 function init() {
+    let harbour = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color)
+    
+    
 //TODO init Methode templating
 }
 
