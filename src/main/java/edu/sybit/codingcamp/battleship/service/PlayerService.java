@@ -37,9 +37,9 @@ public class PlayerService {
      */
     public Player getPlayer(String id) {
         LOGGER.debug("--> getPlayer id=" + id);
-        //TODO Mithilfe der Id den Spieler finden
+        Player player = playerRepository.getOne(id);
         LOGGER.debug("<-- getPlayer player=");
-        return null;
+        return player;
     }
 
     /**
@@ -49,7 +49,7 @@ public class PlayerService {
      */
     void update(Player player) {
         LOGGER.debug("--> update");
-        //TODO Das Spieler Objekt updaten
+        playerRepository.saveAndFlush(player);
         LOGGER.debug("--> update");
     }
 }
