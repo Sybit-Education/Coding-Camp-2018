@@ -134,7 +134,7 @@ function sendCurrentPlayer() {
 
 function saveGamefield() {
     let gamefieldJSON = window.localStorage.getItem("gamefieldJSON");
-    let message = new message('gamefieldmessage', gamefieldJSON);
+    let message = new Message('gamefieldMessage', gamefieldJSON);
     webSocketHandler.sendGamefield(message);
     return Promise.resolve();
 
