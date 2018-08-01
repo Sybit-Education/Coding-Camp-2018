@@ -24,6 +24,7 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -56,9 +57,21 @@ public class MatchService {
      */
     public GameField getGameFieldForPlayer(Match match, Player player) {
         String gameField;
-        //TODO Teste Welcher Spieler des Match mit dem Spieler übereinstimmt
-        //TODO String konvertieren
-        return null;
+        if(match.getPlayer1().equals(player)){
+            String player1 = player.getGamefield();
+            JsonConverter.convertStringToGamefield(player1);
+            GameField player1GF = JsonConverter.convertStringToGamefield(player1);
+            System.out.println("Spieler 1 Gefunden");
+            return player1GF;
+        }else if(match.getPlayer2().equals(player)){
+            String player2 = player.getGamefield();
+            GameField player2GF = JsonConverter.convertStringToGamefield(player2);
+            System.out.println("Spieler 2 Gefunden");
+            return player2GF;
+        }else{
+            System.out.println("Error Spieler Konnte nicht verifiziert werden");
+            return null;
+        }
     }
 
     public Match createNewMatch(String id, Player player) {
@@ -121,9 +134,22 @@ public class MatchService {
     public Match getMatchById(String matchId) throws MatchNotFoundException {
         LOGGER.debug("--> getMatchById");
         Match match = null;
-        //TODO Das Match anhand der Id finden
-        //TODO Wenn kein Match gefunden wurde Exception
-        //TODO Den aktuellen Spieler setzen
+        Optional<Match> optionalMatch = matchRepository.findById(matchId);
+        if(optionalMatch.isPresent()){
+            match =  optionalMatch.get();
+                    
+            
+        }else{
+            throw new MatchNotFoundException("Match nicht gefunden");
+        }
+        
+        if(match.getPlayer1()!=null&& match.getPlayer2()!=null){
+            match.setCurrentPlayer(2);
+        }else if((match.getPlayer1()==null||match.getPlayer2()==null)&&(match.getPlayer1()!=null ||match.getPlayer2()==null)){
+            match.setCurrentPlayer(1);
+        }
+
+        
         return match;
     }
 
@@ -249,7 +275,6 @@ public class MatchService {
         //TODO Den Schuss zähler erhöhen
 
         //TODO Das neue Spielfeld dem Spieler zuweisen
-        //TODO Das neue Spielfeld im Spieler mit Hilfe des playerService speichern
 
         //TODO Die Spielfelder für das Frontend vorbereiten
 
@@ -382,3 +407,4 @@ public class MatchService {
         return sb.toString();
     }
 }
+
