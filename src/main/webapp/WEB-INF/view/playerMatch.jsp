@@ -57,13 +57,26 @@
 <template:javascript/>
 <script>
     window.onload = function () {
-        Battleship.init();
-        Battleship.webSocketHandler.connect().then(function () {
-            Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                Battleship.receiveMessagesFromWebSocket(message);
-            });
-            Battleship.saveGamefield();
-        });
+        let reloadFlag = window.localStorage.getItem("reloadFlag") ? window.localStorage.getItem("reloadFlag") : "false";
+        if(reloadFlag === "false"){
+            Battleship.init();
+            Battleship.webSocketHandler.connect().then(function () {
+                Battleship.webSocketHandler.subscribeToMatch(function (message) {
+                    Battleship.receiveMessagesFromWebSocket(message)
+                });
+                Battleship.saveGamefield();
+                window.localStorage.setItem("reloadFlag","true")
+            })
+
+        }else{
+            Battleship.init();
+            Battleship.webSocketHandler.connect().then(function () {
+                Battleship.webSocketHandler.subscribeToMatch(function (message) {
+                    Battleship.receiveMessagesFromWebSocket(message)
+                });
+                Battleship.requestGamefieldData();
+            })
+        }
     };
 </script>
 </body>

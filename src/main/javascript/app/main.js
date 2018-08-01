@@ -317,5 +317,6 @@ module.exports = {
     receiveMessagesFromWebSocket: receiveMessagesFromWebSocket,
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
-    matchHandler: matchHandler
+    matchHandler: matchHandler,
+    utilHandler: utilHandler
 };
