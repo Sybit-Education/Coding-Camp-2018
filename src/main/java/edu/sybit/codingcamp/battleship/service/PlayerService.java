@@ -24,7 +24,8 @@ public class PlayerService {
 
     public void addGamefieldToPlayer(Player player, String gamefield) {
         LOGGER.debug("--> addGamefieldToPlayer");
-        //TODO Dem Player das Gamfield hinzufügen und abspeichern
+        player.setGamefield(gamefield);
+        update(player);
         LOGGER.debug("<-- addGamefieldToPlayer");
     }
     

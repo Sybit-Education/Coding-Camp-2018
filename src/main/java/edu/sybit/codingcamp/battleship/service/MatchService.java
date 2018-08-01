@@ -253,23 +253,21 @@ public class MatchService {
        fieldBox.setStatus(BoxStatus.FIELD_HIT);
            isShipSunk(getFieldsOfShip(opponentGamefield, fieldBox));
            
-       }
-       
-       
+       } 
 
         //TODO Spieler wechseln
-
         //TODO Den Schuss zähler erhöhen
-
-        //TODO Das neue Spielfeld dem Spieler zuweisen
-        //TODO Das neue Spielfeld im Spieler mit Hilfe des playerService speichern
-
-        //TODO Die Spielfelder für das Frontend vorbereiten
-
-        //TODO Die Messages für den User bauen
-
-        //TODO Die Messages an den User senden
-
+        
+        playerService.addGamefieldToPlayer(opponent, JsonConverter.convertGamefieldToJsonString(opponentGamefield));
+        
+        GameField gameFieldForCurrentPlayerPruned= pruneGameField(currentGamefield);
+        GameField gameFieldForOpponentPlayerPruned= pruneGameField(opponentGamefield);
+        
+        Message messageForCurrentPlayer = buildGameFieldDataMessage(current, currentGamefield, gameFieldForCurrentPlayerPruned, false);
+        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponent, opponentGamefield, gameFieldForOpponentPlayerPruned, false);
+        
+        messagingService.sendMessageToUser("/match", current, messageForCurrentPlayer);
+        messagingService.sendMessageToUser("/match", opponent, messageForOpponentPlayer);
         LOGGER.debug("--> performShot");
     }
 
