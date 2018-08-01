@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div>
             <canvas id="canvas" width="800" height="480"></canvas>
         </div>
     </div>
