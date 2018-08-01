@@ -98,9 +98,9 @@ node{
                     remote.passphrase = '100%Hacker'
                     remote.knownHosts = '/data/jenkins/secrets/known_hosts'
      
-                    sshCommand remote: remote, command: 'uname -a'
-                    sshCommand remote: remote, command: 'docker rm -f battleship', failOnError: false
-                    sshCommand remote: remote, command: 'docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}'
+                    sshCommand remote: remote, command: "uname -a"
+                    sshCommand remote: remote, command: "docker rm -f battleship", failOnError: false
+                    sshCommand remote: remote, command: "docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}"
                
                 }            
                 
