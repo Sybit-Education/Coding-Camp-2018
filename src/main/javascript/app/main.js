@@ -40,31 +40,53 @@ let ships = [];
 let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
 
 function init() {
-    //TODO Beachten ob man initialisiert/eigenes Spielfeld
+
+    let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
+    let enemyPlayerCanvas = document.getElementById("enemyPlayer");
     let canvas = document.getElementById("canvas");
-    let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
-    gameZone = new HarbourZone(canvas, gamefield, harbour);
-    let shipfactory = new ShipFactory (gameZone, boxPixel);
-    
-    ships.push(shipfactory.createSubmarineClass(0, 8*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 4*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 6*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createSubmarineClass(2*boxPixel, 8*boxPixel, 0, false, undefined));
-    
 
-    ships.push(shipfactory.createCruiserClass(0*boxPixel, 5*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createCruiserClass(1*boxPixel, 4*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createCruiserClass(1*boxPixel, 7*boxPixel, 0, false, undefined));
-    
+    let field = false;
 
-    ships.push(shipfactory.createBattleshipClass(1*boxPixel, 0*boxPixel, 0, false, undefined));
-    ships.push(shipfactory.createBattleshipClass(2*boxPixel, 0*boxPixel, 0, false, undefined));
+    if (canvas){
+        let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
+        gameZone = new HarbourZone(canvas, gamefield, harbour);
+        
+        let shipfactory = new ShipFactory (gameZone, boxPixel);
+        
+        ships.push(shipfactory.createSubmarineClass(0, 8*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 4*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 6*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 8*boxPixel, 0, false, undefined));
+
+
+        ships.push(shipfactory.createCruiserClass(0*boxPixel, 5*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createCruiserClass(1*boxPixel, 4*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createCruiserClass(1*boxPixel, 7*boxPixel, 0, false, undefined));
+
+
+        ships.push(shipfactory.createBattleshipClass(1*boxPixel, 0*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createBattleshipClass(2*boxPixel, 0*boxPixel, 0, false, undefined));
+
+        ships.push(shipfactory.createCarrierClass(0*boxPixel, 0*boxPixel, 0, false, undefined));
     
-    ships.push(shipfactory.createCarrierClass(0*boxPixel, 0*boxPixel, 0, false, undefined));
     for (let ship of ships){
         gameZone.addShip(ship);
     }
-}
+        
+    }else if (friendlyPlayerCanvas){ 
+        let field = false;
+        ownGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+        ownGameZone = new GameZone(friendlyPlayerCanvas, ownGameField);  
+        
+        if(enemyPlayerCanvas){
+            let field = true;
+            opponentGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
+            opponentGameZone = new GameZone(enemyPlayerCanvas, opponentGameField);
+        }
+    }
+ }
+
+
 
 function countAllShipParts(ships) {
     let ShipParts = 0;

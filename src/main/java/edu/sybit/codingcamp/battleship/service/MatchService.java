@@ -10,7 +10,6 @@ import edu.sybit.codingcamp.battleship.exception.PlayerException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
-import edu.sybit.codingcamp.battleship.objects.jsonObjects.BoxStatus;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Message;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
@@ -25,7 +24,6 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -240,39 +238,23 @@ public class MatchService {
     public void performShot(String currentPlayerId, Match match, Box boxShot) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
-        Player currentPlayer = match.getPlayerById(currentPlayerId);
-        Player opponentPlayer = match.getOpponent(currentPlayer);
+        //TODO die Spieler holen
 
-        GameField opponentGameField = JsonConverter.convertStringToGamefield(opponentPlayer.getGamefield());
-        GameField currentGameField = JsonConverter.convertStringToGamefield(currentPlayer.getGamefield());
+        //TODO Für jeden Spieler das Gamfield holen
 
-        Box fieldBox = opponentGameField.getBox(boxShot.getId());
-        if (fieldBox.getContent().getId() != null) {
-            LOGGER.info("Treffer! -> " + fieldBox.getContent());
-            fieldBox.setStatus(BoxStatus.FIELD_HIT);
-            isShipSunk(getFieldsOfShip(opponentGameField, fieldBox));
-        } else {
-            fieldBox.setStatus(BoxStatus.FIELD_SHOT);
-            LOGGER.info("daneben :/");
-        }
+        //TODO Prüfen ob der Schuss Treffer oder Treffer/Versenkt ist
 
-        switchPlayer(opponentPlayer, match);
+        //TODO Spieler wechseln
 
-        //finally increase shot counter:
-        increaseShotCounter(match);
+        //TODO Den Schuss zähler erhöhen
 
-        playerService.addGamefieldToPlayer(opponentPlayer, JsonConverter.convertGamefieldToJsonString(opponentGameField));
+        //TODO Das neue Spielfeld dem Spieler zuweisen
 
-        GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
-        GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
+        //TODO Die Spielfelder für das Frontend vorbereiten
 
-        Message messageForCurrentPlayer =
-            buildGameFieldDataMessage(currentPlayer, currentGameField, gameFieldForOpponentPlayerPruned, false);
-        Message messageForOpponentPlayer =
-            buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, false);
+        //TODO Die Messages für den User bauen
 
-        messagingService.sendMessageToUser("/match", currentPlayer, messageForCurrentPlayer);
-        messagingService.sendMessageToUser("/match", opponentPlayer, messageForOpponentPlayer);
+        //TODO Die Messages an den User senden
 
         LOGGER.debug("--> performShot");
     }
@@ -302,63 +284,13 @@ public class MatchService {
         }
 
         Ship hittenShip = box.getContent();
-        if (hittenShip.getRotation() == 0) {
-            if (hittenShip.getShipType().equals("Submarine")) {
-                for (int i = 1; i <= 1; i++) {
-                    String stringX = String.valueOf(xValue);
-                    String stringY = String.valueOf(yValue + i);
-                    boxesOfShip.add(gameField.getBox(stringX + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Cruiser")) {
-                for (int i = 1; i <= 2; i++) {
-                    String stringX = String.valueOf(xValue);
-                    String stringY = String.valueOf(yValue + i);
-                    boxesOfShip.add(gameField.getBox(stringX + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Battleship")) {
-                for (int i = 1; i <= 3; i++) {
-                    String stringX = String.valueOf(xValue);
-                    String stringY = String.valueOf(yValue + i);
-                    boxesOfShip.add(gameField.getBox(stringX + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Carrier")) {
-                for (int i = 1; i <= 4; i++) {
-                    String stringX = String.valueOf(xValue);
-                    String stringY = String.valueOf(yValue + i);
-                    boxesOfShip.add(gameField.getBox(stringX + stringY));
-                }
-            } else {
-                throw new IllegalArgumentException("unknown ship type");
-            }
-        } else if (hittenShip.getRotation() == 270) {
-            if (hittenShip.getShipType().equals("Submarine")) {
-                for (int i = 1; i <= 1; i++) {
-                    char character = (char) (xValue + i);
-                    String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Cruiser")) {
-                for (int i = 1; i <= 2; i++) {
-                    char character = (char) (xValue + i);
-                    String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Battleship")) {
-                for (int i = 1; i <= 3; i++) {
-                    char character = (char) (xValue + i);
-                    String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
-                }
-            } else if (hittenShip.getShipType().equals("Carrier")) {
-                for (int i = 1; i <= 4; i++) {
-                    char character = (char) (xValue + i);
-                    String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
-                }
-            } else {
-                throw new IllegalArgumentException("unknown ship type");
-            }
-        }
+
+        //TODO Prüfen ob das Schiff rotiert ist
+
+        //TODO Auf den Typ des Schiffes prüfen
+
+        //TODO Für den Typ des Schiffes entsprechende Logik ausführen
+
 
         return boxesOfShip;
     }
@@ -410,7 +342,6 @@ public class MatchService {
         for (Box box : gameField.getGameField()) {
             try {
                 Box boxToPrune = (Box) box.clone();
-                // remove all Ships for opponentView
                 boxToPrune.setContent(null);
                 prunedBoxes.add(boxToPrune);
             } catch (CloneNotSupportedException e) {
