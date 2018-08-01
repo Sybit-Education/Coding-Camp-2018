@@ -1,13 +1,13 @@
-/* global Stomp */
+/* global Stomp, BASE_URL */
 
 let utilHandler = require('./UtilHandler');
 
-const socketEndpoint = '/battleships-socket';
+const socketEndpoint = BASE_URL + '/battleships-socket';
 const matchQueue = '/user/match';
-const gamefieldEndpoint = '/battleships/match/gamefield';
-const gamefieldDataEndpoint = '/battleships/match/gamfielddata';
-const shotEndpoint = '/battleships/match/shot';
-const currentPlayerEndpoint = '/battleships/match/currentplayer';
+const gamefieldEndpoint = BASE_URL + '/battleships/match/gamefield';
+const gamefieldDataEndpoint = BASE_URL + '/battleships/match/gamfielddata';
+const shotEndpoint = BASE_URL + '/battleships/match/shot';
+const currentPlayerEndpoint = BASE_URL + '/battleships/match/currentplayer';
 
 let stompClient;
 
