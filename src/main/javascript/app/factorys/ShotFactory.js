@@ -1,3 +1,5 @@
+/* global createjs, BASE_URL */
+
 let Shot = require('../objects/Shot');
 
 module.exports = class ShotFactory {
@@ -45,9 +47,9 @@ module.exports = class ShotFactory {
 
     static getManifest() {
         let manifest = [
-            {src: "resources/images/red.jpg", id: "fieldHit"},
-            {src: "resources/images/black.jpg", id: "fieldSunk"},
-            {src: "resources/images/yellow.jpg", id: "fieldShot"}
+            {src: BASE_URL + "resources/images/red.jpg", id: "fieldHit"},
+            {src: BASE_URL + "resources/images/black.jpg", id: "fieldSunk"},
+            {src: BASE_URL + "resources/images/yellow.jpg", id: "fieldShot"}
         ];
 
         return manifest;

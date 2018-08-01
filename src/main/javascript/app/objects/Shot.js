@@ -1,5 +1,5 @@
 module.exports = class Shot extends createjs.Container {
-    constructor(shotType, image, posX, posY,width, height, boxPixel,){
+    constructor(shotType, image, posX, posY,width, height, boxPixel){
         super();
         this.shotType = shotType;
         this.originX = posX;

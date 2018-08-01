@@ -1,4 +1,4 @@
-/* global createjs */
+/* global createjs, BASE_URL, Promise */
 
 require('yuki-createjs');
 let Gamefield = require('./objects/Gamefield');
@@ -29,22 +29,21 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let field = false;
+let gamefield = new Gamefield(gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color);
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
 let opponentGameZone = undefined;
 let ships = [];
 
-let gamefield = new Gamefield(gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
 
 function init() {
 
+    let field = false;
     let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
     let enemyPlayerCanvas = document.getElementById("enemyPlayer");
     let canvas = document.getElementById("canvas");
 
-    let field = false;
 
     if (canvas){
         let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
@@ -118,7 +117,7 @@ function allShipsOnStage() {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
         let matchId = utilHandler.getCookie("matchId");
-        window.location.href = 'playermatch/' + matchId;
+        window.location.href = BASE_URL + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
