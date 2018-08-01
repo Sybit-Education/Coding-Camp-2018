@@ -24,6 +24,7 @@ import org.springframework.web.socket.messaging.SessionSubscribeEvent;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -56,8 +57,16 @@ public class MatchService {
      */
     public GameField getGameFieldForPlayer(Match match, Player player) {
         String gameField;
+        if(match.getPlayer1().equals(player)){
+            System.out.println("Spieler 1 Gefunden");
+        }else if(match.getPlayer2().equals(player)){
+            System.out.println("Spieler 2 Gefunden");
+        }else{
+            System.out.println("Error Spieler Konnte nicht verifiziert werden");
+        }
         //TODO Teste Welcher Spieler des Match mit dem Spieler übereinstimmt
         //TODO String konvertieren
+        
         return null;
     }
 
@@ -121,9 +130,22 @@ public class MatchService {
     public Match getMatchById(String matchId) throws MatchNotFoundException {
         LOGGER.debug("--> getMatchById");
         Match match = null;
-        //TODO Das Match anhand der Id finden
-        //TODO Wenn kein Match gefunden wurde Exception
-        //TODO Den aktuellen Spieler setzen
+        Optional<Match> optionalMatch = matchRepository.findById(matchId);
+        if(optionalMatch.isPresent()){
+            match =  optionalMatch.get();
+                    
+            
+        }else{
+            throw new MatchNotFoundException("Match nicht gefunden");
+        }
+        
+        if(match.getPlayer1()!=null&& match.getPlayer2()!=null){
+            match.setCurrentPlayer(2);
+        }else if((match.getPlayer1()==null||match.getPlayer2()==null)&&(match.getPlayer1()!=null ||match.getPlayer2()==null)){
+            match.setCurrentPlayer(1);
+        }
+
+        
         return match;
     }
 

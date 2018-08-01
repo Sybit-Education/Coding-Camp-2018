@@ -141,8 +141,8 @@ function saveGamefield() {
 }
 
 function requestGamefieldData() {
-//TODO Message bauen
-//TODO Den WebsocketHander benutzen um die Message zu senden
+let message = new Message("gamefieldMessage", "");
+webSocketHandler.requestGamefieldData(message);
 }
 
 function receiveMessagesFromWebSocket(message) {
