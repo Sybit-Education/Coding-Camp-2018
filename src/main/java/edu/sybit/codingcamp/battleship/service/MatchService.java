@@ -58,16 +58,20 @@ public class MatchService {
     public GameField getGameFieldForPlayer(Match match, Player player) {
         String gameField;
         if(match.getPlayer1().equals(player)){
+            String player1 = player.getGamefield();
+            JsonConverter.convertStringToGamefield(player1);
+            GameField player1GF = JsonConverter.convertStringToGamefield(player1);
             System.out.println("Spieler 1 Gefunden");
+            return player1GF;
         }else if(match.getPlayer2().equals(player)){
+            String player2 = player.getGamefield();
+            GameField player2GF = JsonConverter.convertStringToGamefield(player2);
             System.out.println("Spieler 2 Gefunden");
+            return player2GF;
         }else{
             System.out.println("Error Spieler Konnte nicht verifiziert werden");
+            return null;
         }
-        //TODO Teste Welcher Spieler des Match mit dem Spieler übereinstimmt
-        //TODO String konvertieren
-        
-        return null;
     }
 
     public Match createNewMatch(String id, Player player) {

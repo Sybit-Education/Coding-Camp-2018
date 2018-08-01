@@ -41,7 +41,7 @@ module.exports = class ShipFactory {
         let image = new createjs.Bitmap(ShipFactory.getImageSrc("Battleship"));
         image.scaleX = this.scaleX;
         image.scaleY = image.scaleX  + (this.boxPixel *3 /100);
-        let ship = new Ship ("BattleShip", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
+        let ship = new Ship ("Battleship", image, startPosX, startPosY, rotation, image.scaleX*100, image.scaleY*100, this.boxPixel, lock);
         if (rotation!==0&&parent) {
             ship.loadRotation(parent);
         }
