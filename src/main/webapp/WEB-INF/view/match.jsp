@@ -96,24 +96,21 @@
 
 <script>
     window.onload = function () {
+        window.localStorage.clear();
         Battleship.init();
+    };
 
-                // Battleship.webSocketHandler.connect().then(function () {
-                //     Battleship.webSocketHandler.subscribeToMatch();
-                // })
-            };
+    let showSnackbarShipPlacementNotPossible = function(){
+        $('#toastShipPlacement').snackbar("show");
+    };
 
-            let showSnackbarShipPlacementNotPossible = function(){
-                $('#toastShipPlacement').snackbar("show");
-            };
-            
-            let showSnackbarNotAllShipsArePlaced = function (){
-                $('#toastShipNonPlacement').snackbar("show");
-            };
+    let showSnackbarNotAllShipsArePlaced = function (){
+        $('#toastShipNonPlacement').snackbar("show");
+    };
 
-            let showSnackbarShipRotationNotPossible = function () {
-                $('#toastShipRotation').snackbar("show");
-            };
-        </script>
+    let showSnackbarShipRotationNotPossible = function () {
+        $('#toastShipRotation').snackbar("show");
+    };
+</script>
     </body>
 </html>
