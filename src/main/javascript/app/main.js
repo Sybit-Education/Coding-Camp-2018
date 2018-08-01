@@ -1,4 +1,4 @@
-/* global createjs */
+/* global createjs, BASE_URL, Promise */
 
 require('yuki-createjs');
 let Gamefield = require('./objects/Gamefield');
@@ -117,7 +117,7 @@ function allShipsOnStage() {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
         let matchId = utilHandler.getCookie("matchId");
-        window.location.href = 'playermatch/' + matchId;
+        window.location.href = BASE_URL + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
@@ -316,5 +316,6 @@ module.exports = {
     receiveMessagesFromWebSocket: receiveMessagesFromWebSocket,
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
-    matchHandler: matchHandler
+    matchHandler: matchHandler,
+    utilHandler: utilHandler
 };

@@ -1,4 +1,4 @@
-/* global createjs */
+/* global createjs, BASE_URL */
 
 let Ship = require('../objects/Ship');
 
@@ -61,10 +61,10 @@ module.exports = class ShipFactory {
 
     static getManifest() {
         var manifest = [
-            {src: "resources/images/grey.jpg", id: "Submarine"},
-            {src: "resources/images/grey.jpg", id: "Cruiser"},
-            {src: "resources/images/grey.jpg", id: "Battleship"},
-            {src: "resources/images/grey.jpg", id: "Carrier"}
+            {src: BASE_URL + "resources/images/grey.jpg", id: "Submarine"},
+            {src: BASE_URL + "resources/images/grey.jpg", id: "Cruiser"},
+            {src: BASE_URL + "resources/images/grey.jpg", id: "Battleship"},
+            {src: BASE_URL + "resources/images/grey.jpg", id: "Carrier"}
         ];
 
         return manifest;
