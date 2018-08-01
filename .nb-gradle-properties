@@ -25,57 +25,5 @@
         <arg>-Dspring.profiles.active=development</arg>
       </task-jvm-args>
     </task>
-    <task>
-      <display-name>debug</display-name>
-      <non-blocking>no</non-blocking>
-      <task-names>
-        <name must-exist="no">${project}:debug</name>
-      </task-names>
-      <task-args>
-        <arg>-PcmdLineArgs=${cmd-line-args}</arg>
-        <arg>-PjvmLineArgs=${jvm-line-args}</arg>
-      </task-args>
-      <task-jvm-args>
-        <arg>-Dspring.profiles.active=development</arg>
-      </task-jvm-args>
-    </task>
-    <task>
-      <display-name>debug.single</display-name>
-      <non-blocking>no</non-blocking>
-      <task-names>
-        <name must-exist="no">${project}:debug</name>
-      </task-names>
-      <task-args>
-        <arg>-PmainClass=${selected-class}</arg>
-        <arg>-PcmdLineArgs=${cmd-line-args}</arg>
-        <arg>-PjvmLineArgs=${jvm-line-args}</arg>
-      </task-args>
-      <task-jvm-args>
-        <arg>-Dspring.profiles.active=development</arg>
-      </task-jvm-args>
-    </task>
-    <task>
-      <display-name>debug.test.single</display-name>
-      <non-blocking>no</non-blocking>
-      <task-names>
-        <name must-exist="no">${project}:clean${test-task-name-capital}</name>
-        <name must-exist="no">${project}:${test-task-name}</name>
-        <name must-exist="no">--tests</name>
-        <name must-exist="no">${selected-class}*</name>
-      </task-names>
-      <task-args>
-        <arg>-D${test-task-name}.debug</arg>
-      </task-args>
-      <task-jvm-args>
-        <arg>-Dspring.profiles.active=development</arg>
-      </task-jvm-args>
-    </task>
   </built-in-tasks>
-  <extensions>
-    <org.netbeans.gradle.project.java.JavaExtension>
-      <debug-mode>
-        <type>DEBUGGER_LISTENS</type>
-      </debug-mode>
-    </org.netbeans.gradle.project.java.JavaExtension>
-  </extensions>
 </gradle-project-properties>
