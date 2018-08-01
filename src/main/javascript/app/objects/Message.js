@@ -3,8 +3,8 @@ let utilHandler = require('../handler/UtilHandler');
 module.exports = class Message{
     constructor(messageType, messageContent) {
         
-        let matchId = utilHandler.getCoockie("matchId");
-        let sendFrom = utilHandler.getCoockie("userName");
+        let matchId = utilHandler.getCookie("matchId");
+        let sendFrom = utilHandler.getCookie("userName");
             
         this.massageType = messageType;
         this.messageContent = messageContent;

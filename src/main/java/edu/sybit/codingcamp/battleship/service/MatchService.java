@@ -261,6 +261,7 @@ public class MatchService {
         //TODO Den Schuss zähler erhöhen
 
         //TODO Das neue Spielfeld dem Spieler zuweisen
+        //TODO Das neue Spielfeld im Spieler mit Hilfe des playerService speichern
 
         //TODO Die Spielfelder für das Frontend vorbereiten
 

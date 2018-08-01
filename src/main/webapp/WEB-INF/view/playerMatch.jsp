@@ -22,33 +22,34 @@
 </div>
 <hr>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-2">
-            <div id="friendly-current-field" style="margin-left: 4%; font-weight: bold">A1</div>
+    <div class="row" style="margin-left: -7.5%">
+        <div class="col-2 center">
+            <div class="text-right" id="friendly-current-field" style="font-weight: bold">A1</div>
         </div>
-        <div class="col-3">
+        <div class="col-2 center">
             <h2 class="text-center">Friendly Field</h2>
         </div>         
-        <div class="col-2">
-            <div id="turn-field" style="font-weight: bold">Warte auf Spieler</div>
+        <div class="col-4 center">
+            <div class="text-center" id="turn-field" style="font-weight: bold">Warte auf Spieler</div>
         </div>
-        <div class="col-2">
-            <div id="enemy-current-field" style="margin-left: 4%; font-weight: bold">A1</div>
-        </div>
-        <div class="col-3">
+        <div class="col-2 center" style="margin-left: -3%">
             <h2 class="text-center">Enemy Field</h2>
         </div>
+        <div class="col-2 center">
+            <div class="text-left" id="enemy-current-field" style="font-weight: bold">A1</div>
+        </div>
     </div>
+    
     <div class="row">
-        <div class="col"></div>
-        <div class="col" id="friendlyPlayerDiv">
+        <div class="col-1 center"></div>
+        <div class="col-4 center" id="friendlyPlayerDiv">
             <canvas id="friendlyPlayer" width="480" height="480"></canvas>
         </div>
-        <div class="col"></div>
-        <div class="col" id="enemyPlayerDiv">
+        <div class="col-2 center"></div>
+        <div class="col-4 center" id="enemyPlayerDiv">
             <canvas id="enemyPlayer" width="480" height="480"></canvas>
         </div>
-        <div class="col"></div>
+        <div class="col-1 center"></div>
     </div>
 </div>
 <template:footer/>
@@ -56,13 +57,26 @@
 <template:javascript/>
 <script>
     window.onload = function () {
-        Battleship.init();
-        Battleship.webSocketHandler.connect().then(function () {
-            Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                Battleship.receiveMessagesFromWebSocket(message)
-            });
-            Battleship.saveGamefield();
-        })
+        let reloadFlag = window.localStorage.getItem("reloadFlag") ? window.localStorage.getItem("reloadFlag") : "false";
+        if(reloadFlag === "false"){
+            Battleship.init();
+            Battleship.webSocketHandler.connect().then(function () {
+                Battleship.webSocketHandler.subscribeToMatch(function (message) {
+                    Battleship.receiveMessagesFromWebSocket(message)
+                });
+                Battleship.saveGamefield();
+                window.localStorage.setItem("reloadFlag","true")
+            })
+
+        }else{
+            Battleship.init();
+            Battleship.webSocketHandler.connect().then(function () {
+                Battleship.webSocketHandler.subscribeToMatch(function (message) {
+                    Battleship.receiveMessagesFromWebSocket(message)
+                });
+                Battleship.requestGamefieldData();
+            })
+        }
     };
 </script>
 </body>

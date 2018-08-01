@@ -1,7 +1,6 @@
-/* global createjs */
+/* global createjs, BASE_URL, Promise */
 
 require('yuki-createjs');
-
 let Gamefield = require('./objects/Gamefield');
 let ShipFactory = require('./factorys/ShipFactory');
 let ShotFactory = require('./factorys/ShotFactory');
@@ -30,22 +29,21 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let field = false;
+let gamefield = new Gamefield(gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color);
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
 let opponentGameZone = undefined;
 let ships = [];
 
-let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
 
 function init() {
 
+    let field = false;
     let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
     let enemyPlayerCanvas = document.getElementById("enemyPlayer");
     let canvas = document.getElementById("canvas");
 
-    let field = false;
 
     if (canvas){
         let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
@@ -72,6 +70,7 @@ function init() {
     for (let ship of ships){
         gameZone.addShip(ship);
     }
+    countAllShipParts(ships);
         
     }else if (friendlyPlayerCanvas){ 
         let field = false;
@@ -94,14 +93,11 @@ function countAllShipParts(ships) {
     for (let i = 0; i < ships.length; i++) {
         if (Math.ceil(ships[i].boxSize) === 2) {
             ShipParts = ShipParts + 2;
-        }
-        else if (Math.ceil(ships[i].boxSize) === 3) {
+        } else if (Math.ceil(ships[i].boxSize) === 3) {
             ShipParts = ShipParts + 3;
-        }
-        else if (Math.ceil(ships[i].boxSize) === 4) {
+        } else if (Math.ceil(ships[i].boxSize) === 4) {
             ShipParts = ShipParts + 4;
-        }
-        else if (Math.ceil(ships[i].boxSize) === 5) {
+        } else if (Math.ceil(ships[i].boxSize) === 5) {
             ShipParts = ShipParts + 5;
         }
     }
@@ -109,24 +105,38 @@ function countAllShipParts(ships) {
 }
 
 function allShipsOnStage() {
-    //TODO Alle Boxen holen
 
-    //TODO Prüfen ob die Schiffe platziert sind
+    let boxes = gamefield.getBoxes();
+    let allShipParts = 0;
+    for (let i = 0; i < boxes.length; i++) {
+        if (boxes[i].content !== "") {
+            allShipParts++;
+        }
+    }
+    if (countAllShipParts(ships) === allShipParts) {
+        let gamefieldJSON = gameZone.gameField.convertToJSON();
+        window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
+        let matchId = utilHandler.getCookie("matchId");
+        window.location.href = BASE_URL + 'playermatch/' + matchId;
+    } else {
+        showSnackbarNotAllShipsArePlaced();
+    }
 
-    //TODO Wenn alle Schiffe gefunden wurden (Tipp: let gamefieldJSON = gameZone.gameField.convertToJSON();)
 
-    //TODO Andernfalls eine Snackbar anzeigen (Tipp: Auf der jps/html nachschauen)
+
 }
 
 function sendCurrentPlayer() {
-let message = new Message("currentPlayerMessage", 1);
-webSocketHandler.sendCurrentPlayer(message);
+    let message = new Message("currentPlayerMessage", 1);
+    webSocketHandler.sendCurrentPlayer(message);
 }
 
 function saveGamefield() {
-//TODO Tipp Das Spielfeld aus dem LocalStorage laden
-//TODO die Message bauen und mit dem WebSocketHandler verschiken
-//TODO Tipp am Ende return Promise.resolve 
+    let gamefieldJSON = window.localStorage.getItem("gamefieldJSON");
+    let message = new Message('gamefieldMessage', gamefieldJSON);
+    webSocketHandler.sendGamefield(message);
+    return Promise.resolve();
+
 }
 
 function requestGamefieldData() {
@@ -136,39 +146,45 @@ function requestGamefieldData() {
 
 function receiveMessagesFromWebSocket(message) {
     switch (message.messageType) {
-        case "saveResponse": {
+        case "saveResponse":
+        {
             let messageContent = JSON.parse(message.messageContent);
             if (messageContent.saveState === true) {
                 requestGamefieldData();
             }
             break;
         }
-        case "gamefieldDataInit":{
+        case "gamefieldDataInit":
+        {
             let messageContent = JSON.parse(message.messageContent);
             updateGameFields(messageContent, true);
             break;
         }
-        case "gamefieldData": {
+        case "gamefieldData":
+        {
             let messageContent = JSON.parse(message.messageContent);
             updateGameFields(messageContent, false);
             break;
         }
-        case "matchInfo": {
+        case "matchInfo":
+        {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
-            if(playerId !== utilHandler.getCookie("userName")){
+            if (playerId !== utilHandler.getCookie("userName")) {
                 lockOpponentGameField(playerId);
-            }else{
+            } else {
                 unlockOpponentGameField(playerId);
             }
             console.log(messageContent);
             break;
         }
-        case "gameOver":{
-            window.location = window.location.origin+'/playermatch/'+utilHandler.getCookie('matchId')+'/over';
+        case "gameOver":
+        {
+            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
-        default: {
+        default:
+        {
             console.log('MessageType not found!');
             break;
         }
@@ -176,24 +192,24 @@ function receiveMessagesFromWebSocket(message) {
 
 }
 
-function lockOpponentGameField(playerId){
-ownGameZone.disableMouse();
-document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - '+playerId;
+function lockOpponentGameField(playerId) {
+    ownGameZone.disableMouse();
+    document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - ' + playerId;
 
 }
 
-function unlockOpponentGameField(playerId){
-ownGameZone.enableMouse();
-document.getElementById('turn-field').innerHTML = 'Du bist dran! - '+playerId;
+function unlockOpponentGameField(playerId) {
+    ownGameZone.enableMouse();
+    document.getElementById('turn-field').innerHTML = 'Du bist dran! - ' + playerId;
 }
 
 function updateGameFields(content, init) {
-    if(init === true){
+    if (init === true) {
         updateOwnGameFieldInit(content.ownGameField.gameField, ownGameField, ownGameZone);
-        if(JSON.stringify(content.opponentGameField) !== "{}"){
+        if (JSON.stringify(content.opponentGameField) !== "{}") {
             updateOpponentGameField(content.opponentGameField.gameField, opponentGameField, opponentGameZone);
         }
-    }else{
+    } else {
         updateOwnGameField(content.ownGameField.gameField, ownGameField, ownGameZone);
         updateOpponentGameField(content.opponentGameField.gameField, opponentGameField, opponentGameZone);
     }
@@ -218,17 +234,43 @@ function buildShips(innerGameField, gameField, gameZone) {
     let shipFactory = new ShipFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.content.shipType && !usedIds.includes(box.content.id)) {
-                //TODO "Submarine" currentShips.push(shipFactory.createSubmarineClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-
-                //TODO "Cruiser" currentShips.push(shipFactory.createCruiserClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-
-                //TODO "Battleship" currentShips.push(shipFactory.createBattleshipClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
-        
-                //TODO "Carrier" currentShips.push(shipFactory.createCarrierClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));      
+            switch (box.content.shipType) {
+                case "Submarine":
+                {
+                    currentShips.push(shipFactory.createSubmarineClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Cruiser":
+                {
+                    currentShips.push(shipFactory.createCruiserClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Battleship":
+                {
+                    currentShips.push(shipFactory.createBattleshipClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                case "Carrier":
+                {
+                    currentShips.push(shipFactory.createCarrierClass(box.content.posX - ((boxPixel * 4) - 10), box.content.posY, box.content.rotation, true, gameField));
+                    usedIds.push(box.content.id);
+                    break;
+                }
+                default:
+                {
+                    console.log('ShipType not found!');
+                    break;
+                }
             }
+        }
     });
-    //TODO Der Gamezone die Schiffe hinzufügen 
-    //TODO Mithilfe des Collision Handlers die Schiffposition setzen
+    for (let ship of currentShips) {
+        gameZone.addShip(ship);
+        collisionHandler.setShipPositionInGamefield(gameField, ship);
+    }
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
@@ -236,14 +278,33 @@ function buildShot(innerGameField, gameField, gameZone) {
     let shotFactory = new ShotFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.status) {
-            //TODO "x" currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
- 
-            //TODO "v" currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
-   
-            //TODO "o" currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));   
+            switch (box.status) {
+                case "x":
+                {
+                    currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "v":
+                {
+                    currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                case "o":
+                {
+                    currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
+                    break;
+                }
+                default:
+                {
+                    console.log('ShotType not found!');
+                    break;
+                }
+            }
         }
     });
-    //TODO Die Schüsse dem Gamefield hinzufügen
+    for (let shot of currentShots) {
+        gameZone.addShot(shot);
+    }
 }
 
 module.exports = {
@@ -255,5 +316,6 @@ module.exports = {
     receiveMessagesFromWebSocket: receiveMessagesFromWebSocket,
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
-    matchHandler: matchHandler
+    matchHandler: matchHandler,
+    utilHandler: utilHandler
 };
