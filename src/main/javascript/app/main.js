@@ -40,26 +40,45 @@ let ships = [];
 let gamefield = new Gamefield (gameFieldStartX, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
 
 function init() {
-    console.log("HACKS");
+
     let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
     let enemyPlayerCanvas = document.getElementById("enemyPlayer");
     let canvas = document.getElementById("canvas");
+
     let field = false;
-    console.log("canvas: "+canvas);
-    console.log("enemyPlayer: "+enemyPlayerCanvas);
-    console.log("freindlyPlayer: "+ friendlyPlayerCanvas);
+
     if (canvas){
         let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
         gameZone = new HarbourZone(canvas, gamefield, harbour);
         
+        let shipfactory = new ShipFactory (gameZone, boxPixel);
+        
+        ships.push(shipfactory.createSubmarineClass(0, 8*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 4*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 6*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createSubmarineClass(2*boxPixel, 8*boxPixel, 0, false, undefined));
+
+
+        ships.push(shipfactory.createCruiserClass(0*boxPixel, 5*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createCruiserClass(1*boxPixel, 4*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createCruiserClass(1*boxPixel, 7*boxPixel, 0, false, undefined));
+
+
+        ships.push(shipfactory.createBattleshipClass(1*boxPixel, 0*boxPixel, 0, false, undefined));
+        ships.push(shipfactory.createBattleshipClass(2*boxPixel, 0*boxPixel, 0, false, undefined));
+
+        ships.push(shipfactory.createCarrierClass(0*boxPixel, 0*boxPixel, 0, false, undefined));
+    
+    for (let ship of ships){
+        gameZone.addShip(ship);
+    }
+        
     }else if (friendlyPlayerCanvas){ 
-        console.log("HACKS2");
         let field = false;
         ownGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
         ownGameZone = new GameZone(friendlyPlayerCanvas, ownGameField);  
         
         if(enemyPlayerCanvas){
-            console.log("HACKS3");
             let field = true;
             opponentGameField = new Gamefield(10, gameFieldStartY, boxPixel, boxCountXGameField, boxCountYGameField, color, field);
             opponentGameZone = new GameZone(enemyPlayerCanvas, opponentGameField);
@@ -100,8 +119,8 @@ function allShipsOnStage() {
 }
 
 function sendCurrentPlayer() {
-//TODO Das Message Objekt bauen 
-//TODO Mit dem WebSocketHandler die Message verschiken
+let message = new Message("currentPlayerMessage", 1);
+webSocketHandler.sendCurrentPlayer(message);
 }
 
 function saveGamefield() {
@@ -138,9 +157,9 @@ function receiveMessagesFromWebSocket(message) {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
             if(playerId !== utilHandler.getCookie("userName")){
-                lockOpponentGameField();
+                lockOpponentGameField(playerId);
             }else{
-                unlockOpponentGameField();
+                unlockOpponentGameField(playerId);
             }
             console.log(messageContent);
             break;
@@ -157,12 +176,15 @@ function receiveMessagesFromWebSocket(message) {
 
 }
 
-function lockOpponentGameField(){
-//TODO Das Spielfeld sperren und eine Message anzeigen
+function lockOpponentGameField(playerId){
+ownGameZone.disableMouse();
+document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - '+playerId;
+
 }
 
-function unlockOpponentGameField(){
-//TODO Das Spielfeld sperren und eine Message anzeigen
+function unlockOpponentGameField(playerId){
+ownGameZone.enableMouse();
+document.getElementById('turn-field').innerHTML = 'Du bist dran! - '+playerId;
 }
 
 function updateGameFields(content, init) {

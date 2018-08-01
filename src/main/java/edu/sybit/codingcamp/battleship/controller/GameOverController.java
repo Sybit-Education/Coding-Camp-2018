@@ -52,7 +52,7 @@ public class GameOverController {
             LOGGER.debug("Player win: " + player);
             
             //TODO wer hat denn gewonnen, das müssen wir ncoh anzeigen.
-            
+            model.addAttribute("winner", "ich");
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.

@@ -34,8 +34,7 @@ node{
         }
 
         stage('Docker') {
-            //if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
-           
+
             def branchName = env.BRANCH_NAME.toLowerCase()
             if (branchName.contains("/")) {
               // ignore branch type
@@ -43,34 +42,37 @@ node{
             }
             branchName = branchName.replace("-", "")
 
-            def imageName = dockerInstanceName + ":" +
-              ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
-              env.BUILD_ID
-            echo "Build Docker ${imageName}"
-            def customImage = docker.build("${imageName}")
+            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
+           
 
-            timeout(time: 20, unit: 'MINUTES') {
-                //Push the Docker image to registry with Tag
-                docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-                    /* Finally, we'll push the image with two tags:
-                    * First, the incremental build number from Jenkins
-                    * Second, the 'latest' tag.
-                    * Pushing multiple tags is cheap, as all the layers are reused. */
-                    customImage.push()                        
-                    customImage.push("latest")
+
+                def imageName = dockerInstanceName + ":" +
+                  ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
+                  env.BUILD_ID
+                echo "Build Docker ${imageName}"
+                def customImage = docker.build("${imageName}")
+
+                timeout(time: 20, unit: 'MINUTES') {
+                    //Push the Docker image to registry with Tag
+                    docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
+                        /* Finally, we'll push the image with two tags:
+                        * First, the incremental build number from Jenkins
+                        * Second, the 'latest' tag.
+                        * Pushing multiple tags is cheap, as all the layers are reused. */
+                        customImage.push("${branchName}-${env.BUILD_NUMBER}")                        
+                        customImage.push("latest")
+                    }
+
                 }
             }
-            //}
-        }
 
-        stage('Deploy'){
 
             if(env.BRANCH_NAME == 'develop'){
                 try {
                     sh 'docker rm -f battleship-test'
                 } catch (e) { }
                 docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-                    sh 'docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:latest'
+                    sh "docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}"
                 }
             }
 
@@ -96,9 +98,9 @@ node{
                     remote.passphrase = '100%Hacker'
                     remote.knownHosts = '/data/jenkins/secrets/known_hosts'
      
-                    sshCommand remote: remote, command: 'uname -a'
-                    sshCommand remote: remote, command: 'docker rm -f battleship', failOnError: false
-                    sshCommand remote: remote, command: 'docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:latest'
+                    sshCommand remote: remote, command: "uname -a"
+                    sshCommand remote: remote, command: "docker rm -f battleship", failOnError: false
+                    sshCommand remote: remote, command: "docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}"
                
                 }            
                 
