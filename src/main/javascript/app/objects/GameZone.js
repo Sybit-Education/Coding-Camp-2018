@@ -18,12 +18,14 @@ module.exports = class GameZone extends createjs.Stage {
 
     addShip(ship) {
         this.addChild(ship);
+        this.setChildIndex(ship, 100);
         this.update();
     }
 
 
     addShot(shot){
         this.addChild(shot);
+        this.setChildIndex(shot, 1000);
         this.update();
     }
 
