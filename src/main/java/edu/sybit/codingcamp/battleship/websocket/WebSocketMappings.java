@@ -64,7 +64,7 @@ public class WebSocketMappings {
 
         LOGGER.debug("<-- gamefield");
     }
-
+    
     @MessageMapping("/match/gamfielddata")
     public void getGamFieldData(Message gamefieldMessage) {
         LOGGER.debug("--> getGamefieldData");

@@ -35,7 +35,7 @@ module.exports = class Ship extends createjs.Container {
             });
 
             this.on("pressup", function (evt) {
-                //TODO was soll passieren wenn die Maus losgelassen wird
+                moveShip(this, evt);
             });
         }
 
