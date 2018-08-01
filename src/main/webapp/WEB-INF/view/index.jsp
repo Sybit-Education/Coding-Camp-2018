@@ -31,5 +31,12 @@
         <template:footer />
         <template:javascript/>
 
+        <script>
+            window.onload = function () {
+                window.localStorage.clear();
+                Battleship.utilHandler.removeCookie("userName");
+            };
+        </script>
+
     </body>
 </html>
