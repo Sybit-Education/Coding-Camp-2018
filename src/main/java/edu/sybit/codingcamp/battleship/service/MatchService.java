@@ -58,18 +58,18 @@ public class MatchService {
      */
     public GameField getGameFieldForPlayer(Match match, Player player) {
         String gameField;
-        if(match.getPlayer1().equals(player)){
+        if (match.getPlayer1().equals(player)) {
             String player1 = player.getGamefield();
             JsonConverter.convertStringToGamefield(player1);
             GameField player1GF = JsonConverter.convertStringToGamefield(player1);
             System.out.println("Spieler 1 Gefunden");
             return player1GF;
-        }else if(match.getPlayer2().equals(player)){
+        } else if (match.getPlayer2().equals(player)) {
             String player2 = player.getGamefield();
             GameField player2GF = JsonConverter.convertStringToGamefield(player2);
             System.out.println("Spieler 2 Gefunden");
             return player2GF;
-        }else{
+        } else {
             System.out.println("Error Spieler Konnte nicht verifiziert werden");
             return null;
         }
@@ -80,10 +80,10 @@ public class MatchService {
         Match match = null;
         try {
             match = new Match(id);
-            addNewPlayerToMatch(match,player);
+            addNewPlayerToMatch(match, player);
         } catch (MatchNotFoundException | PlayerException ex) {
             LOGGER.error("Match konnte nicht gefunden werden. Exception:" + ex.getMessage());
-        } 
+        }
         LOGGER.debug("<-- createNewMatch match=");
         return match;
     }
@@ -122,9 +122,9 @@ public class MatchService {
         match.addPlayer(player);
         this.updateMatch(match);
         LOGGER.debug("<-- addNewPlayerToMatch match=" + match + " playerName=" + player.toString());
-      
+
     }
-   
+
     /**
      * Get a match by given id.
      *
@@ -136,21 +136,22 @@ public class MatchService {
         LOGGER.debug("--> getMatchById");
         Match match = null;
         Optional<Match> optionalMatch = matchRepository.findById(matchId);
-        if(optionalMatch.isPresent()){
-            match =  optionalMatch.get();
-                    
-            
-        }else{
+        if (optionalMatch.isPresent()) {
+            match = optionalMatch.get();
+
+
+        } else {
             throw new MatchNotFoundException("Match nicht gefunden");
         }
-        
-        if(match.getPlayer1()!=null&& match.getPlayer2()!=null){
+
+        if (match.getPlayer1() != null && match.getPlayer2() != null) {
             match.setCurrentPlayer(2);
-        }else if((match.getPlayer1()==null||match.getPlayer2()==null)&&(match.getPlayer1()!=null ||match.getPlayer2()==null)){
+        } else if ((match.getPlayer1() == null || match.getPlayer2() == null) && (match.getPlayer1() != null
+            || match.getPlayer2() == null)) {
             match.setCurrentPlayer(1);
         }
 
-        
+
         return match;
     }
 
@@ -265,33 +266,36 @@ public class MatchService {
     public void performShot(String currentPlayerId, Match match, Box boxShot) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
-       Player current = match.getPlayerById(currentPlayerId);
-       Player opponent = match.getOpponent(current);
-       
-       GameField currentGamefield = JsonConverter.convertStringToGamefield(current.getGamefield());
-       GameField opponentGamefield = JsonConverter.convertStringToGamefield(opponent.getGamefield());
-       
-       Box fieldBox = opponentGamefield.getBox(boxShot.getId());
-       if(fieldBox.getContent().getId() == null){
-           fieldBox.setStatus(BoxStatus.FIELD_SHOT);
-       }
-       else{
-       fieldBox.setStatus(BoxStatus.FIELD_HIT);
-           isShipSunk(getFieldsOfShip(opponentGamefield, fieldBox));
-           
-       } 
+        Player current = match.getPlayerById(currentPlayerId);
+        Player opponent = match.getOpponent(current);
+
+        GameField currentGamefield = JsonConverter.convertStringToGamefield(current.getGamefield());
+        GameField opponentGamefield = JsonConverter.convertStringToGamefield(opponent.getGamefield());
+
+        Box fieldBox = opponentGamefield.getBox(boxShot.getId());
+        if (fieldBox.getContent().getId() != null) {
+            LOGGER.info("Treffer! -> " + fieldBox.getContent());
+            fieldBox.setStatus(BoxStatus.FIELD_HIT);
+            isShipSunk(getFieldsOfShip(opponentGamefield, fieldBox));
+        } else {
+            fieldBox.setStatus(BoxStatus.FIELD_SHOT);
+            LOGGER.info("daneben :/");
+        }
 
         //TODO Spieler wechseln
         //TODO Den Schuss zähler erhöhen
-        
+
         playerService.addGamefieldToPlayer(opponent, JsonConverter.convertGamefieldToJsonString(opponentGamefield));
-        
-        GameField gameFieldForCurrentPlayerPruned= pruneGameField(currentGamefield);
-        GameField gameFieldForOpponentPlayerPruned= pruneGameField(opponentGamefield);
-        
-        Message messageForCurrentPlayer = buildGameFieldDataMessage(current, currentGamefield, gameFieldForCurrentPlayerPruned, false);
-        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponent, opponentGamefield, gameFieldForOpponentPlayerPruned, false);
-        
+        playerService.update(opponent);
+
+        GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGamefield);
+        GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGamefield);
+
+        Message messageForCurrentPlayer =
+            buildGameFieldDataMessage(current, currentGamefield, gameFieldForCurrentPlayerPruned, false);
+        Message messageForOpponentPlayer =
+            buildGameFieldDataMessage(opponent, opponentGamefield, gameFieldForOpponentPlayerPruned, false);
+
         messagingService.sendMessageToUser("/match", current, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponent, messageForOpponentPlayer);
         LOGGER.debug("--> performShot");
@@ -322,71 +326,61 @@ public class MatchService {
         }
 
         Ship hittenShip = box.getContent();
-        
-        if(hittenShip.getRotation() == 0){
-            if(hittenShip.getShipType().equals("Submarine")){
-                for(int i = 1; i<= 1; i++){
+        if (hittenShip.getRotation() == 0) {
+            if (hittenShip.getShipType().equals("Submarine")) {
+                for (int i = 1; i <= 1; i++) {
                     String stringX = String.valueOf(xValue);
                     String stringY = String.valueOf(yValue + i);
                     boxesOfShip.add(gameField.getBox(stringX + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Cruiser")){
-                for(int i = 1; i<= 2; i++){
+            } else if (hittenShip.getShipType().equals("Cruiser")) {
+                for (int i = 1; i <= 2; i++) {
                     String stringX = String.valueOf(xValue);
                     String stringY = String.valueOf(yValue + i);
                     boxesOfShip.add(gameField.getBox(stringX + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Battleship")){
-                for(int i = 1; i<= 3; i++){
+            } else if (hittenShip.getShipType().equals("Battleship")) {
+                for (int i = 1; i <= 3; i++) {
                     String stringX = String.valueOf(xValue);
                     String stringY = String.valueOf(yValue + i);
                     boxesOfShip.add(gameField.getBox(stringX + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Carrier")){
-                for(int i = 1; i<= 4; i++){
+            } else if (hittenShip.getShipType().equals("Carrier")) {
+                for (int i = 1; i <= 4; i++) {
                     String stringX = String.valueOf(xValue);
                     String stringY = String.valueOf(yValue + i);
                     boxesOfShip.add(gameField.getBox(stringX + stringY));
                 }
+            } else {
+                throw new IllegalArgumentException("unknown ship type");
             }
-            else {
-            throw new IllegalArgumentException("Unbekanntes Schiff");   
-            }
-        
-        }else if(hittenShip.getRotation() == 270){
-            if(hittenShip.getShipType().equals("Submarine")){
-                for(int i = 1; i<= 1; i++){
-                    char characterX = (char)(xValue + i);
+        } else if (hittenShip.getRotation() == 270) {
+            if (hittenShip.getShipType().equals("Submarine")) {
+                for (int i = 1; i <= 1; i++) {
+                    char character = (char) (xValue + i);
                     String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Cruiser")){
-                for(int i = 1; i<= 2; i++){
-                    char characterX = (char)(xValue + i);
+            } else if (hittenShip.getShipType().equals("Cruiser")) {
+                for (int i = 1; i <= 2; i++) {
+                    char character = (char) (xValue + i);
                     String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Battleship")){
-                for(int i = 1; i<= 3; i++){
-                    char characterX = (char)(xValue + i);
+            } else if (hittenShip.getShipType().equals("Battleship")) {
+                for (int i = 1; i <= 3; i++) {
+                    char character = (char) (xValue + i);
                     String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
                 }
-            }
-            else if(hittenShip.getShipType().equals("Carrier")){
-                for(int i = 1; i<= 4; i++){
-                    char characterX = (char)(xValue + i);
+            } else if (hittenShip.getShipType().equals("Carrier")) {
+                for (int i = 1; i <= 4; i++) {
+                    char character = (char) (xValue + i);
                     String stringY = String.valueOf(yValue);
-                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                    boxesOfShip.add(gameField.getBox(String.valueOf(character) + stringY));
                 }
-            }
-            else {
-            throw new IllegalArgumentException("Unbekanntes Schiff");   
+            } else {
+                throw new IllegalArgumentException("unknown ship type");
             }
         }
 
@@ -395,26 +389,29 @@ public class MatchService {
 
     //iterates above all fields and checks weather every status is x (so ship is sunk) or not
     private boolean isShipSunk(List<Box> boxesOfShip) {
-        for(int i = 0; i < boxesOfShip.size(); i++ ){
-            if(!boxesOfShip.get(i).getStatus().equals(BoxStatus.FIELD_HIT)&& !boxesOfShip.get(i).equals(BoxStatus.FIELD_SUNK)){
-               return false;
+        for (int i = 0; i < boxesOfShip.size(); i++) {
+            if (!boxesOfShip.get(i).getStatus().equals(BoxStatus.FIELD_HIT) && !boxesOfShip.get(i).equals(BoxStatus.FIELD_SUNK)) {
+                return false;
             }
         }
         setAllBoxesAsSunk(boxesOfShip);
         return true;
     }
 
+
     private String getStartBoxOfShip(Ship ship) {
-        //TODO gibt für ein Schiff die Startbox zurück
-        return "";
+
+        int xChar = (((ship.getPosX() - 160) / 40) + 1) + 64;
+        String boxIdX = Character.toString((char) xChar);
+        String boxIdY = String.valueOf(ship.getPosY() / 40 + 1);
+
+        return boxIdX + boxIdY;
     }
 
-    //replaces status in every box with v (sunk)
     private void setAllBoxesAsSunk(List<Box> boxes) {
-        for(int i = 0; i< boxes.size(); i++){
-            boxes.get(i).setStatus(BoxStatus.FIELD_SUNK);
+        for (Box box : boxes) {
+            box.setStatus(BoxStatus.FIELD_SUNK);
         }
-        //TODO Den Box status getroffen durch gesunken ersetzen
         LOGGER.debug("SCHIFF GESUNKEN !!!!!!");
     }
 
