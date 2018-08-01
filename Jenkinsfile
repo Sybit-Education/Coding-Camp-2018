@@ -1,16 +1,10 @@
 node{
     try{
-        properties(
-            [
-                disableConcurrentBuilds(),
-                buildDiscarder(
-                    logRotator(
-                        numToKeepStr: '5'
-                    )
-                )
-            ]
-        )
 
+        properties: [
+            disableConcurrentBuilds(),
+            buildDiscarder( logRotator(numToKeepStr: '5'))
+        ]
 
         def dockerInstanceName = "battleship"
         
