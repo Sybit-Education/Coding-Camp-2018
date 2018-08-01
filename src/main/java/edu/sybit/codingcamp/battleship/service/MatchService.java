@@ -96,11 +96,19 @@ public class MatchService {
      */
     public Player isMatchWon(final String matchId) throws MatchNotFoundException {
         LOGGER.debug("--> isMatchWon: matchId=" + matchId);
-        //TODO Herausfinden ob ein Spieler gewonnen hat und den gewinner zurückgeben
-        LOGGER.debug("<-- isMatchWon: player=");
+        Match match = getMatchById(matchId);
+        Player player1 = match.getPlayer1();
+        Player player2 = match.getPlayer2();
+        int sunkBoatsP1 = countOfStatus(player1, "v");
+        int sunkBoatsP2 = countOfStatus(player2, "v");
+        if(sunkBoatsP1 == 30){
+            return player2;
+        }else if(sunkBoatsP2 == 30){
+            return player1;
+        } else {
         return null;
     }
-
+}
     /**
      * Count number of boxes in gamefield having given status.
      *
@@ -110,8 +118,13 @@ public class MatchService {
      */
     protected int countOfStatus(final Player player, final String status) {
         int hits = 0;
-        //TODO Gamefield anhand des Spielers finden
-        //TODO Die Hits auf dem Gamfield zählen
+        String playerGFString = player.getGamefield();
+        GameField playerGF = JsonConverter.convertStringToGamefield(playerGFString);
+        for (Box box : playerGF.getGameField()) {
+            if(box.getStatus().equals(status)){
+                hits++;
+            }
+        }      
         return hits;
     }
 

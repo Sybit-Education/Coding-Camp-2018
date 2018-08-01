@@ -95,6 +95,18 @@ public class MatchServiceTest {
     public void getMatchByIdTest_throwsException() throws Exception {
         matchService.getMatchById("some invalid Id");
     }
+    
+    @Test
+    public void testIsMatchWon() throws Exception {
+        Match testMatch = new Match("lul");
+        testMatch.setWinnerPlayer("Fisch");
+        Player testPlayer = new Player("Banane");
+//        testPlayer.setGamefield(gamefield);
+        when(mockedMatchRepository.findById("lul")).thenReturn(Optional.of(testMatch));
+        when(mockedPlayerService.getPlayer("Fisch")).thenReturn(testPlayer);
+        Player result = matchService.isMatchWon("lul");
+        assertThat(result, is(testPlayer));
+    }
 
     /*
     @Test
