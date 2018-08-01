@@ -2,7 +2,7 @@ node{
     try{
 
         options  {
-          disableConcurrentBuilds(),
+          disableConcurrentBuilds()
           buildDiscarder(logRotator(numToKeepStr: '5'))
         }
 
