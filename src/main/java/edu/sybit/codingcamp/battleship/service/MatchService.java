@@ -254,7 +254,8 @@ public class MatchService {
            isShipSunk(getFieldsOfShip(opponentGamefield, fieldBox));
            
        }
-        //TODO Prüfen ob der Schuss Treffer oder Treffer/Versenkt ist
+       
+       
 
         //TODO Spieler wechseln
 
@@ -364,13 +365,6 @@ public class MatchService {
             throw new IllegalArgumentException("Unbekanntes Schiff");   
             }
         }
-
-        //TODO Prüfen ob das Schiff rotiert ist
-
-        //TODO Auf den Typ des Schiffes prüfen
-
-        //TODO Für den Typ des Schiffes entsprechende Logik ausführen
-
 
         return boxesOfShip;
     }
