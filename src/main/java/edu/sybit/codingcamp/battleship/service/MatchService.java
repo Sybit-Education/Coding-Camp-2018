@@ -296,6 +296,73 @@ public class MatchService {
         }
 
         Ship hittenShip = box.getContent();
+        
+        if(hittenShip.getRotation() == 0){
+            if(hittenShip.getShipType().equals("Submarine")){
+                for(int i = 1; i<= 1; i++){
+                    String stringX = String.valueOf(xValue);
+                    String stringY = String.valueOf(yValue + i);
+                    boxesOfShip.add(gameField.getBox(stringX + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Cruiser")){
+                for(int i = 1; i<= 2; i++){
+                    String stringX = String.valueOf(xValue);
+                    String stringY = String.valueOf(yValue + i);
+                    boxesOfShip.add(gameField.getBox(stringX + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Battleship")){
+                for(int i = 1; i<= 3; i++){
+                    String stringX = String.valueOf(xValue);
+                    String stringY = String.valueOf(yValue + i);
+                    boxesOfShip.add(gameField.getBox(stringX + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Carrier")){
+                for(int i = 1; i<= 4; i++){
+                    String stringX = String.valueOf(xValue);
+                    String stringY = String.valueOf(yValue + i);
+                    boxesOfShip.add(gameField.getBox(stringX + stringY));
+                }
+            }
+            else {
+            throw new IllegalArgumentException("Unbekanntes Schiff");   
+            }
+        
+        }else if(hittenShip.getRotation() == 270){
+            if(hittenShip.getShipType().equals("Submarine")){
+                for(int i = 1; i<= 1; i++){
+                    char characterX = (char)(xValue + i);
+                    String stringY = String.valueOf(yValue);
+                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Cruiser")){
+                for(int i = 1; i<= 2; i++){
+                    char characterX = (char)(xValue + i);
+                    String stringY = String.valueOf(yValue);
+                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Battleship")){
+                for(int i = 1; i<= 3; i++){
+                    char characterX = (char)(xValue + i);
+                    String stringY = String.valueOf(yValue);
+                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                }
+            }
+            else if(hittenShip.getShipType().equals("Carrier")){
+                for(int i = 1; i<= 4; i++){
+                    char characterX = (char)(xValue + i);
+                    String stringY = String.valueOf(yValue);
+                    boxesOfShip.add(gameField.getBox(String.valueOf(characterX) + stringY));
+                }
+            }
+            else {
+            throw new IllegalArgumentException("Unbekanntes Schiff");   
+            }
+        }
 
         //TODO Prüfen ob das Schiff rotiert ist
 
@@ -310,9 +377,11 @@ public class MatchService {
     //iterates above all fields and checks weather every status is x (so ship is sunk) or not
     private boolean isShipSunk(List<Box> boxesOfShip) {
         for(int i = 0; i < boxesOfShip.size(); i++ ){
-            //if(boxesOfShip.get(i).getStatus().equals())
+            if(!boxesOfShip.get(i).getStatus().equals(BoxStatus.FIELD_HIT)&& !boxesOfShip.get(i).equals(BoxStatus.FIELD_SUNK)){
+               return false;
+            }
         }
-        //TODO Über die Boxen des Schiffes iterieren und falls alle getroffen sind return true
+        setAllBoxesAsSunk(boxesOfShip);
         return true;
     }
 
@@ -323,6 +392,9 @@ public class MatchService {
 
     //replaces status in every box with v (sunk)
     private void setAllBoxesAsSunk(List<Box> boxes) {
+        for(int i = 0; i< boxes.size(); i++){
+            boxes.get(i).setStatus(BoxStatus.FIELD_SUNK);
+        }
         //TODO Den Box status getroffen durch gesunken ersetzen
         LOGGER.debug("SCHIFF GESUNKEN !!!!!!");
     }

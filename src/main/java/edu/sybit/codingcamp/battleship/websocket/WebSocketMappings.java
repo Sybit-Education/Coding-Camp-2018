@@ -107,7 +107,6 @@ public class WebSocketMappings {
             matchService.performShot(currentPlayerId,currentMatch, box);
             
         } catch (MatchNotFoundException e) {
-            //TODO Error Handling
             LOGGER.error(e.getMessage(), e);
         }
 
