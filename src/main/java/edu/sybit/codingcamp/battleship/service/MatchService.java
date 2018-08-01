@@ -10,6 +10,7 @@ import edu.sybit.codingcamp.battleship.exception.PlayerException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
+import edu.sybit.codingcamp.battleship.objects.jsonObjects.BoxStatus;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Message;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
@@ -238,10 +239,21 @@ public class MatchService {
     public void performShot(String currentPlayerId, Match match, Box boxShot) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
-        //TODO die Spieler holen
-
-        //TODO Für jeden Spieler das Gamfield holen
-
+       Player current = match.getPlayerById(currentPlayerId);
+       Player opponent = match.getOpponent(current);
+       
+       GameField currentGamefield = JsonConverter.convertStringToGamefield(current.getGamefield());
+       GameField opponentGamefield = JsonConverter.convertStringToGamefield(opponent.getGamefield());
+       
+       Box fieldBox = opponentGamefield.getBox(boxShot.getId());
+       if(fieldBox.getContent().getId() == null){
+           fieldBox.setStatus(BoxStatus.FIELD_SHOT);
+       }
+       else{
+       fieldBox.setStatus(BoxStatus.FIELD_HIT);
+           isShipSunk(getFieldsOfShip(opponentGamefield, fieldBox));
+           
+       }
         //TODO Prüfen ob der Schuss Treffer oder Treffer/Versenkt ist
 
         //TODO Spieler wechseln
@@ -297,6 +309,9 @@ public class MatchService {
 
     //iterates above all fields and checks weather every status is x (so ship is sunk) or not
     private boolean isShipSunk(List<Box> boxesOfShip) {
+        for(int i = 0; i < boxesOfShip.size(); i++ ){
+            //if(boxesOfShip.get(i).getStatus().equals())
+        }
         //TODO Über die Boxen des Schiffes iterieren und falls alle getroffen sind return true
         return true;
     }
