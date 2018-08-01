@@ -63,7 +63,6 @@
             </div>
         </div>
     </div>
-    <!-- Modal share link end -->
 </div>
 
         <button id="toastShipPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht auf diese Position gesetzt werden">
