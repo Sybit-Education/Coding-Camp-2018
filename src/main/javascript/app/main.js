@@ -29,7 +29,7 @@ const harbourStartY = 0;
 
 const color = "#FFFFFF";
 
-let field = false;
+
 let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
@@ -40,11 +40,11 @@ let gamefield = new Gamefield(gameFieldStartX, gameFieldStartY, boxPixel, boxCou
 
 function init() {
 
+    let field = false;
     let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
     let enemyPlayerCanvas = document.getElementById("enemyPlayer");
     let canvas = document.getElementById("canvas");
 
-    let field = false;
 
     if (canvas){
         let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
