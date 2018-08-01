@@ -13,9 +13,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<c:url value="/rules" />">Spielregeln</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/team" />">Team</a>
-                </li>
+               
             </ul>
         </div>
     </div>
