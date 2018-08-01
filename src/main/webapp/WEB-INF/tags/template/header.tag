@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<base href="<c:url value="/" />" />
+<!-- base href="<c:url value="/" />" / -->
 
 <link rel="icon" href="<c:url value="resources/favicon.ico" />" />
 
