@@ -51,8 +51,8 @@ public class GameOverController {
             Player player = matchService.isMatchWon(matchId);
             LOGGER.debug("Player win: " + player);
             
-            //TODO wer hat denn gewonnen, das müssen wir ncoh anzeigen.
-            model.addAttribute("winner", "ich");
+            String playerID = player.getPlayerId();
+            model.addAttribute("winner", playerID);
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.
