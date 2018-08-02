@@ -107,8 +107,8 @@ public class WebSocketMappings {
             Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
             if(winnerPlayer != null){
                 //Es hat jemand Gewonnen
-                messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("End", "GameOver"));
-                messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("End", "GameOver"));
+                messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
+                messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
             }
         } catch (MatchNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
