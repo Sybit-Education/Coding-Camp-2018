@@ -193,13 +193,13 @@ function receiveMessagesFromWebSocket(message) {
 }
 
 function lockOpponentGameField(playerId) {
-    ownGameZone.disableMouse();
+    opponentGameZone.disableMouse();
     document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - ' + playerId;
 
 }
 
 function unlockOpponentGameField(playerId) {
-    ownGameZone.enableMouse();
+    opponentGameZone.enableMouse();
     document.getElementById('turn-field').innerHTML = 'Du bist dran! - ' + playerId;
 }
 
