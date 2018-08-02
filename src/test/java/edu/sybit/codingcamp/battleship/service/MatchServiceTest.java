@@ -83,7 +83,6 @@ public class MatchServiceTest {
         matchService.addNewPlayerToMatch(new Match(mockedMatchId), new Player(playerId));
     }
 
-    @Ignore
     @Test
     public void getMatchByIdTest_validMatch() throws Exception {
         List<Match> matchList = generateSampleMatches();
@@ -93,7 +92,6 @@ public class MatchServiceTest {
         assertThat(matchById, is(matchList.get(0)));
     }
 
-    @Ignore
     @Test(expected = MatchNotFoundException.class)
     public void getMatchByIdTest_throwsException() throws Exception {
         matchService.getMatchById("some invalid Id");
