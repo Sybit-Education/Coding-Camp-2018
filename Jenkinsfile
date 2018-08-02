@@ -111,7 +111,7 @@ node{
         currentBuild.result = "FAILED"
         throw e
     } finally {
-        junit allowEmptyResults: true, testResults: 'build/test-results/TEST-*.xml'
+        junit allowEmptyResults: true, testResults: 'build/test-results/test/TEST-*.xml'
 
         // Success or failure, always send notifications
         notifyBuild(currentBuild.result)
