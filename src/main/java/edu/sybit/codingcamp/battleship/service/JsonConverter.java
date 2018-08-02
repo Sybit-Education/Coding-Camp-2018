@@ -5,8 +5,11 @@
 package edu.sybit.codingcamp.battleship.service;
 
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,5 +49,11 @@ public class JsonConverter {
     public static Box convertStringToBox(String boxString) {
         Gson gson = new Gson();
         return gson.fromJson(boxString, Box.class);
+    }
+    public static GameField convertJsonFileToGameField(String path) throws FileNotFoundException{
+        Gson gson = new Gson();
+        JsonReader reader = new JsonReader(new FileReader(path));
+        GameField gameField = gson.fromJson(reader, GameField.class);
+        return gameField;
     }
 }
