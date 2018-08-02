@@ -4,11 +4,14 @@
 
 package edu.sybit.codingcamp.battleship.service;
 
+import ch.qos.logback.classic.util.LevelToSyslogSeverity;
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
+import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
 import edu.sybit.codingcamp.battleship.repository.MatchRepository;
+import java.io.FileInputStream;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -94,6 +97,32 @@ public class MatchServiceTest {
     @Test(expected = MatchNotFoundException.class)
     public void getMatchByIdTest_throwsException() throws Exception {
         matchService.getMatchById("some invalid Id");
+    }
+    
+    @Test
+    public void testIsMatchWon() throws Exception {
+        String matchID = "matchID564375";
+        String player1Id = "Player1";
+        String player2Id = "Player2";
+        Match testMatch = new Match(matchID);
+        Player testPlayer1 = new Player(player1Id);
+        Player testPlayer2 = new Player(player2Id);
+        GameField gameFieldWon = new GameField();
+        GameField gameFieldLose = new GameField();
+        String gameFieldLoseConv;
+        String gameFieldWonConv;
+        gameFieldWon = JsonConverter.convertJsonFileToGameField("src/test/resources/gameField_sunk.json");
+        gameFieldWonConv = JsonConverter.convertGamefieldToJsonString(gameFieldWon);
+        gameFieldLose = JsonConverter.convertJsonFileToGameField("src/test/resources/gameField.json");
+        gameFieldLoseConv = JsonConverter.convertGamefieldToJsonString(gameFieldLose);
+        testPlayer1.setGamefield(gameFieldWonConv);
+        testPlayer2.setGamefield(gameFieldLoseConv);
+        testMatch.setPlayer1(testPlayer1);
+        testMatch.setPlayer2(testPlayer2);
+        //datenbak mock
+        when(mockedMatchRepository.findById(matchID)).thenReturn(Optional.of(testMatch));
+        Player result = matchService.isMatchWon(matchID);
+        assertThat(result, is(testPlayer2));
     }
 
     /*

@@ -57,7 +57,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="copyUrl()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyUrl()">
                     Copy to clipboard ...
                 </button>
             </div>
