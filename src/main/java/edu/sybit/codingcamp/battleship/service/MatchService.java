@@ -11,6 +11,7 @@ import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.BoxStatus;
+import static edu.sybit.codingcamp.battleship.objects.jsonObjects.BoxStatus.FIELD_SUNK;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Message;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
@@ -97,11 +98,19 @@ public class MatchService {
      */
     public Player isMatchWon(final String matchId) throws MatchNotFoundException {
         LOGGER.debug("--> isMatchWon: matchId=" + matchId);
-        //TODO Herausfinden ob ein Spieler gewonnen hat und den gewinner zurückgeben
-        LOGGER.debug("<-- isMatchWon: player=");
+        Match match = getMatchById(matchId);
+        Player player1 = match.getPlayer1();
+        Player player2 = match.getPlayer2();
+        int sunkBoatsP1 = countOfStatus(player1, FIELD_SUNK);
+          int sunkBoatsP2 = countOfStatus(player2, FIELD_SUNK);
+        if(sunkBoatsP1 == 30){
+            return player2;
+        }else if(sunkBoatsP2 == 30){
+            return player1;
+        } else {
         return null;
     }
-
+}
     /**
      * Count number of boxes in gamefield having given status.
      *
@@ -111,8 +120,13 @@ public class MatchService {
      */
     protected int countOfStatus(final Player player, final String status) {
         int hits = 0;
-        //TODO Gamefield anhand des Spielers finden
-        //TODO Die Hits auf dem Gamfield zählen
+        String playerGFString = player.getGamefield();
+        GameField playerGF = JsonConverter.convertStringToGamefield(playerGFString);
+        for (Box box : playerGF.getGameField()) {
+            if(box.getStatus().equals(status)){
+                hits++;
+            }
+        }      
         return hits;
     }
 
@@ -263,7 +277,7 @@ public class MatchService {
      * @param boxShot
      */
     public void performShot(String currentPlayerId, Match match, Box boxShot) {
-        LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
+       LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
        Player current = match.getPlayerById(currentPlayerId);
        Player opponent = match.getOpponent(current);
@@ -309,7 +323,7 @@ public class MatchService {
 
 
     private List<Box> getFieldsOfShip(GameField gameField, Box box) {
-        String startBox = getStartBoxOfShip(box.getContent());
+       String startBox = getStartBoxOfShip(box.getContent());
 
         char xValue = startBox.charAt(0);
         String boxYString = startBox.substring(1, startBox.length());
@@ -393,7 +407,6 @@ public class MatchService {
         return boxesOfShip;
     }
 
-    //iterates above all fields and checks weather every status is x (so ship is sunk) or not
     private boolean isShipSunk(List<Box> boxesOfShip) {
         for(int i = 0; i < boxesOfShip.size(); i++ ){
             if(!boxesOfShip.get(i).getStatus().equals(BoxStatus.FIELD_HIT)&& !boxesOfShip.get(i).equals(BoxStatus.FIELD_SUNK)){
@@ -409,7 +422,6 @@ public class MatchService {
         return "";
     }
 
-    //replaces status in every box with v (sunk)
     private void setAllBoxesAsSunk(List<Box> boxes) {
         for(int i = 0; i< boxes.size(); i++){
             boxes.get(i).setStatus(BoxStatus.FIELD_SUNK);
