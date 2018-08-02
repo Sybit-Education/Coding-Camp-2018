@@ -11,7 +11,10 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/rules" />">Spielregeln</a>
+                    <a class="nav-link" href="<c:url value="/rules" />">Spielregeln</a
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<c:url value="/credits" />">Credits</a
                 </li>
                
             </ul>
