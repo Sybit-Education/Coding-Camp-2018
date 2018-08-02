@@ -179,6 +179,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "gameOver":
         {
+            console.log("GameOver");
             window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }

@@ -27,6 +27,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -293,7 +294,7 @@ public class MatchService {
      * @param match
      * @param boxShot
      */
-    public void performShot(String currentPlayerId, Match match, Box boxShot) {
+    public Player performShot(String currentPlayerId, Match match, Box boxShot) {
                LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
         Player currentPlayer = match.getPlayerById(currentPlayerId);
@@ -330,6 +331,15 @@ public class MatchService {
         LOGGER.debug("--> performShot");
         
          switchPlayer(opponentPlayer, match);
+         
+         String matchID = match.getMatchId();
+         Player winnerPlayer = new Player();
+        try {
+            winnerPlayer = isMatchWon(matchID);
+        } catch (MatchNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MatchService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return winnerPlayer;
     }
 
     /**
