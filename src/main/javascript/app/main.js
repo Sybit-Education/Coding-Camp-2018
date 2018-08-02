@@ -129,14 +129,14 @@ function decrement() {
     console.log(countDownSeconds)
 }
 
-function timeToShot() {
+function timeToShoot() {
     let countDownSeconds = setInterval(decrement, 1000);
-    
+    console.log(countDownSeconds);
     return countDownSeconds;
 }
 
 function sendTimer() {
-    let message = new Message("timerMessage", timeToShot());
+    let message = new Message("timerMessage", timeToShoot());
     webSocketHandler.sendTimer(message);
 }
 
@@ -182,6 +182,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "matchInfo":
         {
+            timeToShoot();
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
             if (playerId !== utilHandler.getCookie("userName")) {
