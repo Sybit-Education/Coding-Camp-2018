@@ -305,19 +305,36 @@ public class MatchService {
         Box fieldBox = opponentGameField.getBox(boxShot.getId());
         if (fieldBox.getContent().getId() != null) {
             LOGGER.info("Treffer! -> " + fieldBox.getContent());
+            
             fieldBox.setStatus(BoxStatus.FIELD_HIT);
-            isShipSunk(getFieldsOfShip(opponentGameField, fieldBox));
+            updateOpponendPlayer(opponentPlayer, opponentGameField);
+            sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
+
+            if(isShipSunk(getFieldsOfShip(opponentGameField, fieldBox))){
+                updateOpponendPlayer(opponentPlayer, opponentGameField);
+                sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
+            }
         } else {
             fieldBox.setStatus(BoxStatus.FIELD_SHOT);
+            updateOpponendPlayer(opponentPlayer, opponentGameField);
+            sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
             LOGGER.info("daneben :/");
         }
 
         //finally increase shot counter:
         increaseShotCounter(match);
 
+        LOGGER.debug("--> performShot");
+        
+         switchPlayer(opponentPlayer, match);
+    }
+    
+    private void updateOpponendPlayer(Player opponentPlayer, GameField opponentGameField){
         playerService.addGamefieldToPlayer(opponentPlayer, JsonConverter.convertGamefieldToJsonString(opponentGameField));
         playerService.update(opponentPlayer);
-
+    }
+    
+    private void sendUpdateMessage(Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField){
         GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
         GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
 
@@ -326,10 +343,6 @@ public class MatchService {
 
         messagingService.sendMessageToUser("/match", currentPlayer, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponentPlayer, messageForOpponentPlayer);
-
-        LOGGER.debug("--> performShot");
-        
-         switchPlayer(opponentPlayer, match);
     }
 
     /**
