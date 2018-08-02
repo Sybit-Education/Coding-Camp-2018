@@ -104,8 +104,12 @@ public class WebSocketMappings {
         try {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
-            matchService.performShot(currentPlayerId,currentMatch, box);
-            
+            Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
+            if(winnerPlayer != null){
+                //Es hat jemand Gewonnen
+                messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
+                messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
+            }
         } catch (MatchNotFoundException e) {
             LOGGER.error(e.getMessage(), e);
         }
