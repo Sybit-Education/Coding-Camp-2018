@@ -32,7 +32,6 @@ public class PlayerServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Ignore
     @Test
     public void addGamefieldToPlayerTest(){
         String gamefield = "someGamefield";
