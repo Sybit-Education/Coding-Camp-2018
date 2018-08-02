@@ -101,7 +101,9 @@ public class MatchServiceTest {
         Match testMatch = new Match("lul");
         testMatch.setWinnerPlayer("Fisch");
         Player testPlayer = new Player("Banane");
-//        testPlayer.setGamefield(gamefield);
+        testPlayer.setGamefield(testMatch.getMatchId());
+        fileInput
+        //datenbak mock
         when(mockedMatchRepository.findById("lul")).thenReturn(Optional.of(testMatch));
         when(mockedPlayerService.getPlayer("Fisch")).thenReturn(testPlayer);
         Player result = matchService.isMatchWon("lul");

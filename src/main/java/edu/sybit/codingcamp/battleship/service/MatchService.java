@@ -10,6 +10,7 @@ import edu.sybit.codingcamp.battleship.exception.PlayerException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
+import static edu.sybit.codingcamp.battleship.objects.jsonObjects.BoxStatus.FIELD_SUNK;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Message;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
@@ -99,8 +100,8 @@ public class MatchService {
         Match match = getMatchById(matchId);
         Player player1 = match.getPlayer1();
         Player player2 = match.getPlayer2();
-        int sunkBoatsP1 = countOfStatus(player1, "v");
-        int sunkBoatsP2 = countOfStatus(player2, "v");
+        int sunkBoatsP1 = countOfStatus(player1, FIELD_SUNK);
+          int sunkBoatsP2 = countOfStatus(player2, FIELD_SUNK);
         if(sunkBoatsP1 == 30){
             return player2;
         }else if(sunkBoatsP2 == 30){
