@@ -22,7 +22,6 @@ module.exports = class Box extends createjs.Shape {
             this.on("click", function (evt) {
                 let message = new Message('shot', this);
                 Battleship.webSocketHandler.sendShot(message);
-                //TODO turn player function
             });
         }
 
