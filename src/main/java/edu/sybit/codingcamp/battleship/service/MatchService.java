@@ -292,9 +292,9 @@ public class MatchService {
         GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGamefield);
 
         Message messageForCurrentPlayer =
-            buildGameFieldDataMessage(current, currentGamefield, gameFieldForCurrentPlayerPruned, false);
+            buildGameFieldDataMessage(current, currentGamefield, gameFieldForOpponentPlayerPruned, false);
         Message messageForOpponentPlayer =
-            buildGameFieldDataMessage(opponent, opponentGamefield, gameFieldForOpponentPlayerPruned, false);
+            buildGameFieldDataMessage(opponent, opponentGamefield, gameFieldForCurrentPlayerPruned, false);
 
         messagingService.sendMessageToUser("/match", current, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponent, messageForOpponentPlayer);
