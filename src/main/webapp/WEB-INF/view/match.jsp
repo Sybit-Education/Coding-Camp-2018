@@ -81,24 +81,24 @@
         <template:javascript/>
 
 <script>
-    let url;
-    url = window.location.href;
-    document.getElementById("Url").value = url;
-</script>
-     
-<script>
-    function copyUrl(){
-    let copyUrl = document.getElementById("Url");
-    copyUrl.select();
-    document.execCommand("copy");
-    }
-</script>
-
-<script>
     window.onload = function () {
         window.localStorage.clear();
+        setUrlInModal()
         Battleship.init();
     };
+    
+    function setUrlInModal(){
+        let url;
+        url = window.location.href;
+        document.getElementById("Url").value = url;
+        localStorage.setItem("keyMatchLink",url);
+    }
+    
+    function copyUrl(){
+        let copyUrl = document.getElementById("Url");
+        copyUrl.select();
+        document.execCommand("copy");
+    }
 
     let showSnackbarShipPlacementNotPossible = function(){
         $('#toastShipPlacement').snackbar("show");
