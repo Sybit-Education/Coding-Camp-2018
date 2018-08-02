@@ -56,20 +56,8 @@
                
   
         </div>
-        
-       
+
         <template:footer/>
-
         <template:javascript/>
-        <script>
-            window.onload = function () {
-                Battleship.init();
-
-                Battleship.webSocketHandler.connect().then(function () {
-                    Battleship.webSocketHandler.subscribeToMatch();
-                    Battleship.saveGamefield();
-                });
-            };
-        </script>
     
 </html>

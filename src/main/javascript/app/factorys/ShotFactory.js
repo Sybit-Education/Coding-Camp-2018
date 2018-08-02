@@ -31,7 +31,7 @@ module.exports = class ShotFactory {
         let image = new createjs.Bitmap(ShotFactory.getImageSrc("fieldSunk"));
         image.scaleX = this.scaleX;
         image.scaleY = this.scaleY;
-        let shot = new Shot("fieldHit", image, startPosX, startPosY, image.scaleX * 100, image.scaley * 100, this.boxPixel);
+        let shot = new Shot("fieldSunk", image, startPosX, startPosY, image.scaleX * 100, image.scaley * 100, this.boxPixel);
         return shot;
     }
 
@@ -40,7 +40,7 @@ module.exports = class ShotFactory {
         let image = new createjs.Bitmap(ShotFactory.getImageSrc("fieldShot"));
         image.scaleX = this.scaleX;
         image.scaleY = this.scaleY;
-        let shot = new Shot("fieldHit", image, startPosX, startPosY, image.scaleX * 100, image.scaley * 100, this.boxPixel);
+        let shot = new Shot("fieldShot", image, startPosX, startPosY, image.scaleX * 100, image.scaley * 100, this.boxPixel);
         return shot;
     }
 
