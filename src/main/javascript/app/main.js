@@ -34,6 +34,7 @@ let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
 let opponentGameZone = undefined;
+let countDownSeconds = 60;
 let ships = [];
 
 
@@ -121,9 +122,22 @@ function allShipsOnStage() {
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
+}
 
+function decrement() {
+    countDownSeconds = countDownSeconds -1;+
+    console.log(countDownSeconds)
+}
 
+function timeToShot() {
+    let countDownSeconds = setInterval(decrement, 1000);
+    
+    return countDownSeconds;
+}
 
+function sendTimer() {
+    let message = new Message("timerMessage", timeToShot());
+    webSocketHandler.sendTimer(message);
 }
 
 function sendCurrentPlayer() {
@@ -313,6 +327,7 @@ module.exports = {
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,
     sendCurrentPlayer: sendCurrentPlayer,
+    sendTimer :sendTimer,
     receiveMessagesFromWebSocket: receiveMessagesFromWebSocket,
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,

@@ -8,6 +8,7 @@ const gamefieldEndpoint = BASE_URL + 'battleships/match/gamefield';
 const gamefieldDataEndpoint = BASE_URL + 'battleships/match/gamfielddata';
 const shotEndpoint = BASE_URL + 'battleships/match/shot';
 const currentPlayerEndpoint = BASE_URL + 'battleships/match/currentplayer';
+const timerEndpoint = BASE_URL + 'battleships/match/timer';
 
 let stompClient;
 
