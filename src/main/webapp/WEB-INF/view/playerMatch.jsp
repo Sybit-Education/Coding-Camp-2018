@@ -45,7 +45,9 @@
         <div class="col-4 center" id="friendlyPlayerDiv">
             <canvas id="friendlyPlayer" width="480" height="480"></canvas>
         </div>
-        <div class="col-2 center"></div>
+        <div class="col-2 center">
+            <h3 id="countDownSeconds" class="text-center">60</h3>
+        </div>
         <div class="col-4 center" id="enemyPlayerDiv">
             <canvas id="enemyPlayer" width="480" height="480"></canvas>
         </div>

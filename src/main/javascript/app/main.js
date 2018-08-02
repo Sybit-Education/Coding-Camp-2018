@@ -35,6 +35,7 @@ let ownGameZone = undefined;
 let opponentGameField = undefined;
 let opponentGameZone = undefined;
 let countDownSeconds = 60;
+let intervalId = undefined;
 let ships = [];
 
 
@@ -125,14 +126,18 @@ function allShipsOnStage() {
 }
 
 function decrement() {
-    countDownSeconds = countDownSeconds -1;+
-    console.log(countDownSeconds)
+    countDownSeconds = countDownSeconds -1;
+    document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
 
 function timeToShoot() {
-    let countDownSeconds = setInterval(decrement, 1000);
-    console.log(countDownSeconds);
-    return countDownSeconds;
+    intervalId = setInterval(decrement, 1000);
+}
+
+function stopTimer() {
+    clearInterval(intervalId);
+    countDownSeconds = 60;
+    document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
 
 function sendTimer() {
@@ -182,13 +187,15 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "matchInfo":
         {
-            timeToShoot();
+            
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
             if(playerId !== utilHandler.getCookie("userName")){
+                stopTimer();
                 lockOpponentGameField(playerId);
             }else{
                 unlockOpponentGameField(playerId);
+                timeToShoot();
             }
             console.log(messageContent);
             break;
@@ -287,6 +294,11 @@ function buildShips(innerGameField, gameField, gameZone) {
     }
 }
 
+function sendShotToWebsocket(messageObj){
+    //TODO: Reset Timer
+    webSocketHandler.sendShot(messageObj);
+}
+
 function buildShot(innerGameField, gameField, gameZone) {
     let currentShots = [];
     let shotFactory = new ShotFactory(gameZone, boxPixel);
@@ -327,10 +339,10 @@ module.exports = {
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,
     sendCurrentPlayer: sendCurrentPlayer,
-    sendTimer :sendTimer,
     receiveMessagesFromWebSocket: receiveMessagesFromWebSocket,
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
-    utilHandler: utilHandler
+    utilHandler: utilHandler,
+    sendShotToWebsocket: sendShotToWebsocket
 };
