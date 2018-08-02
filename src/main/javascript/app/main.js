@@ -166,13 +166,12 @@ function receiveMessagesFromWebSocket(message) {
             updateGameFields(messageContent, false);
             break;
         }
-        case "matchInfo":
-        {
+        case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
-            if (playerId !== utilHandler.getCookie("userName")) {
+            if(playerId !== utilHandler.getCookie("userName")){
                 lockOpponentGameField(playerId);
-            } else {
+            }else{
                 unlockOpponentGameField(playerId);
             }
             console.log(messageContent);
@@ -192,15 +191,14 @@ function receiveMessagesFromWebSocket(message) {
 
 }
 
-function lockOpponentGameField(playerId) {
-    ownGameZone.disableMouse();
-    document.getElementById('turn-field').innerHTML = 'Der Gegener ist dran! - ' + playerId;
-
+function lockOpponentGameField(playerId){
+    opponentGameZone.disableMouse();
+    document.getElementById("turn-field").innerHTML = "Dein Gegner ist am Zug! - "+playerId;
 }
 
-function unlockOpponentGameField(playerId) {
-    ownGameZone.enableMouse();
-    document.getElementById('turn-field').innerHTML = 'Du bist dran! - ' + playerId;
+function unlockOpponentGameField(playerId){
+    opponentGameZone.enableMouse();
+    document.getElementById("turn-field").innerHTML = "Du bist am Zug! - "+playerId;
 }
 
 function updateGameFields(content, init) {

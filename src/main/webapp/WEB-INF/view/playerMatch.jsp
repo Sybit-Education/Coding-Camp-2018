@@ -52,6 +52,38 @@
         <div class="col-1 center"></div>
     </div>
 </div>
+
+
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shareLinkModal">
+                share link ...
+            </button>
+       
+
+<!-- Modal -->
+<div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Share Link</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea rows="2" cols="55" id="Url"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyUrl()">
+                    Copy to clipboard ...
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <template:footer/>
 
 <template:javascript/>
@@ -62,22 +94,33 @@
             Battleship.init();
             Battleship.webSocketHandler.connect().then(function () {
                 Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                    Battleship.receiveMessagesFromWebSocket(message)
+                    Battleship.receiveMessagesFromWebSocket(message);
                 });
                 Battleship.saveGamefield();
-                window.localStorage.setItem("reloadFlag","true")
+                window.localStorage.setItem("reloadFlag","true");
             })
 
         }else{
             Battleship.init();
             Battleship.webSocketHandler.connect().then(function () {
                 Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                    Battleship.receiveMessagesFromWebSocket(message)
+                    Battleship.receiveMessagesFromWebSocket(message);
                 });
                 Battleship.requestGamefieldData();
             })
         }
     };
+</script>
+
+<script>
+    let test = localStorage.getItem("keyMatchLink");
+    console.log(test);
+    document.getElementById("Url").value = localStorage.getItem("keyMatchLink");
+    function copyUrl(){
+    let copyUrl = document.getElementById("Url");
+    copyUrl.select();
+    document.execCommand("copy");
+    }
 </script>
 </body>
 </html>
