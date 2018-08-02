@@ -62,17 +62,17 @@
             Battleship.init();
             Battleship.webSocketHandler.connect().then(function () {
                 Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                    Battleship.receiveMessagesFromWebSocket(message)
+                    Battleship.receiveMessagesFromWebSocket(message);
                 });
                 Battleship.saveGamefield();
-                window.localStorage.setItem("reloadFlag","true")
+                window.localStorage.setItem("reloadFlag","true");
             })
 
         }else{
             Battleship.init();
             Battleship.webSocketHandler.connect().then(function () {
                 Battleship.webSocketHandler.subscribeToMatch(function (message) {
-                    Battleship.receiveMessagesFromWebSocket(message)
+                    Battleship.receiveMessagesFromWebSocket(message);
                 });
                 Battleship.requestGamefieldData();
             })

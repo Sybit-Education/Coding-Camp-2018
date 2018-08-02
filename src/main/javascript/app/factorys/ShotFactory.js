@@ -47,9 +47,9 @@ module.exports = class ShotFactory {
 
     static getManifest() {
         let manifest = [
-            {src: BASE_URL + "resources/images/red.jpg", id: "fieldHit"},
-            {src: BASE_URL + "resources/images/black.jpg", id: "fieldSunk"},
-            {src: BASE_URL + "resources/images/yellow.jpg", id: "fieldShot"}
+            {src: BASE_URL + "resources/images/hit.png", id: "fieldHit"},
+            {src: BASE_URL + "resources/images/sunk.png", id: "fieldSunk"},
+            {src: BASE_URL + "resources/images/shot.png", id: "fieldShot"}
         ];
 
         return manifest;
