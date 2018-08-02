@@ -180,8 +180,19 @@ public class MatchService {
     public Player getCurrentPlayer(Match match) {
         LOGGER.debug("--> getCurrentPlayer: match=" + match);
         Player currentPlayer = null;
-        //TODO Aus dem Match den aktuellen Spieler finden
-        //TODO Wenn kein Match gefunden wurde Exception
+        
+        if (match.getCurrentPlayer() == 1){
+        currentPlayer = match.getPlayer1();
+        }
+        else if (match.getCurrentPlayer() == 2){
+          currentPlayer = match.getPlayer2(); 
+        }
+        else if (match.getCurrentPlayer() == 0){
+           currentPlayer = match.getPlayer1();
+        }
+        else {
+        throw new GeneralException("No current player set!");
+        }
         LOGGER.debug("<-- getCurrentPlayer");
         return currentPlayer;
     }
@@ -194,10 +205,12 @@ public class MatchService {
      */
     public void setCurrentPlayer(Match match, Integer currentPlayer) {
         LOGGER.debug("--> setCurrentPlayer");
-        //TODO Exception falls der Spieler nicht 1 oder 2 ist
-        //TODO Den aktuellen Spieer Setzen
-        //TODO Das Match dem aktuellen Spieler senden
-        //TODO Das Match abspeichern
+        if (currentPlayer < 1 || currentPlayer > 2){
+            throw new GeneralException("Current Player is neither 1 or 2!");
+        }
+        match.setCurrentPlayer(currentPlayer);
+        sendCurrentPlayerMessage(match);
+        matchRepository.saveAndFlush(match);
         LOGGER.debug("--> setCurrentPlayer: " + currentPlayer);
     }
 
@@ -207,7 +220,6 @@ public class MatchService {
 
         String playerId = "";
 
-        //TODO Den aktuellen Spiel herausfinden
         switch (match.getCurrentPlayer()) {
             case 1: {
                 playerId = player1.getPlayerId();
@@ -222,7 +234,6 @@ public class MatchService {
             }
         }
 
-        //TODO enstprechend diesen Spielern eine Message senden
         Message messageForPlayer1 = new Message("matchInfo", "{\"currentPlayer\": \"" + playerId + "\"}");
         messageForPlayer1.setSendTo(player1);
 
@@ -251,6 +262,14 @@ public class MatchService {
     protected Player getOpponentPlayer(Match match) {
         LOGGER.debug("--> getOpponentPlayer: match=" + match);
         Player opponentPlayer = null;
+        
+        if (match.getCurrentPlayer() == 2){
+            opponentPlayer = match.getPlayer1();
+        }else if (match.getCurrentPlayer() == 1){
+            opponentPlayer = match.getPlayer2();
+        } else {
+            throw new GeneralException("match has no defined opponentPlayer!");
+        }
         //TODO von dem Match den opponent Player zurückgeben, falls kein Spieler gefunden Wird exeption
         LOGGER.debug("<-- getOpponentPlayer");
         return opponentPlayer;
@@ -282,7 +301,10 @@ public class MatchService {
             LOGGER.info("daneben :/");
         }
 
-        //TODO Spieler wechseln
+
+        
+        
+        
         //TODO Den Schuss zähler erhöhen
 
         playerService.addGamefieldToPlayer(opponent, JsonConverter.convertGamefieldToJsonString(opponentGamefield));
@@ -299,6 +321,11 @@ public class MatchService {
         messagingService.sendMessageToUser("/match", current, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponent, messageForOpponentPlayer);
         LOGGER.debug("--> performShot");
+        
+    
+        switchPlayer(opponent, match);
+    
+    
     }
 
     /**
@@ -308,7 +335,13 @@ public class MatchService {
      * @param match
      */
     private void switchPlayer(Player opponentPlayer, Match match) {
-        //TODO switch Player
+        if(opponentPlayer.getPlayerId().equals(match.getPlayer1().getPlayerId())){
+            setCurrentPlayer(match, 1);
+        }else if(opponentPlayer.getPlayerId().equals(match.getPlayer2().getPlayerId())){
+             setCurrentPlayer(match, 2);
+        }else{
+            LOGGER.error("Player not found");
+        }
     }
 
 
