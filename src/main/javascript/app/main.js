@@ -119,7 +119,7 @@ function allShipsOnStage() {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
         let matchId = utilHandler.getCookie("matchId");
-        window.location.href = BASE_URL + 'playermatch/' + matchId;
+        window.location.href = webSocketHandler.getCleanBaseUrl(BASE_URL) + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
@@ -188,11 +188,12 @@ function receiveMessagesFromWebSocket(message) {
         case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
+            let playerName = messageContent.currentPlayerName;
             if(playerId !== utilHandler.getCookie("userId")){
                 stopTimer();
-                lockOpponentGameField(playerId);
+                lockOpponentGameField(playerName);
             }else{
-                unlockOpponentGameField(playerId);
+                unlockOpponentGameField(playerName);
                 timeToShoot();
             }
             console.log(messageContent);
@@ -212,14 +213,14 @@ function receiveMessagesFromWebSocket(message) {
 
 }
 
-function lockOpponentGameField(playerId){
+function lockOpponentGameField(playerName){
     opponentGameZone.disableMouse();
-    document.getElementById("turn-field").innerHTML = "Dein Gegner ist am Zug! - "+playerId;
+    document.getElementById("turn-field").innerHTML = "Dein Gegner ("+playerName+") ist am Zug!";
 }
 
-function unlockOpponentGameField(playerId){
+function unlockOpponentGameField(playerName){
     opponentGameZone.enableMouse();
-    document.getElementById("turn-field").innerHTML = "Du bist am Zug! - "+playerId;
+    document.getElementById("turn-field").innerHTML = "Du ("+playerName+") bist am Zug!";
 }
 
 function updateGameFields(content, init) {

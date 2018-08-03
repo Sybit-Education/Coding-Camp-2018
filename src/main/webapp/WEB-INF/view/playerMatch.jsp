@@ -21,29 +21,28 @@
     </div>
 </div>
 <hr>
-<div class="container-fluid">
-    <div class="row" style="margin-left: -7.5%">
-        <div class="col-2 center">
-            <div class="text-right" id="friendly-current-field" style="font-weight: bold">A1</div>
+<div class="container">
+    <div class="row">
+        <div class="col-1">
+            <div id="friendly-current-field" style="font-weight: bold">A1</div>
         </div>
-        <div class="col-2 center">
+        <div class="col-3">
             <h2 class="text-center">Friendly Field</h2>
         </div>         
-        <div class="col-4 center">
+        <div class="col-4">
             <div class="text-center" id="turn-field" style="font-weight: bold">Warte auf Spieler</div>
         </div>
-        <div class="col-2 center" style="margin-left: -3%">
+        <div class="col-3">
             <h2 class="text-center">Enemy Field</h2>
         </div>
-        <div class="col-2 center">
+        <div class="col-1">
             <div class="text-left" id="enemy-current-field" style="font-weight: bold">A1</div>
         </div>
     </div>
     
     <div class="row">
-        <div class="col-1 center"></div>
-        <div class="col-4 center" id="friendlyPlayerDiv">
-            <canvas id="friendlyPlayer" width="480" height="480"></canvas>
+        <div class="col-5" id="friendlyPlayerDiv">
+            <canvas id="friendlyPlayer" width="420" height="420"></canvas>
         </div>
         <div class="col-2 center">
             <h3 id="countDownSeconds" class="text-center">60</h3>
@@ -52,10 +51,9 @@
                     share link ...
                 </button>
         </div>
-        <div class="col-4 center" id="enemyPlayerDiv">
-            <canvas id="enemyPlayer" width="480" height="480"></canvas>
+        <div class="col-5" id="enemyPlayerDiv">
+            <canvas id="enemyPlayer" width="420" height="420"></canvas>
         </div>
-        <div class="col-1 center"></div>
     </div>
 </div>
 
