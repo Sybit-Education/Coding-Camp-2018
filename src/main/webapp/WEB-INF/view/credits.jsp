@@ -18,14 +18,11 @@
         
         <template:navigation />    
         <main class="container">
-           <ins><h1 style = "color: #48c9b0; text-align: center;"> <b> Spielregeln </b> </h1> </ins>
+           <h1 style = "color:#212529; text-align: center; letter-spacing: 4px; margin-top: 20px"> <b> CREDITS </b> </h1>
 
-           <br>
-           <b> <h2 style = "color: #e74c3c;  text-align: center;"><b> Spielzeit: 15 bis 25 Minuten</b></h2> </b>
-           <br>
            
-           <hr style="border: #b51682 3px solid ">
-           <h1 style = " text-align: center;"> Personen: </h1>
+           <hr style="border: #b51682 3px solid; border-radius: 10px; margin-top: 50px ">
+           <h2 style = " text-align: center;"> Personen </h2>
            <br>
       
            <ul class="list-unstyled" style="margin-left:25%; font-size: 1.5rem; max-width: 70%;-moz-column-count: 2;
@@ -51,8 +48,8 @@
                <li>Gregor Taut</li>
             </ul>
             
-            <hr style="border: #b51682 3px solid ">
-           <h2 style = " text-align: center;"> Software: </h2>
+            <hr style="border: #b51682 3px solid; border-radius: 10px ">
+           <h2 style = " text-align: center;"> Software </h2>
            <br>
            <ul class="list-unstyled" style="margin-left:25%; font-size: 1.5rem; max-width: 70%;-moz-column-count: 2;
                 -moz-column-gap: 10px;
@@ -69,23 +66,17 @@
                <li>Node.js</li>
            </ul> 
            
-            <hr style="border: #b51682 3px solid ">
-            <h2 style = " text-align: center;"> Software: </h2>
-            <ul class="list-unstyled" style="margin-left:25%; font-size: 1.5rem; max-width: 70%;-moz-column-count: 2;
-                -moz-column-gap: 10px;
-                -webkit-column-count: 2;
-                -webkit-column-gap: 10px;
-                column-count: 2;
-                column-gap: 1px;">
-                <li>Explosion | https://pixabay.com/de/explosion-pow-detonation-bombe-153710/</li>
-                <li>Splash | https://pixabay.com/de/spritzer-spritzen-plantschen-wasser-148094/</li>
-                <li>Kreuz | https://pixabay.com/de/kreuz-durchgestrichen-erledigt-ja-2470297/</li>
+            <hr style="border: #b51682 3px solid; border-radius: 10px ">
+            <h2 style = " text-align: center;"> Bildernachweis </h2>
+            <ul class="list-unstyled" style="margin-left:25%; font-size: 1.5rem; max-width:55%; color:#111">
+                <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/explosion-pow-detonation-bombe-153710" style="color:black">Explosion</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/spritzer-spritzen-plantschen-wasser-148094" style="color:black">Splash</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/kreuz-durchgestrichen-erledigt-ja-2470297" style="color:black">Kreuz</a></li>
                 <li></li>
             </ul>
             <br>
 
-            <h1 style = " text-align: center;"> Bildernachweis: </h1>
-            <br>
+        
       
         </main>
         <template:footer />
