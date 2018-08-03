@@ -18,11 +18,10 @@
     </head>
 
     <body>
-
+       
 <template:navigation/>
 
 <main class="container">
-    <h1>Match</h1>
     <div class="row">
         <div class="col">
             <!-- Button trigger modal -->
@@ -42,7 +41,7 @@
     </div>
 </main>
 
-<!-- Modal -->
+<!-- ShareLinksModal -->
 <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,7 +52,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea rows="2" cols="55" id="Url"></textarea>
+                <textarea rows="2" cols="55" id="Url" style="resize: none;"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -63,6 +62,28 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- NameModal -->
+<div class="modal fade" id="NameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Name Eingeben</h5>
+      </div>
+      <form onSubmit="return getValue();" class="needs-validation">
+        <div class="modal-body">
+            <input type="text" rows="1" cols="53" id="NameEingebenTextArea" class="form-control" style="resize: none;" required/>
+            <div class="invalid-feedback">
+                Bitte einen Namen eingeben!
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Name Bestätigen</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
         <button id="toastShipPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht auf diese Position gesetzt werden">
@@ -79,12 +100,36 @@
 
         <template:footer />
         <template:javascript/>
+   
+<script>
+    let url;
+    url = window.location.href;
+    document.getElementById("Url").value = url;
+</script>
+<script>
+  function getValue(){
+   Battleship.utilHandler.setCookie("userName", document.getElementById("NameEingebenTextArea").value);
+   $('#NameModal').modal('hide');
+   // no reload
+   return false;
+  }
+</script> 
+<script>
+    function copyUrl(){
+    let copyUrl = document.getElementById("Url");
+    copyUrl.select();
+    document.execCommand("copy");
+    }
+</script>
 
 <script>
     window.onload = function () {
         window.localStorage.clear();
+        Battleship.utilHandler.removeCookie("userId");
+        Battleship.utilHandler.removeCookie("userName");
         setUrlInModal()
         Battleship.init();
+        $("#NameModal").modal({backdrop: 'static', keyboard: false});
     };
     
     function setUrlInModal(){
