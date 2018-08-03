@@ -34,6 +34,8 @@ let ownGameField = undefined;
 let ownGameZone = undefined;
 let opponentGameField = undefined;
 let opponentGameZone = undefined;
+let countDownSeconds = 60;
+let intervalId = undefined;
 let ships = [];
 
 
@@ -121,9 +123,26 @@ function allShipsOnStage() {
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
+}
 
+function decrement() {
+    countDownSeconds = countDownSeconds -1;
+    document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
+}
 
+function timeToShoot() {
+    intervalId = setInterval(decrement, 1000);
+}
 
+function stopTimer() {
+    clearInterval(intervalId);
+    countDownSeconds = 60;
+    document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
+}
+
+function sendTimer() {
+    let message = new Message("timerMessage", timeToShoot());
+    webSocketHandler.sendTimer(message);
 }
 
 function sendCurrentPlayer() {
@@ -169,10 +188,12 @@ function receiveMessagesFromWebSocket(message) {
         case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
-            if(playerId !== utilHandler.getCookie("userName")){
+            if(playerId !== utilHandler.getCookie("userId")){
+                stopTimer();
                 lockOpponentGameField(playerId);
             }else{
                 unlockOpponentGameField(playerId);
+                timeToShoot();
             }
             console.log(messageContent);
             break;
@@ -271,6 +292,11 @@ function buildShips(innerGameField, gameField, gameZone) {
     }
 }
 
+function sendShotToWebsocket(messageObj){
+    //TODO: Reset Timer
+    webSocketHandler.sendShot(messageObj);
+}
+
 function buildShot(innerGameField, gameField, gameZone) {
     let currentShots = [];
     let shotFactory = new ShotFactory(gameZone, boxPixel);
@@ -315,5 +341,6 @@ module.exports = {
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
-    utilHandler: utilHandler
+    utilHandler: utilHandler,
+    sendShotToWebsocket: sendShotToWebsocket
 };

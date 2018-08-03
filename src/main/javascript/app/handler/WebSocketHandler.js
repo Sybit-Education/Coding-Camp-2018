@@ -8,6 +8,7 @@ const gamefieldEndpoint = BASE_URL + 'battleships/match/gamefield';
 const gamefieldDataEndpoint = BASE_URL + 'battleships/match/gamfielddata';
 const shotEndpoint = BASE_URL + 'battleships/match/shot';
 const currentPlayerEndpoint = BASE_URL + 'battleships/match/currentplayer';
+const timerEndpoint = BASE_URL + 'battleships/match/timer';
 
 let stompClient;
 
@@ -19,8 +20,8 @@ module.exports = {
             // Disable console logging
             stompClient.debug = null;
             stompClient.connect({}, function (frame) {
-                let userName = frame.headers['user-name'];
-                utilHandler.setCookie("userName", userName, 30);
+                let userId = frame.headers['user-name'];
+                utilHandler.setCookie("userId", userId, 30);
                 resolve();
             }, function (error) {
                 console.log('STOMP: ' + error);

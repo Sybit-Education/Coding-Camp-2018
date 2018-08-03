@@ -27,6 +27,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
 
 /**
  * This Service provides functionality to manage the Matches.
@@ -293,8 +294,8 @@ public class MatchService {
      * @param match
      * @param boxShot
      */
-    public void performShot(String currentPlayerId, Match match, Box boxShot) {
-               LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
+    public Player performShot(String currentPlayerId, Match match, Box boxShot) {
+        LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
         Player currentPlayer = match.getPlayerById(currentPlayerId);
         Player opponentPlayer =  match.getOpponent(currentPlayer);
@@ -304,37 +305,51 @@ public class MatchService {
 
         Box fieldBox = opponentGameField.getBox(boxShot.getId());
         if (fieldBox.getContent().getId() != null) {
+
             LOGGER.info("Treffer! -> " + fieldBox.getContent());
-            
             fieldBox.setStatus(BoxStatus.FIELD_HIT);
-            updateOpponendPlayer(opponentPlayer, opponentGameField);
-            sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
+            updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
+            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
 
             if(isShipSunk(getFieldsOfShip(opponentGameField, fieldBox))){
-                updateOpponendPlayer(opponentPlayer, opponentGameField);
-                sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
+                updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
+                sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
             }
+
         } else {
             fieldBox.setStatus(BoxStatus.FIELD_SHOT);
-            updateOpponendPlayer(opponentPlayer, opponentGameField);
-            sendUpdateMessage(currentPlayer, opponentPlayer, currentGameField, opponentGameField);
             LOGGER.info("daneben :/");
+
+            updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
+            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
         }
 
+
         //finally increase shot counter:
-        increaseShotCounter(match);
+        increaseShotCounter(match);      
+         
+        String matchID = match.getMatchId();
+        Player winnerPlayer = new Player();
+        try {
+            winnerPlayer = isMatchWon(matchID);
+        } catch (MatchNotFoundException ex) {
+            LOGGER.error("Error: " + ex.getMessage());
+        }
+        
+        switchPlayer(opponentPlayer, match);
 
         LOGGER.debug("--> performShot");
+        return winnerPlayer;
         
-         switchPlayer(opponentPlayer, match);
     }
-    
-    private void updateOpponendPlayer(Player opponentPlayer, GameField opponentGameField){
+
+    private void updateOpponentPlayerAfterShot(Player opponentPlayer, GameField opponentGameField){
         playerService.addGamefieldToPlayer(opponentPlayer, JsonConverter.convertGamefieldToJsonString(opponentGameField));
         playerService.update(opponentPlayer);
     }
-    
-    private void sendUpdateMessage(Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField){
+
+    private void sendUpdateMessage (Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField){
+
         GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
         GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
 
@@ -344,6 +359,7 @@ public class MatchService {
         messagingService.sendMessageToUser("/match", currentPlayer, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponentPlayer, messageForOpponentPlayer);
     }
+
 
     /**
      * Switch the current Player
