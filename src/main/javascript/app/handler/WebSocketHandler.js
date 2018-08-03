@@ -2,20 +2,20 @@
 
 let utilHandler = require('./UtilHandler');
 
-const socketEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships-socket';
+const socketEndpoint = 'battleships-socket';
 const matchQueue = '/user/match';
-const gamefieldEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/gamefield';
-const gamefieldDataEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/gamfielddata';
-const shotEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/shot';
-const currentPlayerEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/currentplayer';
-const timerEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/timer';
+const gamefieldEndpoint = 'battleships/match/gamefield';
+const gamefieldDataEndpoint = 'battleships/match/gamfielddata';
+const shotEndpoint = 'battleships/match/shot';
+const currentPlayerEndpoint = 'battleships/match/currentplayer';
+const timerEndpoint = 'battleships/match/timer';
 
 let stompClient;
 
 module.exports = {
     connect: function () {
         return new Promise(function (resolve, reject) {
-            let socket = new SockJS(socketEndpoint);
+            let socket = new SockJS(getCleanBaseUrl(BASE_URL) + socketEndpoint);
             stompClient = Stomp.over(socket);
             // Disable console logging
             stompClient.debug = null;
@@ -42,22 +42,6 @@ module.exports = {
             callback(message);
         }, {matchId: matchId});
     },
-
-    sendCurrentPlayer: function (messageObj) {
-        stompClient.send(currentPlayerEndpoint, {}, JSON.stringify(messageObj));
-    },
-
-    sendGamefield: function (messageObj) {
-        stompClient.send(gamefieldEndpoint, {}, JSON.stringify(messageObj));
-    },
-
-    requestGamefieldData: function (messageObj) {
-        stompClient.send(gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
-    },
-
-    sendShot: function (messageObj) {
-        stompClient.send(shotEndpoint, {}, JSON.stringify(messageObj));
-    },
     
     getCleanBaseUrl: function (baseUrl){
         let baseUrlRegex = /(.*)(;)(.*)/g;
@@ -67,5 +51,21 @@ module.exports = {
         }else{
             return match[1] !== null ? match[1] : baseUrl;
         }
+    },
+
+    sendCurrentPlayer: function (messageObj) {
+        stompClient.send(getCleanBaseUrl(BASE_URL) + currentPlayerEndpoint, {}, JSON.stringify(messageObj));
+    },
+
+    sendGamefield: function (messageObj) {
+        stompClient.send(getCleanBaseUrl(BASE_URL) + gamefieldEndpoint, {}, JSON.stringify(messageObj));
+    },
+
+    requestGamefieldData: function (messageObj) {
+        stompClient.send(getCleanBaseUrl(BASE_URL) + gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
+    },
+
+    sendShot: function (messageObj) {
+        stompClient.send(getCleanBaseUrl(BASE_URL) + shotEndpoint, {}, JSON.stringify(messageObj));
     }
 };
