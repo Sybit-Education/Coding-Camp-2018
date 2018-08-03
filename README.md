@@ -13,4 +13,53 @@ Das Spiel wird automatisch von einem hausinternen Jenkins-Server kompiliert und 
 
 ---
 
-Das Sybit Coding Camp ist eine Aktion in Kooperation mit dem Jugendcafé Connect der Stadt Radolfzell.
+
+# Entwicklung
+
+## Voraussetzungen
+
+### Software installieren
+
+Folgende Software muss installiert sein:
+
+- Java 8
+- git Client (z.B. [Sourcetree](https://www.sourcetreeapp.com/))
+- Entwicklungsumgebung (z.B. [Netbeans](https://netbeans.org/), [Eclipse](https://www.eclipse.org/), [InelliJ](https://www.jetbrains.com/idea/), ...)
+- [node.js](https://nodejs.org) (mit npm)
+
+
+
+## Projekt einrichten
+
+### Schritt 1: Repository clonen
+Repository klonen oder als zip-Archiv herunterladen und entpacken.
+
+
+### Schritt 2: Konfiguration
+
+anhand des Skriptes auf dem USB-Stick.
+
+## Projekt kompilieren
+
+In der Eingabeaufforderung (Commandline) im Projektordner öffnen den Befehl 
+eingeben: 
+
+``` gradlew bootRun ```
+
+Um auch die JavaScript-Dateien immer wieder zu aktualisieren, gibt es den Befehl:
+
+```gradlew runParallelTasks ```
+
+Dieser übersetzt den gesamten Quellcode und startet den Webserver.
+
+## Applikation starten
+
+Im Browser die Adresse [http://localhost:8080](http://localhost:8080) aufrufen.
+
+Wird jetzt am Quellcode etwas geändert, so wird das automatisch erkannt und 
+die Anwendung neu kompiliert und gestartet.
+
+---
+
+Das Coding Camp der Sybit GmbH findet in Kooperation mit der Stadtjugendpflege 
+im Rahmen des Sommerferienprogramms der Stadt Radolfzell statt.
