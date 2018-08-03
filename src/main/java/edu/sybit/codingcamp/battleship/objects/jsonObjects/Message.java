@@ -19,6 +19,8 @@ public class Message implements Serializable{
     private String messageContent;
 
     private String matchId;
+    
+    private String playerName;
 
     public Message() {
     }
@@ -63,4 +65,13 @@ public class Message implements Serializable{
     public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+    
 }
