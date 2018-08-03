@@ -238,7 +238,13 @@ function updateGameFields(content, init) {
 }
 
 function updateOpponentGameField(innerGameField, gameField, gameZone) {
-    buildShot(innerGameField, gameField, gameZone);
+    if(UtilHandler.getCookie("showShips") === "true"){
+        buildShot(innerGameField, gameField, gameZone);
+        buildShips(innerGameField, gameField, GameZone);
+    } else {
+        buildShot(innerGameField, gameField, gameZone);
+    }
+
 }
 
 function updateOwnGameFieldInit(innerGameField, gameField, gameZone) {
