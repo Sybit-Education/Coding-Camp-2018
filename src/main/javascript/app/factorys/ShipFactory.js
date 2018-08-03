@@ -1,6 +1,7 @@
 /* global createjs, BASE_URL */
 
 let Ship = require('../objects/Ship');
+let webSocketHandler = require('../handler/WebSocketHandler');
 
 module.exports = class ShipFactory {
     constructor(gamezone, boxPixel) {
@@ -61,10 +62,10 @@ module.exports = class ShipFactory {
 
     static getManifest() {
         var manifest = [
-            {src: BASE_URL + "resources/images/grey.jpg", id: "Submarine"},
-            {src: BASE_URL + "resources/images/grey.jpg", id: "Cruiser"},
-            {src: BASE_URL + "resources/images/grey.jpg", id: "Battleship"},
-            {src: BASE_URL + "resources/images/grey.jpg", id: "Carrier"}
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/grey.jpg", id: "Submarine"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/grey.jpg", id: "Cruiser"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/grey.jpg", id: "Battleship"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/grey.jpg", id: "Carrier"}
         ];
 
         return manifest;

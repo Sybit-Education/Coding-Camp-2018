@@ -2,20 +2,22 @@
 
 let utilHandler = require('./UtilHandler');
 
-const socketEndpoint = BASE_URL + 'battleships-socket';
+const socketEndpoint = 'battleships-socket';
 const matchQueue = '/user/match';
-const gamefieldEndpoint = BASE_URL + 'battleships/match/gamefield';
-const gamefieldDataEndpoint = BASE_URL + 'battleships/match/gamfielddata';
-const shotEndpoint = BASE_URL + 'battleships/match/shot';
-const currentPlayerEndpoint = BASE_URL + 'battleships/match/currentplayer';
-const timerEndpoint = BASE_URL + 'battleships/match/timer';
+const gamefieldEndpoint = 'battleships/match/gamefield';
+const gamefieldDataEndpoint = 'battleships/match/gamfielddata';
+const shotEndpoint = 'battleships/match/shot';
+const currentPlayerEndpoint = 'battleships/match/currentplayer';
+const timerEndpoint = 'battleships/match/timer';
 
 let stompClient;
 
 module.exports = {
     connect: function () {
+        let endpoint = this.getCleanBaseUrl(BASE_URL) + socketEndpoint;
+        
         return new Promise(function (resolve, reject) {
-            let socket = new SockJS(socketEndpoint);
+            let socket = new SockJS(endpoint);
             stompClient = Stomp.over(socket);
             // Disable console logging
             stompClient.debug = null;
@@ -42,21 +44,30 @@ module.exports = {
             callback(message);
         }, {matchId: matchId});
     },
+    
+    getCleanBaseUrl: function (baseUrl){
+        let baseUrlRegex = /(.*)(;)(.*)/g;
+        let match = baseUrlRegex.exec(baseUrl);
+        if(match === null){
+            return baseUrl;
+        }else{
+            return match[1] !== null ? match[1] : baseUrl;
+        }
+    },
 
     sendCurrentPlayer: function (messageObj) {
-        stompClient.send(currentPlayerEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + currentPlayerEndpoint, {}, JSON.stringify(messageObj));
     },
 
     sendGamefield: function (messageObj) {
-        console.log(messageObj);
-        stompClient.send(gamefieldEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + gamefieldEndpoint, {}, JSON.stringify(messageObj));
     },
 
     requestGamefieldData: function (messageObj) {
-        stompClient.send(gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
     },
 
     sendShot: function (messageObj) {
-        stompClient.send(shotEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + shotEndpoint, {}, JSON.stringify(messageObj));
     }
 };
