@@ -189,9 +189,7 @@ function receiveMessagesFromWebSocket(message) {
             updateGameFields(messageContent, false);
             break;
         }
-        case "matchInfo":
-        {
-            
+        case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
             if(playerId !== utilHandler.getCookie("userName")){
