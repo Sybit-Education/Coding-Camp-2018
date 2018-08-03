@@ -18,11 +18,10 @@
     </head>
 
     <body>
-
+       
 <template:navigation/>
 
 <main class="container">
-    <h1>Match</h1>
     <div class="row">
         <div class="col">
             <!-- Button trigger modal -->
@@ -42,7 +41,7 @@
     </div>
 </main>
 
-<!-- Modal -->
+<!-- ShareLinksModal -->
 <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -53,7 +52,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea rows="2" cols="55" id="Url"></textarea>
+                <textarea rows="2" cols="55" id="Url" style="resize: none;"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -63,6 +62,29 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- NameModal -->
+<div class="modal fade" id="NameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Name Eingeben</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          
+          <textarea rows="1" cols="53" id="NameEingebenTextArea" style="resize: none;"></textarea>
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="getValue()">Name Bestätigen</button>
+      </div>
+    </div>
+  </div>
 </div>
 
         <button id="toastShipPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht auf diese Position gesetzt werden">
@@ -79,12 +101,35 @@
 
         <template:footer />
         <template:javascript/>
+   
+<script>
+<<<<<<< Updated upstream
+=======
+    let url;
+    url = window.location.href;
+    document.getElementById("Url").value = url;
+</script>
+<script>
+  function getValue(){
+  let nameModalValue = document.getElementById("NameEingebenTextArea").value; 
+  console.log(nameModalValue);   
+  }
+</script> 
+<script>
+    function copyUrl(){
+    let copyUrl = document.getElementById("Url");
+    copyUrl.select();
+    document.execCommand("copy");
+    }
+</script>
 
 <script>
+>>>>>>> Stashed changes
     window.onload = function () {
         window.localStorage.clear();
         setUrlInModal()
         Battleship.init();
+        $("#NameModal").modal({backdrop: 'static', keyboard: false});
     };
     
     function setUrlInModal(){
