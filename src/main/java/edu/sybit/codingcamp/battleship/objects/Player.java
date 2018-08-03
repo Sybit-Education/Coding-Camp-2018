@@ -17,6 +17,8 @@ public class Player implements Serializable {
     @Id
     @Column(name = "player_id")
     private String playerId;
+    @Column(name = "player_name")
+    private String playerName;
     @Column(name = "game_field", length = Integer.MAX_VALUE)
     private String gamefield;
 
@@ -46,7 +48,15 @@ public class Player implements Serializable {
     public void setPlayerId(String playerId) {
         this.playerId = playerId;
     }
-    
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     @Override
     public String toString() {
         return "Player{playerId=" + playerId + "}";
