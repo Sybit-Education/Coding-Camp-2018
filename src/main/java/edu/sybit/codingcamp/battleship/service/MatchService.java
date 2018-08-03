@@ -27,6 +27,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
 import java.util.logging.Level;
 
 /**
@@ -75,6 +76,22 @@ public class MatchService {
             System.out.println("Error Spieler Konnte nicht verifiziert werden");
             return null;
         }
+    }
+    
+    public Timer resetTimer(Timer timer,Match currentMatch) {
+        timer.cancel();
+        timer.purge();
+        
+        return createNewTimer(currentMatch);
+    }
+    
+    public Timer createNewTimer(Match currentMatch){
+        Timer timer= new Timer();
+        GameOverTask gameOverTask = new GameOverTask();
+        gameOverTask.setMatch(currentMatch);
+        gameOverTask.setMessagingService(messagingService);
+        timer.schedule(gameOverTask,60000);
+        return timer;
     }
 
     public Match createNewMatch(String id, Player player) {
