@@ -57,7 +57,8 @@ public class GameOverController {
             String winnerNamen = winner.getPlayerName();
             String looserName = looser.getPlayerName();
             model.addAttribute("winner", winnerNamen);
-            model.addAttribute("looser", looserName); 
+            model.addAttribute("looser", looserName);
+            model.addAttribute("shotsCount", match.getShotCount());
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.

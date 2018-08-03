@@ -17,39 +17,12 @@
                 <h1 style = "color: #e74c3c; text-align: center;"> <b> Spiel beendet! </b> </h1>
         
                 <br>
-                <h2 style = " text-align: center;"> Spieler ${winner} hat gewonnen </h2>
+                <h2 style = " text-align: center;">${winner} hat gewonnen </h2>
                 <br>
-                <h3 style = " text-align: center;">   Spieler ${looser} hat verloren </h3>
+                <h3 style = " text-align: center;">${looser} hat verloren </h3>
                 <br>
-                <h4 style = " text-align: center;"> Spielzeit: </h4>
+                <h4 style = " text-align: center;"> Schüsse insgesammt: ${shotsCount}</h4>
                 <br>
-                   
-
-                <table class="table">
-
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">getroffene Schiffe</th>
-                  <th scope="col">Schüsse insgesamt</th>
-                  <th scope="col">davon Treffer</th>
-                </tr>
-
-
-                <tr>
-                  <th scope="row">Spieler 1</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th scope="row">Spieler 2</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-
-
-            </table>
                         
                
   

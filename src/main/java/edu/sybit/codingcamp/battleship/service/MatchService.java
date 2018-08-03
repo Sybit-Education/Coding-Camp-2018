@@ -485,8 +485,14 @@ public class MatchService {
     }
 
 
-    private void increaseShotCounter(Match match) {
-        //TODO Den counter erhöhen
+     void increaseShotCounter(Match match) {
+
+        if (match.getShotCount() == null) {
+            match.setShotCount(1);
+        } else {
+            match.setShotCount(match.getShotCount() + 1);
+        }
+        updateMatch(match);
     }
 
     /**
