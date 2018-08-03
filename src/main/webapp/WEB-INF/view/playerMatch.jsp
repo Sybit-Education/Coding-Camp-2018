@@ -47,7 +47,7 @@
         <div class="col-2 center">
             <h3 id="countDownSeconds" class="text-center">60</h3>
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shareLinkModal">
+                <button type="button" class="btn btn-primary" style="color:#b51682" data-toggle="modal" data-target="#shareLinkModal">
                     share link ...
                 </button>
         </div>
@@ -60,29 +60,28 @@
 
 
 
-<!-- Modal -->
-<div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Share Link</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <textarea rows="2" cols="55" id="Url" style="width: 100%"></textarea>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyUrl()">
-                    Copy to clipboard ...
-                </button>
+  <!-- Modal -->
+    <div class="modal fade" id="shareLinkModal" tabindex="-1" role="dialog" aria-labelledby="schareLink" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Share Link</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <textarea rows="2" cols="55" id="Url"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="color:#b51682" onclick="copyUrl()">
+                        Copy to clipboard ...
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 <template:footer/>
 
 <template:javascript/>
