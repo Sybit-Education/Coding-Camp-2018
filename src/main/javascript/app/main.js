@@ -119,7 +119,7 @@ function allShipsOnStage() {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
         let matchId = utilHandler.getCookie("matchId");
-        window.location.href = BASE_URL + 'playermatch/' + matchId;
+        window.location.href = webSocketHandler.getCleanBaseUrl(BASE_URL) + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
     }
