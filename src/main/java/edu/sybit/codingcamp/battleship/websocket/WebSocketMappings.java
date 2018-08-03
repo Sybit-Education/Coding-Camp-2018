@@ -42,6 +42,13 @@ public class WebSocketMappings {
         
         Player player = message.getSendFrom();
         
+        if(message.getPlayerName() == null || message.getPlayerName() == ""){
+         LOGGER.error("Speiler hat keinen Namen");
+        }else{
+         player.setPlayerName(message.getPlayerName());
+         playerService.update(player);
+        }
+        
         Match match;
         try {
             match = matchService.getMatchById(message.getMatchId());

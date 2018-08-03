@@ -48,6 +48,7 @@ module.exports = {
     },
 
     sendGamefield: function (messageObj) {
+        console.log(messageObj);
         stompClient.send(gamefieldEndpoint, {}, JSON.stringify(messageObj));
     },
 

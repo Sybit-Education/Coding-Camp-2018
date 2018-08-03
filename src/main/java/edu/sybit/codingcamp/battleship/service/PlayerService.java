@@ -47,7 +47,7 @@ public class PlayerService {
      * 
      * @param player 
      */
-    void update(Player player) {
+    public void update(Player player) {
         LOGGER.debug("--> update");
         playerRepository.saveAndFlush(player);
         LOGGER.debug("--> update");
