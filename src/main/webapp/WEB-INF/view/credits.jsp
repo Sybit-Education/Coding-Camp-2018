@@ -57,13 +57,14 @@
                 -webkit-column-gap: 10px;
                 column-count: 2;
                 column-gap: 1px;">
-               <li>Net Beans IDe</li>
-               <li>Source Tree</li>
-               <li>GIMP - GNU Image Manipulation Program</li>
+               <li>NetBeans IDE</li>
+               <li>SourceTree</li>
+               <li>GIMP</li>
                <li>Jenkins.io</li>
                <li>Spring Boot</li>
-               <li>Gradel Build Tool</li>
+               <li>Gradle Build Tool</li>
                <li>Node.js</li>
+               <li>Bootstrap</li>
            </ul> 
            
             <hr style="border: #b51682 3px solid; border-radius: 10px ">
@@ -72,7 +73,7 @@
                 <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/explosion-pow-detonation-bombe-153710" style="color:black">Explosion</a></li>
                 <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/spritzer-spritzen-plantschen-wasser-148094" style="color:black">Splash</a></li>
                 <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/kreuz-durchgestrichen-erledigt-ja-2470297" style="color:black">Kreuz</a></li>
-                <li></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://pixabay.com/de/krieg-schiff-silhouette-schiff-146209/" style="color:black">Battleship</a></li>
             </ul>
             <br>
 

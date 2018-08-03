@@ -22,10 +22,7 @@ public class creditsController{
     @RequestMapping(value = "/credits")
     public String credits() {
         LOGGER.debug("--> credits");
-        
-        //dieser controller zeigt einfach die Datei index.jsp an. Deshalb "return index".
-        
-        LOGGER.debug("<-- credits");
+               
         return "credits";
     }
 }
