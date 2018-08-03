@@ -37,6 +37,8 @@ public class WebSocketMappings {
 
     @Autowired
     private MessagingService messagingService;
+    
+    private Timer timer;
 
     @MessageMapping("/match/gamefield")
     public void gamefield(Message message) {
@@ -78,6 +80,7 @@ public class WebSocketMappings {
     public void getGamFieldData(Message gamefieldMessage) {
         LOGGER.debug("--> getGamefieldData");
         Match currentMatch = null;
+        this.timer = null;
         try {
             currentMatch = matchService.getMatchById(gamefieldMessage.getMatchId());
         } catch (MatchNotFoundException e) {
@@ -98,6 +101,7 @@ public class WebSocketMappings {
             messagingService.sendMessageToUser("/match", player1, messageForPlayer1);
             messagingService.sendMessageToUser("/match", player2, messageForPlayer2);
             matchService.setCurrentPlayer(currentMatch,1);
+            this.timer = matchService.createNewTimer(currentMatch);
         }else{
             Message messageForPlayer1 = matchService.buildGameFieldDataMessage(player1, gameFieldForPlayer1, new GameField(), true);
             messagingService.sendMessageToUser("/match", player1, messageForPlayer1);
@@ -113,11 +117,7 @@ public class WebSocketMappings {
 
         try {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
-            Timer timer= new Timer();
-            GameOverTask gameOverTask = new GameOverTask();
-            gameOverTask.setMatch(currentMatch);
-            gameOverTask.setMessagingService(messagingService);
-            timer.schedule(gameOverTask,60000);
+            this.timer = matchService.resetTimer(timer, currentMatch);
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
             Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
             if(winnerPlayer != null){

@@ -7,8 +7,10 @@ package edu.sybit.codingcamp.battleship.controller;
 
 
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
+import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.service.MatchService;
+import edu.sybit.codingcamp.battleship.service.PlayerService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -33,6 +35,9 @@ public class GameOverController {
     @Autowired
     protected MatchService matchService;
     
+    @Autowired
+    private PlayerService playerService;
+    
 
     /**
      * Show game over page with winner.
@@ -54,7 +59,9 @@ public class GameOverController {
                 String playerID = player.getPlayerId();
                 model.addAttribute("winner", playerID);
             } else {
-                model.addAttribute("winner", "der andere");
+                Match match = matchService.getMatchById(matchId);
+                Player currentPlayer = matchService.getCurrentPlayer(match);
+                model.addAttribute("winner", currentPlayer.getPlayerName());
             }
 
         } catch (MatchNotFoundException ex) {
