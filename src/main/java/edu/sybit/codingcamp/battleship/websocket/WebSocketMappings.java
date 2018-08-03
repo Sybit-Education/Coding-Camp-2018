@@ -104,7 +104,7 @@ public class WebSocketMappings {
         try {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
-            Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
+            Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box, shot.isShowShips());
             if(winnerPlayer != null){
                 //Es hat jemand Gewonnen
                 messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));

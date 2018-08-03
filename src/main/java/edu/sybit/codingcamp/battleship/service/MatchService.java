@@ -294,7 +294,7 @@ public class MatchService {
      * @param match
      * @param boxShot
      */
-    public Player performShot(String currentPlayerId, Match match, Box boxShot) {
+    public Player performShot(String currentPlayerId, Match match, Box boxShot, boolean showShips) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
 
         Player currentPlayer = match.getPlayerById(currentPlayerId);
@@ -309,11 +309,11 @@ public class MatchService {
             LOGGER.info("Treffer! -> " + fieldBox.getContent());
             fieldBox.setStatus(BoxStatus.FIELD_HIT);
             updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
-            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
+            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField, showShips);
 
             if(isShipSunk(getFieldsOfShip(opponentGameField, fieldBox))){
                 updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
-                sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
+                sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField, showShips);
             }
 
         } else {
@@ -321,7 +321,7 @@ public class MatchService {
             LOGGER.info("daneben :/");
 
             updateOpponentPlayerAfterShot(opponentPlayer, opponentGameField);
-            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField);
+            sendUpdateMessage(currentPlayer,opponentPlayer,currentGameField,opponentGameField, showShips);
         }
 
 
@@ -348,11 +348,15 @@ public class MatchService {
         playerService.update(opponentPlayer);
     }
 
-    private void sendUpdateMessage (Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField){
+    private void sendUpdateMessage (Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField, boolean showShips){
 
         GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
-        GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
-
+        GameField gameFieldForOpponentPlayerPruned = null;
+        if(showShips){
+            gameFieldForOpponentPlayerPruned = opponentGameField;
+        } else {
+            gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
+        }
         Message messageForCurrentPlayer = buildGameFieldDataMessage(currentPlayer,currentGameField , gameFieldForOpponentPlayerPruned, false);
         Message messageForOpponentPlayer = buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, false);
 

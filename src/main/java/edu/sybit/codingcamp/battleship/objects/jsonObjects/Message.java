@@ -19,7 +19,9 @@ public class Message implements Serializable{
     private String messageContent;
 
     private String matchId;
-
+    
+    private boolean showShips;
+    
     public Message() {
     }
 
@@ -63,4 +65,10 @@ public class Message implements Serializable{
     public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
+    
+    public boolean isShowShips() {
+        return showShips;
+    }
+   
+    
 }

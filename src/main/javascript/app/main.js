@@ -9,7 +9,7 @@ let HarbourZone = require('./objects/HarbourZone');
 let webSocketHandler = require('./handler/WebSocketHandler');
 let matchHandler = require('./handler/MatchHandler');
 let Message = require('./objects/Message');
-let utilHandler = require('./handler/UtilHandler');
+let UtilHandler = require('./handler/UtilHandler');
 let collisionHandler = require('./handler/CollisionHandler');
 
 
@@ -118,7 +118,7 @@ function allShipsOnStage() {
     if (countAllShipParts(ships) === allShipParts) {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
-        let matchId = utilHandler.getCookie("matchId");
+        let matchId = UtilHandler.getCookie("matchId");
         window.location.href = BASE_URL + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
@@ -139,7 +139,9 @@ function stopTimer() {
     countDownSeconds = 60;
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
-
+function showShips() {
+    UtilHandler.setCookie("showShips","true", 1);
+}
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
     webSocketHandler.sendTimer(message);
@@ -183,24 +185,25 @@ function receiveMessagesFromWebSocket(message) {
         {
             let messageContent = JSON.parse(message.messageContent);
             updateGameFields(messageContent, false);
+            console.log("gamefieldData");
+            console.log(messageContent);
             break;
         }
         case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
-            if(playerId !== utilHandler.getCookie("userId")){
+            if(playerId !== UtilHandler.getCookie("userId")){
                 stopTimer();
                 lockOpponentGameField(playerId);
             }else{
                 unlockOpponentGameField(playerId);
                 timeToShoot();
             }
-            console.log(messageContent);
             break;
         }
         case "gameOver":
         {
-            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            window.location = window.location.origin + '/playermatch/' + UtilHandler.getCookie('matchId') + '/over';
             break;
         }
         default:
@@ -333,6 +336,7 @@ function buildShot(innerGameField, gameField, gameZone) {
 
 module.exports = {
     boxPixel: boxPixel,
+    showShips: showShips,
     init: init,
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,
@@ -341,6 +345,6 @@ module.exports = {
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
-    utilHandler: utilHandler,
+    UtilHandler: UtilHandler,
     sendShotToWebsocket: sendShotToWebsocket
 };
