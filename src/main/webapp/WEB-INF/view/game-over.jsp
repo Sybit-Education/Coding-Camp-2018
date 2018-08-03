@@ -13,15 +13,13 @@
         <template:navigation/>
 
         <div class="container">
-        
-            <p>Winner ${winner}</p>
  
                 <h1 style = "color: #e74c3c; text-align: center;"> <b> Spiel beendet! </b> </h1>
         
                 <br>
-                <h2 style = " text-align: center;"> Spieler... hat gewonnen </h2>
+                <h2 style = " text-align: center;"> Spieler ${winner} hat gewonnen </h2>
                 <br>
-                <h3 style = " text-align: center;">   Spieler... hat verloren </h3>
+                <h3 style = " text-align: center;">   Spieler ${looser} hat verloren </h3>
                 <br>
                 <h4 style = " text-align: center;"> Spielzeit: </h4>
                 <br>

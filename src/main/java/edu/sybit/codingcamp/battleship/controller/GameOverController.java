@@ -7,6 +7,7 @@ package edu.sybit.codingcamp.battleship.controller;
 
 
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
+import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import javax.servlet.http.Cookie;
@@ -48,11 +49,15 @@ public class GameOverController {
         response.addCookie(new Cookie("matchId", matchId));
         
         try {
-            Player player = matchService.isMatchWon(matchId);
-            LOGGER.debug("Player win: " + player);
+            Player winner = matchService.isMatchWon(matchId);
+            Match match= matchService.getMatchById(matchId);
+            Player looser = match.getOpponent(winner);
+            LOGGER.debug("Player win: " + winner);
             
-            String playerID = player.getPlayerId();
-            model.addAttribute("winner", playerID);
+            String winnerNamen = winner.getPlayerName();
+            String looserName = looser.getPlayerName();
+            model.addAttribute("winner", winnerNamen);
+            model.addAttribute("looser", looserName); 
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.
