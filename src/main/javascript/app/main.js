@@ -9,7 +9,7 @@ let HarbourZone = require('./objects/HarbourZone');
 let webSocketHandler = require('./handler/WebSocketHandler');
 let matchHandler = require('./handler/MatchHandler');
 let Message = require('./objects/Message');
-let UtilHandler = require('./handler/UtilHandler');
+let utilHandler = require('./handler/UtilHandler');
 let collisionHandler = require('./handler/CollisionHandler');
 
 
@@ -118,7 +118,7 @@ function allShipsOnStage() {
     if (countAllShipParts(ships) === allShipParts) {
         let gamefieldJSON = gameZone.gameField.convertToJSON();
         window.localStorage.setItem('gamefieldJSON', gamefieldJSON);
-        let matchId = UtilHandler.getCookie("matchId");
+        let matchId = utilHandler.getCookie("matchId");
         window.location.href = BASE_URL + 'playermatch/' + matchId;
     } else {
         showSnackbarNotAllShipsArePlaced();
@@ -140,7 +140,7 @@ function stopTimer() {
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
 function showShips() {
-    UtilHandler.setCookie("showShips","true", 1);
+    utilHandler.setCookie("showShips","true", 1);
 }
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
@@ -194,7 +194,7 @@ function receiveMessagesFromWebSocket(message) {
             let playerId = messageContent.currentPlayer;
 
             let playerName = messageContent.currentPlayerName;
-            if(playerId !== UtilHandler.getCookie("userId")){
+            if(playerId !== utilHandler.getCookie("userId")){
 
                 stopTimer();
                 lockOpponentGameField(playerName);
@@ -206,7 +206,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "gameOver":
         {
-            window.location = window.location.origin + '/playermatch/' + UtilHandler.getCookie('matchId') + '/over';
+            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
         default:
@@ -241,7 +241,7 @@ function updateGameFields(content, init) {
 }
 
 function updateOpponentGameField(innerGameField, gameField, gameZone) {
-    if(UtilHandler.getCookie("showShips") === "true"){
+    if(utilHandler.getCookie("showShips") === "true"){
         buildShot(innerGameField, gameField, gameZone);
         buildShips(innerGameField, gameField, GameZone);
     } else {
@@ -354,6 +354,6 @@ module.exports = {
     requestGamefieldData: requestGamefieldData,
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
-    UtilHandler: UtilHandler,
+    utilHandler: utilHandler,
     sendShotToWebsocket: sendShotToWebsocket
 };
