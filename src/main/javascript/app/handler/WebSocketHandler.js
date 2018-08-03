@@ -14,8 +14,10 @@ let stompClient;
 
 module.exports = {
     connect: function () {
+        let endpoint = this.getCleanBaseUrl(BASE_URL) + socketEndpoint;
+        
         return new Promise(function (resolve, reject) {
-            let socket = new SockJS(getCleanBaseUrl(BASE_URL) + socketEndpoint);
+            let socket = new SockJS(endpoint);
             stompClient = Stomp.over(socket);
             // Disable console logging
             stompClient.debug = null;
@@ -54,18 +56,18 @@ module.exports = {
     },
 
     sendCurrentPlayer: function (messageObj) {
-        stompClient.send(getCleanBaseUrl(BASE_URL) + currentPlayerEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + currentPlayerEndpoint, {}, JSON.stringify(messageObj));
     },
 
     sendGamefield: function (messageObj) {
-        stompClient.send(getCleanBaseUrl(BASE_URL) + gamefieldEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + gamefieldEndpoint, {}, JSON.stringify(messageObj));
     },
 
     requestGamefieldData: function (messageObj) {
-        stompClient.send(getCleanBaseUrl(BASE_URL) + gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + gamefieldDataEndpoint, {}, JSON.stringify(messageObj));
     },
 
     sendShot: function (messageObj) {
-        stompClient.send(getCleanBaseUrl(BASE_URL) + shotEndpoint, {}, JSON.stringify(messageObj));
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + shotEndpoint, {}, JSON.stringify(messageObj));
     }
 };
