@@ -63,7 +63,24 @@
             </ul>
             <br>
 
-        
+            <hr style="border: #b51682 3px solid; border-radius: 10px ">
+            <h2 style = " text-align: center; margin-bottom: 20px"> So wird gespielt </h2>
+            
+            <ul class="list-unstyled" style="margin-left:10%; font-size: 1.5rem; max-width:100%; color:#111; -moz-column-count: 2;
+                -moz-column-gap: 10px;
+                -webkit-column-count: 2;
+                -webkit-column-gap: 10px;
+                column-count: 2;
+                column-gap: 20px">
+                <li>• auf "Neues Spiel..." klicken</li>
+                <li>• Namen eingeben</li>
+                <li>• Sie können einen weiteren Spieler einladen indem sie auf Share link klicken und daraufhin den Link and die Person senden mit der Sie spielen möchten</li>
+                <li>• Platzieren sie die Schiffe indem sie sie mit der Maus auf die gewünschte Position auf dem Feld ziehen. Sie können sie auch drehen indem sie auf ein Schiff doppelklicken </li>
+                <li>• Klicken sie auf weiter um auf das Spielfeld zu kommen, hier müssen sie ggf. auf den anderen Spieler warten</li>
+                <li>• Sobald das Spiel beginnt bekommen sie 60 sekunden pro Schuß sobald Sie schießen ended ihre Runde</li>
+                <li>• Um zu gewinnen müssen Sie jedes gegnerische Schiff versenken</li>
+            </ul>
+            <br>
       
         
         </main>
