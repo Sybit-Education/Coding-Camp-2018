@@ -34,6 +34,7 @@
         <script>
             window.onload = function () {
                 window.localStorage.clear();
+                Battleship.utilHandler.removeCookie("userId");
                 Battleship.utilHandler.removeCookie("userName");
             };
         </script>
