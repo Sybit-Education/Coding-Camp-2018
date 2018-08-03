@@ -25,10 +25,10 @@
     <div class="row">
         <div class="col">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shareLinkModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" style=" color:#b51682" data-target="#shareLinkModal">
                 share link ...
             </button>
-            <button id="checkShips" class="btn btn-default" onclick="Battleship.allShipsOnStage();">Weiter</button>
+            <button id="checkShips" class="btn btn-default" onclick="Battleship.allShipsOnStage();" style=" color:#b51682">Weiter</button>
         </div>
         <div class="col">
             <div id="current-field" style="margin-top: 2%; font-weight: bold"></div>
@@ -46,7 +46,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Share Link</h5>
+                <h5 class="modal-title" id="exampleModalLabel" style="color:#51682">Share Link</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -56,7 +56,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyUrl()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" style="color:#b51682" onclick="copyUrl()">
                     Copy to clipboard ...
                 </button>
             </div>
@@ -79,7 +79,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">Name Bestätigen</button>
+          <button type="submit" class="btn btn-primary" style="color:#b51682">Name Bestätigen</button>
         </div>
       </form>
     </div>

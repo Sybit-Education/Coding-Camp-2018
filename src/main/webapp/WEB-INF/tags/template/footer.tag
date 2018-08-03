@@ -4,7 +4,7 @@
 
 
 <footer>
-    <div class="container">
+    <div class="container" style="margin-left: ">
         <div class="row">
             <div class="col-4">
                 <span class="text-muted">&copy; 2018 Sybit GmbH.</span>
