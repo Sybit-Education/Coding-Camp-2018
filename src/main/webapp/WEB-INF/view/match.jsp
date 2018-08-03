@@ -70,19 +70,18 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLongTitle">Name Eingeben</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
-      <div class="modal-body">
-          
-          <textarea rows="1" cols="53" id="NameEingebenTextArea" style="resize: none;"></textarea>
-         
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="getValue()">Name Bestätigen</button>
-      </div>
+      <form onSubmit="return getValue();" class="needs-validation">
+        <div class="modal-body">
+            <input type="text" rows="1" cols="53" id="NameEingebenTextArea" class="form-control" style="resize: none;" required/>
+            <div class="invalid-feedback">
+                Bitte einen Namen eingeben!
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Name Bestätigen</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -110,6 +109,9 @@
 <script>
   function getValue(){
    Battleship.utilHandler.setCookie("userName", document.getElementById("NameEingebenTextArea").value);
+   $('#NameModal').modal('hide');
+   // no reload
+   return false;
   }
 </script> 
 <script>
