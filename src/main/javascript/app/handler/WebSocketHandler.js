@@ -20,8 +20,8 @@ module.exports = {
             // Disable console logging
             stompClient.debug = null;
             stompClient.connect({}, function (frame) {
-                let userName = frame.headers['user-name'];
-                utilHandler.setCookie("userName", userName, 30);
+                let userId = frame.headers['user-name'];
+                utilHandler.setCookie("userId", userId, 30);
                 resolve();
             }, function (error) {
                 console.log('STOMP: ' + error);

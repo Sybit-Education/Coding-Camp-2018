@@ -25,15 +25,15 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
         String userId = "";
         String cookie = request.getHeaders().get("cookie").get(0);
         if (cookie != null) {
-            userId = getUserNameByRegex(cookie);
+            userId = getUserIdByRegex(cookie);
         }
 
         return new StompPrincipal(userId.equals("") ? UUID.randomUUID().toString() : userId);
     }
 
-    private String getUserNameByRegex(String cookie) {
+    private String getUserIdByRegex(String cookie) {
         String result = "";
-        String patternString = ".*(?:userName=)(.*)";
+        String patternString = ".*(?:userId=)(.*)";
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(cookie);
         if (matcher.find()) {
