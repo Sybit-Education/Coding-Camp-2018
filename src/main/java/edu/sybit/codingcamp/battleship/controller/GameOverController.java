@@ -53,17 +53,26 @@ public class GameOverController {
         response.addCookie(new Cookie("matchId", matchId));
         
         try {
-            Player player = matchService.isMatchWon(matchId);
+            Player winner = matchService.isMatchWon(matchId);
             
-            if(player != null) {
-                String playerID = player.getPlayerId();
-                model.addAttribute("winner", playerID);
+            Match match= matchService.getMatchById(matchId);
+            
+            if(winner != null) {
+                String winnerName = winner.getPlayerName();
+                model.addAttribute("winner", winnerName);
+                Player looser = match.getOpponent(winner);
+                String looserName = looser.getPlayerName();
+                model.addAttribute("looser", looserName);
             } else {
-                Match match = matchService.getMatchById(matchId);
                 Player currentPlayer = matchService.getCurrentPlayer(match);
                 model.addAttribute("winner", currentPlayer.getPlayerName());
+                Player looser = match.getOpponent(currentPlayer);
+                String looserName = looser.getPlayerName();
+                model.addAttribute("looser", looserName);
             }
-
+            
+            model.addAttribute("shotsCount", match.getShotCount());
+        
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.
