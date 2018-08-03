@@ -11,7 +11,6 @@ import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 
 public class MatchTest {
 
