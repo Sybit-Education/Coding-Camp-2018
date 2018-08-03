@@ -231,14 +231,17 @@ public class MatchService {
         Player player2 = match.getPlayer2();
 
         String playerId = "";
+        String playerName = "";
 
         switch(match.getCurrentPlayer()){
             case 1:{
                 playerId = player1.getPlayerId();
+                playerName = player1.getPlayerName();
                 break;
             }
             case 2: {
                 playerId = player2.getPlayerId();
+                playerName = player2.getPlayerName();
                 break;
             }
             default:{
@@ -246,10 +249,10 @@ public class MatchService {
             }
         }
 
-        Message messageForPlayer1 = new Message("matchInfo", "{\"currentPlayer\": \""+playerId+"\"}");
+        Message messageForPlayer1 = new Message("matchInfo", "{\"currentPlayer\": \""+playerId+"\", \"currentPlayerName\": \""+playerName+"\"}");
         messageForPlayer1.setSendTo(player1);
 
-        Message messageForPlayer2 = new Message("matchInfo", "{\"currentPlayer\": \""+playerId+"\"}");
+        Message messageForPlayer2 = new Message("matchInfo", "{\"currentPlayer\": \""+playerId+"\", \"currentPlayerName\": \""+playerName+"\"}");
         messageForPlayer2.setSendTo(player2);
 
         messagingService.sendMessageToUser("/match", player1, messageForPlayer1);

@@ -22,6 +22,8 @@ public class Message implements Serializable{
     
     private boolean showShips;
     
+    private String playerName;
+
     public Message() {
     }
 
@@ -70,5 +72,13 @@ public class Message implements Serializable{
         return showShips;
     }
    
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
     
 }
