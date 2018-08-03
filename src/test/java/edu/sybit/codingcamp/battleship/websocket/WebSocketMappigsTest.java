@@ -11,7 +11,6 @@ import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

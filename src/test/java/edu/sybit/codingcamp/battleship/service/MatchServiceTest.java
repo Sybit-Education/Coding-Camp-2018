@@ -4,14 +4,12 @@
 
 package edu.sybit.codingcamp.battleship.service;
 
-import ch.qos.logback.classic.util.LevelToSyslogSeverity;
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Ship;
 import edu.sybit.codingcamp.battleship.repository.MatchRepository;
-import java.io.FileInputStream;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -23,9 +21,10 @@ import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import org.junit.Ignore;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class MatchServiceTest {
