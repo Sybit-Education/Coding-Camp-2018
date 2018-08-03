@@ -18,38 +18,54 @@
         
         <template:navigation />    
         <main class="container">
-           <ins><h1 style = "color: #48c9b0; text-align: center;"> <b> Spielregeln </b> </h1> </ins>
+         <h1 style = "color:#212529; text-align: center; letter-spacing: 4px; margin-top: 20px"> <b> Spielregeln </b> </h1>
 
-           <br>
-           <b> <h2 style = "color: #e74c3c;  text-align: center;"><b> Spielzeit: 15 bis 25 Minuten</b></h2> </b>
-           <br>
-           <h1 style = " text-align: center;"> Die Schiffen dürfen: </h1>
-           <br>
-           <h4 style = " text-align: center;">   - nicht aneinander stoßen </h4>
-           <h4 style = " text-align: center;"> - nicht über Eck gebaut sein oder Ausbuchtungen besitzen </h4>
-           <h4 style = " text-align: center;">  - nicht diagonal aufgestellt werden </h4>
-           <h4 style = " text-align: center;">  - auch am Rand liegen</h4>
-
-           <br>
-           <h1 style = " text-align: center;"> Spielverlauf: </h1>
-           <br>
-           <h4 style = " text-align: center;"> - Der Eingeladene beginnt das Spiel.</h4>
-            <h4 style = " text-align: center;"> - Der Schießende gibt eine Koordinate an, auf die er feuert, zum Beispiel C3</h4>
-           <h4 style = " text-align: center;"> - Der Beschossene sieht auf seinem Spielfeld, ob der Schluss ein Treffer ist, ein Schiff versenkt hat oder ins Wasser ging.</h4>
-            <h4 style = " text-align: center;"> - Ein Schiff gilt als versenkt, wenn alle Felder des Schiffes getroffen wurden</h4>
-            <h4 style = " text-align: center;">- Jeder Spieler hat ein Schuss pro Runde</h4>
+           
+           <hr style="border: #b51682 3px solid; border-radius: 10px; margin-top: 50px;">
+           <h2 style = " text-align: center; margin-bottom: 20px"> Die Schiffe dürfen </h2>
+           
+      
+           <ul class="list-unstyled" style="margin-left:10%; font-size: 1.5rem; max-width: 100%; -moz-column-count: 2;
+                -moz-column-gap: 10px;
+                -webkit-column-count: 2;
+                -webkit-column-gap: 10px;
+                column-count: 2;
+                column-gap: 20px;">
+               <li>• nicht aneinander stoßen</li>
+               <li>• nicht über Eck gebaut sein oder Ausbuchtungen besitzen</li>
+               <li>• nicht diagonal aufgestellt werden</li>
+               <li>• auch am Rand liegen</li>
+            </ul>
+            
+            <hr style="border: #b51682 3px solid; border-radius: 10px ">
+           <h2 style = " text-align: center; margin-bottom: 20px"> Spielverlauf </h2>
+           
+           <ul class="list-unstyled" style="margin-left:10%; font-size: 1.5rem; max-width: 100%;">
+               <li>• Der Schießende gibt eine Koordinate an, auf die er feuert</li>
+               <li>• Der Beschossene sieht auf seinem Spielfeld, ob der Schuss ein Treffer war, ein Schiff versenkt wurde oder ins Wasser ging</li>
+               <li>• Ein Schiff gilt als versenkt, wenn alle Felder des Schiffes getroffen wurden</li>
+               <li>• Jeder Spieler hat ein Schuss pro Runde</li>
+           </ul> 
+           
+            <hr style="border: #b51682 3px solid; border-radius: 10px ">
+            <h2 style = " text-align: center; margin-bottom: 20px"> Schiffe </h2>
+            
+            <ul class="list-unstyled" style="margin-left:10%; font-size: 1.5rem; max-width:100%; color:#111; -moz-column-count: 2;
+                -moz-column-gap: 10px;
+                -webkit-column-count: 2;
+                -webkit-column-gap: 10px;
+                column-count: 2;
+                column-gap: 20px">
+                <li>• ein Schlachtschiff (5 Kästchen)</li>
+                <li>• zwei Kreuzer (je 4 Kästchen)</li>
+                <li>• drei Zerstörer (je 3 Kästchen)</li>
+                <li>• vier U-Boote (je 2 Kästchen)</li>
+            </ul>
             <br>
-            <h3 style = "color: red; text-align: center;"> <b> Wer zuerst alle Schiffe des Gegners versenkt hat, ist der Sieger </b></h3>
 
-            <br>
-
-            <h1 style = " text-align: center;"> Schiffe: </h1>
-            <br>
-            <h4 style = " text-align: center;"> - ein Schlachtschiff (5 Kästchen)</h4>
-              <h4 style = " text-align: center;"> - zwei Kreuzer (je 4 Kästchen)</h4>
-                         <h4 style = " text-align: center;"> - drei Zerstörer (je 3 Kästchen)</h4>
-                         <h4 style = " text-align: center;"> - vier U-Boote (je 2 Kästchen)</h4>
-                         <br> 
+        
+      
+        
         </main>
         <template:footer />
         <template:javascript/>
