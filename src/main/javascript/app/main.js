@@ -188,7 +188,7 @@ function receiveMessagesFromWebSocket(message) {
         case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
-            if(playerId !== utilHandler.getCookie("userName")){
+            if(playerId !== utilHandler.getCookie("userId")){
                 stopTimer();
                 lockOpponentGameField(playerId);
             }else{
