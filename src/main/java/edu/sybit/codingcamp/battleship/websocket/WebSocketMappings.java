@@ -15,6 +15,8 @@ import edu.sybit.codingcamp.battleship.service.JsonConverter;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
+import edu.sybit.codingcamp.battleship.service.GameOverTask;
+import java.util.Timer;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,8 +103,14 @@ public class WebSocketMappings {
     public void shot(Message shot) {
         LOGGER.debug("--> shoot: on " + shot.getMessageContent());
         String currentPlayerId = shot.getSendFrom().getPlayerId();
+
         try {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
+            Timer timer= new Timer();
+            GameOverTask gameOverTask = new GameOverTask();
+            gameOverTask.setMatch(currentMatch);
+            gameOverTask.setMessagingService(messagingService);
+            timer.schedule(gameOverTask,60000);
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
             Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
             if(winnerPlayer != null){

@@ -49,17 +49,20 @@ public class GameOverController {
         
         try {
             Player player = matchService.isMatchWon(matchId);
-            LOGGER.debug("Player win: " + player);
             
-            String playerID = player.getPlayerId();
-            model.addAttribute("winner", playerID);
+            if(player != null) {
+                String playerID = player.getPlayerId();
+                model.addAttribute("winner", playerID);
+            } else {
+                model.addAttribute("winner", "der andere");
+            }
+
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.
             return new ModelAndView("redirect:/", model);
         }
               
-
         LOGGER.debug("<-- gameOver");
         return new ModelAndView("game-over", model);
     }
