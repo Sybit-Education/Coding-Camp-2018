@@ -2,13 +2,13 @@
 
 let utilHandler = require('./UtilHandler');
 
-const socketEndpoint = BASE_URL + 'battleships-socket';
+const socketEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships-socket';
 const matchQueue = '/user/match';
-const gamefieldEndpoint = BASE_URL + 'battleships/match/gamefield';
-const gamefieldDataEndpoint = BASE_URL + 'battleships/match/gamfielddata';
-const shotEndpoint = BASE_URL + 'battleships/match/shot';
-const currentPlayerEndpoint = BASE_URL + 'battleships/match/currentplayer';
-const timerEndpoint = BASE_URL + 'battleships/match/timer';
+const gamefieldEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/gamefield';
+const gamefieldDataEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/gamfielddata';
+const shotEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/shot';
+const currentPlayerEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/currentplayer';
+const timerEndpoint = getCleanBaseUrl(BASE_URL) + 'battleships/match/timer';
 
 let stompClient;
 
@@ -57,5 +57,15 @@ module.exports = {
 
     sendShot: function (messageObj) {
         stompClient.send(shotEndpoint, {}, JSON.stringify(messageObj));
+    },
+    
+    getCleanBaseUrl: function (baseUrl){
+        let baseUrlRegex = /(.*)(;)(.*)/g;
+        let match = baseUrlRegex.exec(baseUrl);
+        if(match === null){
+            return baseUrl;
+        }else{
+            return match[1] !== null ? match[1] : baseUrl;
+        }
     }
 };

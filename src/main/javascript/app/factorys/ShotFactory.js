@@ -1,6 +1,7 @@
 /* global createjs, BASE_URL */
 
 let Shot = require('../objects/Shot');
+let webSocketHandler = require('../handler/WebSocketHandler');
 
 module.exports = class ShotFactory {
     constructor(gamezone, boxPixel) {
@@ -47,9 +48,9 @@ module.exports = class ShotFactory {
 
     static getManifest() {
         let manifest = [
-            {src: BASE_URL + "resources/images/hit.png", id: "fieldHit"},
-            {src: BASE_URL + "resources/images/sunk.png", id: "fieldSunk"},
-            {src: BASE_URL + "resources/images/shot.png", id: "fieldShot"}
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/hit.png", id: "fieldHit"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/sunk.png", id: "fieldSunk"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/shot.png", id: "fieldShot"}
         ];
 
         return manifest;
