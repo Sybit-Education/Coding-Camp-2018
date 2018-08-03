@@ -103,16 +103,13 @@
         <template:javascript/>
    
 <script>
-<<<<<<< Updated upstream
-=======
     let url;
     url = window.location.href;
     document.getElementById("Url").value = url;
 </script>
 <script>
   function getValue(){
-  let nameModalValue = document.getElementById("NameEingebenTextArea").value; 
-  console.log(nameModalValue);   
+   Battleship.utilHandler.setCookie("userName", document.getElementById("NameEingebenTextArea").value);
   }
 </script> 
 <script>
@@ -124,9 +121,10 @@
 </script>
 
 <script>
->>>>>>> Stashed changes
     window.onload = function () {
         window.localStorage.clear();
+        Battleship.utilHandler.removeCookie("userId");
+        Battleship.utilHandler.removeCookie("userName");
         setUrlInModal()
         Battleship.init();
         $("#NameModal").modal({backdrop: 'static', keyboard: false});
