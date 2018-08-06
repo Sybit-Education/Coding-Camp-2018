@@ -24,7 +24,7 @@ Folgende Software muss installiert sein:
 
 - Java 8
 - git Client (z.B. [Sourcetree](https://www.sourcetreeapp.com/))
-- Entwicklungsumgebung (z.B. [Netbeans](https://netbeans.org/), [Eclipse](https://www.eclipse.org/), [InelliJ](https://www.jetbrains.com/idea/), ...)
+- Entwicklungsumgebung (z.B. [Netbeans](https://netbeans.org/), [Eclipse](https://www.eclipse.org/), [IntelliJ](https://www.jetbrains.com/idea/), ...)
 - [node.js](https://nodejs.org) (mit npm)
 
 
