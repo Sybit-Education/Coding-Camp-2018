@@ -1,9 +1,0 @@
-version: '2'
-services:
-  battleship:
-    build: .
-    image: battleship:local
-    ports:
-      - "8080:8080"
-    volumes:
-      - "C:/Users/fzr/Documents/Kitematic/battleship/app/log:/app/log"

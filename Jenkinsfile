@@ -42,9 +42,7 @@ node{
             }
             branchName = branchName.replace("-", "")
 
-            if(env.BRANCH_NAME == 'develop' || env.BRANCH_NAME == 'master'){
-           
-
+            if(env.BRANCH_NAME == 'master'){
 
                 def imageName = dockerInstanceName + ":" +
                   ((env.BRANCH_NAME == "master") ? "" : "${branchName}-") +
@@ -61,6 +59,25 @@ node{
                         * Pushing multiple tags is cheap, as all the layers are reused. */
                         customImage.push("${branchName}-${env.BUILD_NUMBER}")                        
                         customImage.push("latest")
+                    }
+
+                }
+            }
+
+            if(env.BRANCH_NAME == 'develop'){
+
+                def imageName = dockerInstanceName + ":" + "develop"
+                echo "Build Docker ${imageName}"
+                def customImage = docker.build("${imageName}")
+
+                timeout(time: 20, unit: 'MINUTES') {
+                    //Push the Docker image to registry with Tag
+                    docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
+                        /* Finally, we'll push the image with two tags:
+                        * First, the incremental build number from Jenkins
+                        * Second, the 'latest' tag.
+                        * Pushing multiple tags is cheap, as all the layers are reused. */
+                        customImage.push("${branchName})
                     }
 
                 }
@@ -100,7 +117,8 @@ node{
      
                     sshCommand remote: remote, command: "uname -a"
                     sshCommand remote: remote, command: "docker rm -f battleship", failOnError: false
-                    sshCommand remote: remote, command: "docker run -d -p 8181:8080 --name battleship coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}"
+                    sshCommand remote: remote, command: "cd /home/docker/battleship"
+                    sshCommand remote: remote, command: "docker-compose up -d"
                
                 }            
                 
