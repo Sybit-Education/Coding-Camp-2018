@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Schulungsnb
  */
 @Controller
-public class creditsController{
+public class CreditsController{
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(creditsController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CreditsController.class);
     
     @RequestMapping(value = "/credits")
     public String credits() {
