@@ -59,6 +59,6 @@ public class Player implements Serializable {
 
     @Override
     public String toString() {
-        return "Player{playerId=" + playerId + "}";
+        return "Player{playerId=" + playerId + ", playerName=" + playerName + "}";
     }
 }

@@ -21,7 +21,7 @@
                 <br>
                 <h3 style = " text-align: center;">${looser} hat verloren </h3>
                 <br>
-                <h4 style = " text-align: center;"> Schüsse insgesammt: ${shotsCount}</h4>
+                <h4 style = " text-align: center;"> Schüsse insgesamt: ${shotsCount}</h4>
                 <br>
                         
                

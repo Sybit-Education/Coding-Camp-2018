@@ -9,6 +9,7 @@ const gamefieldDataEndpoint = 'battleships/match/gamfielddata';
 const shotEndpoint = 'battleships/match/shot';
 const currentPlayerEndpoint = 'battleships/match/currentplayer';
 const timerEndpoint = 'battleships/match/timer';
+const toManyPlayersEndpoint = 'battleships/match/gamefield';
 
 let stompClient;
 
@@ -69,5 +70,9 @@ module.exports = {
 
     sendShot: function (messageObj) {
         stompClient.send(this.getCleanBaseUrl(BASE_URL) + shotEndpoint, {}, JSON.stringify(messageObj));
+    },
+    
+    sendToManyPlayers: function (messageObj) {
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + toManyPlayersEndpoint, {}, JSON.stringify(messageObj));
     }
 };

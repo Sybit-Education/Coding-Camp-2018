@@ -41,13 +41,13 @@ public class WebSocketMappings {
     private Timer timer;
 
     @MessageMapping("/match/gamefield")
-    public void gamefield(Message message) {
+    public void gamefield(Message message) throws MatchNotFoundException, PlayerException {
         LOGGER.debug("--> gamefield");
         
         Player player = message.getSendFrom();
         
         if(message.getPlayerName() == null || message.getPlayerName() == ""){
-         LOGGER.error("Speiler hat keinen Namen");
+         LOGGER.error("Spieler hat keinen Namen");
         }else{
          player.setPlayerName(message.getPlayerName());
          playerService.update(player);
@@ -60,13 +60,16 @@ public class WebSocketMappings {
             LOGGER.debug("no Match found -> create new one.");
             match = matchService.createNewMatch(message.getMatchId(), player);
         }
-        
+
         if(!(player.equals(match.getPlayer1())) && (match.getPlayer2() == null)) {
             //set second player
-            matchService.addOpponentPlayer(match, player);
-            
+            matchService.addNewPlayerToMatch(match, player);         
         } 
-            
+          
+        if(!player.equals(match.getPlayer1()) && !player.equals(match.getPlayer2()) ) {          
+            messagingService.sendMessageToUser("/match", player, new Message("toManyPlayersMessage", ""));
+        }
+        
         playerService.addGamefieldToPlayer(player, message.getMessageContent());
 
         Message responseMessage = new Message("saveResponse", "{\"saveState\":true}");
