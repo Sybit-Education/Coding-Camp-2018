@@ -25,7 +25,7 @@
             <button id="Link" class="btn btn-primary" onclick="Battleship.matchHandler.connectToMatch()" 
                     style="font-size:1.5rem;float:left; left:50%; position: absolute; margin-top: 100px; margin-left: -102.5px; color:#b51682;">Neues Spiel ...</button>
             
-            <img src="resources/images/battleship.png" alt="Kriegsschiff" style="margin-left: -100px; margin-top: 100px">
+            <img src="resources/images/battleship-titel.png" alt="Kriegsschiff" style="margin-left: -100px; margin-top: 100px">
 
 
             <!--<button id="Queue" class="btn btn-primary" onclick="connectToQueue()">Queue</button>-->
