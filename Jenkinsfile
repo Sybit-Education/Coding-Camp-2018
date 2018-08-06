@@ -77,7 +77,7 @@ node{
                         * First, the incremental build number from Jenkins
                         * Second, the 'latest' tag.
                         * Pushing multiple tags is cheap, as all the layers are reused. */
-                        customImage.push("${branchName})
+                        customImage.push("${branchName}")
                     }
 
                 }
@@ -116,10 +116,8 @@ node{
                     remote.knownHosts = '/data/jenkins/secrets/known_hosts'
      
                     sshCommand remote: remote, command: "uname -a"
-                    sshCommand remote: remote, command: "docker rm -f battleship", failOnError: false
-                    sshCommand remote: remote, command: "cd /home/docker/battleship"
-                    sshCommand remote: remote, command: "docker-compose up -d"
-               
+                    sshCommand remote: remote, command: "docker-compose -f /home/docker/battleship/docker-compose.yml rm -f battleship", failOnError: false
+                    sshCommand remote: remote, command: "docker-compose -f /home/docker/battleship/docker-compose.yml up -d"
                 }            
                 
             }

@@ -7,9 +7,10 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
 <html>
     <head>
-        <template:header title="Battleships"/>
+        <template:header title="Spiel beendet - Battleship"/>
     </head>
     
+    <body>
         <template:navigation/>
 
         <div class="container">
@@ -30,5 +31,5 @@
 
         <template:footer/>
         <template:javascript/>
-    
+    </body>
 </html>
