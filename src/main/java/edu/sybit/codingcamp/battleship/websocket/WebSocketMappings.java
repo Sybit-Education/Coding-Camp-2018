@@ -15,6 +15,8 @@ import edu.sybit.codingcamp.battleship.service.JsonConverter;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
+import edu.sybit.codingcamp.battleship.service.GameOverTask;
+import java.util.Timer;
 import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,8 @@ public class WebSocketMappings {
 
     @Autowired
     private MessagingService messagingService;
+    
+    private Timer timer;
 
     @MessageMapping("/match/gamefield")
     public void gamefield(Message message) {
@@ -76,6 +80,7 @@ public class WebSocketMappings {
     public void getGamFieldData(Message gamefieldMessage) {
         LOGGER.debug("--> getGamefieldData");
         Match currentMatch = null;
+        this.timer = null;
         try {
             currentMatch = matchService.getMatchById(gamefieldMessage.getMatchId());
         } catch (MatchNotFoundException e) {
@@ -96,6 +101,7 @@ public class WebSocketMappings {
             messagingService.sendMessageToUser("/match", player1, messageForPlayer1);
             messagingService.sendMessageToUser("/match", player2, messageForPlayer2);
             matchService.setCurrentPlayer(currentMatch,1);
+            this.timer = matchService.createNewTimer(currentMatch);
         }else{
             Message messageForPlayer1 = matchService.buildGameFieldDataMessage(player1, gameFieldForPlayer1, new GameField(), true);
             messagingService.sendMessageToUser("/match", player1, messageForPlayer1);
@@ -108,8 +114,10 @@ public class WebSocketMappings {
     public void shot(Message shot) {
         LOGGER.debug("--> shoot: on " + shot.getMessageContent());
         String currentPlayerId = shot.getSendFrom().getPlayerId();
+
         try {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
+            this.timer = matchService.resetTimer(timer, currentMatch);
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
             Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box, shot.isShowShips());
             if(winnerPlayer != null){

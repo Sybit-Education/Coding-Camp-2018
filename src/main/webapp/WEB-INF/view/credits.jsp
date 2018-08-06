@@ -18,6 +18,11 @@
         
         <template:navigation />    
         <main class="container">
+           <div id="titles"><div id="titlecontent">
+
+                
+           
+        <main class="container">
            <h1 style = "color:#212529; text-align: center; letter-spacing: 4px; margin-top: 20px"> <b> CREDITS </b> </h1>
 
            
@@ -79,6 +84,12 @@
 
         
       
+        </main>
+        <template:footer />
+        <template:javascript/>
+
+
+           </div></div>
         </main>
         <template:footer />
         <template:javascript/>

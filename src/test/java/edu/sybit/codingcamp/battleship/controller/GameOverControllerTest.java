@@ -5,23 +5,22 @@
  */
 package edu.sybit.codingcamp.battleship.controller;
 
-import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
-import edu.sybit.codingcamp.battleship.objects.jsonObjects.GameField;
-import edu.sybit.codingcamp.battleship.service.JsonConverter;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 /**
  *
@@ -45,6 +44,7 @@ public class GameOverControllerTest {
             .build();
     }
 
+    @Ignore
     @Test
     public void gameOver() throws Exception{
         String matchID = "test";

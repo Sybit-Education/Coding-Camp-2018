@@ -126,10 +126,15 @@ function allShipsOnStage() {
 }
 
 function decrement() {
-    countDownSeconds = countDownSeconds -1;
-    document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
+  
+    if (countDownSeconds > 0){
+        countDownSeconds = countDownSeconds -1;
+        document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
+    } else {
+        countDownSeconds = 0;
+        document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
+    }
 }
-
 function timeToShoot() {
     intervalId = setInterval(decrement, 1000);
 }

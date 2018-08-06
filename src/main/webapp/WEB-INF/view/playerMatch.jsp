@@ -47,7 +47,7 @@
         <div class="col-2 center">
             <h3 id="countDownSeconds" class="text-center">60</h3>
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shareLinkModal">
+                <button type="button" class="btn btn-primary" style="color:#b51682" data-toggle="modal" data-target="#shareLinkModal">
                     share link ...
                 </button>
         </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="copyUrl()">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" style="color:#b51682" onclick="copyUrl()">
                         Copy to clipboard ...
                     </button>
                 </div>
