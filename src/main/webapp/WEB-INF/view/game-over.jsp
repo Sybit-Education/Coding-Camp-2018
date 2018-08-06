@@ -7,9 +7,10 @@
 <%@ taglib prefix="template" tagdir="/WEB-INF/tags/template" %>
 <html>
     <head>
-        <template:header title="Battleships"/>
+        <template:header title="Spiel beendet - Battleship"/>
     </head>
     
+    <body>
         <template:navigation/>
 
         <div class="container">
@@ -21,7 +22,7 @@
                 <br>
                 <h3 style = " text-align: center;">${looser} hat verloren </h3>
                 <br>
-                <h4 style = " text-align: center;"> Schüsse insgesammt: ${shotsCount}</h4>
+                <h4 style = " text-align: center;"> Schüsse insgesamt: ${shotsCount}</h4>
                 <br>
                         
                
@@ -30,5 +31,5 @@
 
         <template:footer/>
         <template:javascript/>
-    
+    </body>
 </html>

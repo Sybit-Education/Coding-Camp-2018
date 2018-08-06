@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <template:header title="Battleships" />
+        <template:header title="Battleship" />
     </head>
 
     <body>
@@ -19,7 +19,7 @@
         <template:navigation />    
 
         <main class="container">
-            <h1 style="float:left; left:50%; position: absolute; margin-top: 50px; margin-left: -100px;">Battleships</h1>
+            <h1 style="float:left; left:50%; position: absolute; margin-top: 50px; margin-left: -100px;">Battleship</h1>
             <p style="float:left; left:50%; position: absolute; margin-top: 550px; margin-left: -300px; color:white; font-size: 1.2rem">Spiele online mit deinen Freunden "Schiffe versenken"! </p>
             <p style="float:left; left:50%; position: absolute; margin-top: 530px; margin-left: -300px; color:white; font-size: 1.2rem">Erzeuge einfach ein neues Spiel und teile den Link - schon kann es los gehen!</p>
             <button id="Link" class="btn btn-primary" onclick="Battleship.matchHandler.connectToMatch()" 

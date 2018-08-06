@@ -219,7 +219,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "gameOver":
         {
-            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            window.location = webSocketHandler.getCleanBaseUrl(BASE_URL) + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
         default:
