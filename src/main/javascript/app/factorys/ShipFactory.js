@@ -64,7 +64,7 @@ module.exports = class ShipFactory {
         var manifest = [
             {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/Submarine.png", id: "Submarine"},
             {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/Cruiser.png", id: "Cruiser"},
-            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/battleship_field.png", id: "Battleship"},
+            {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/Battleship.png", id: "Battleship"},
             {src: webSocketHandler.getCleanBaseUrl(BASE_URL) + "resources/images/Carrier.png", id: "Carrier"}
         ];
 
