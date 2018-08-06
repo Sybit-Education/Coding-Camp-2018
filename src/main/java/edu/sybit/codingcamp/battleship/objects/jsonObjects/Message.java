@@ -67,8 +67,9 @@ public class Message implements Serializable{
     public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
-    
+        
     public boolean isShowShips() {
+        System.out.println("showShips: "+showShips);
         return showShips;
     }
    

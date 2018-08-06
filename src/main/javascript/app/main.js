@@ -37,6 +37,7 @@ let opponentGameZone = undefined;
 let countDownSeconds = 60;
 let intervalId = undefined;
 let ships = [];
+let showShipsBoolean;
 
 
 function init() {
@@ -145,12 +146,14 @@ function stopTimer() {
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
 function showShips() {
-    console.log("You activated the cheat: showShips()");
     utilHandler.setCookie("showShips","true", 1);
+    showShipsBoolean = "true";
+    return ("You activated the cheat: showShips()");
 }
 function resetCheat() {
-    console.log("Resettet all cheats!");
     utilHandler.removeCookie("showShips");
+    showShipsBoolean = "false";
+    return ("Resettet all cheats!");
 }
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
@@ -251,13 +254,10 @@ function updateGameFields(content, init) {
 }
 
 function updateOpponentGameField(innerGameField, gameField, gameZone) {
-    if(utilHandler.getCookie("showShips") === "true"){
-        buildShot(innerGameField, gameField, gameZone);
-        buildShips(innerGameField, gameField, GameZone);
-    } else {
-        buildShot(innerGameField, gameField, gameZone);
+    if(showShipsBoolean === "true"){
+    buildShips(innerGameField, gameField, gameZone);
     }
-
+    buildShot(innerGameField, gameField, gameZone);
 }
 
 function updateOwnGameFieldInit(innerGameField, gameField, gameZone) {
@@ -320,7 +320,7 @@ function sendShotToWebsocket(messageObj){
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
-    let currentShots = [];
+     let currentShots = [];
     let shotFactory = new ShotFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.status) {

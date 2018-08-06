@@ -90,7 +90,7 @@ public class MatchService {
         GameOverTask gameOverTask = new GameOverTask();
         gameOverTask.setMatch(currentMatch);
         gameOverTask.setMessagingService(messagingService);
-        timer.schedule(gameOverTask,60000);
+        timer.schedule(gameOverTask,600000000);
         return timer;
     }
 
@@ -371,14 +371,16 @@ public class MatchService {
     private void sendUpdateMessage (Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField, boolean showShips){
 
         GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
-        GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
+        GameField gameFieldForOpponentPlayerPruned;
+        
         if(showShips){
+            System.out.println("Cheat >show ships<");
             gameFieldForOpponentPlayerPruned = opponentGameField;
         } else {
             gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
         }
-        Message messageForCurrentPlayer = buildGameFieldDataMessage(currentPlayer, currentGameField, gameFieldForOpponentPlayerPruned, showShips);
-        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, showShips);
+        Message messageForCurrentPlayer = buildGameFieldDataMessage(currentPlayer, currentGameField, gameFieldForOpponentPlayerPruned, false);
+        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, false);
 
         messagingService.sendMessageToUser("/match", currentPlayer, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponentPlayer, messageForOpponentPlayer);
