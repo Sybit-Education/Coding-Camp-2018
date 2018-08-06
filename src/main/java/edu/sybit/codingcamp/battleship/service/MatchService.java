@@ -371,14 +371,14 @@ public class MatchService {
     private void sendUpdateMessage (Player currentPlayer, Player opponentPlayer, GameField currentGameField, GameField opponentGameField, boolean showShips){
 
         GameField gameFieldForCurrentPlayerPruned = pruneGameField(currentGameField);
-        GameField gameFieldForOpponentPlayerPruned = null;
+        GameField gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
         if(showShips){
             gameFieldForOpponentPlayerPruned = opponentGameField;
         } else {
             gameFieldForOpponentPlayerPruned = pruneGameField(opponentGameField);
         }
-        Message messageForCurrentPlayer = buildGameFieldDataMessage(currentPlayer,currentGameField , gameFieldForOpponentPlayerPruned, false);
-        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, false);
+        Message messageForCurrentPlayer = buildGameFieldDataMessage(currentPlayer, currentGameField, gameFieldForOpponentPlayerPruned, showShips);
+        Message messageForOpponentPlayer = buildGameFieldDataMessage(opponentPlayer, opponentGameField, gameFieldForCurrentPlayerPruned, showShips);
 
         messagingService.sendMessageToUser("/match", currentPlayer, messageForCurrentPlayer);
         messagingService.sendMessageToUser("/match", opponentPlayer, messageForOpponentPlayer);

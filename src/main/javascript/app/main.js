@@ -145,7 +145,12 @@ function stopTimer() {
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
 function showShips() {
+    console.log("You activated the cheat: showShips()");
     utilHandler.setCookie("showShips","true", 1);
+}
+function resetCheat() {
+    console.log("Resettet all cheats!");
+    utilHandler.removeCookie("showShips");
 }
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
@@ -351,6 +356,7 @@ function buildShot(innerGameField, gameField, gameZone) {
 module.exports = {
     boxPixel: boxPixel,
     showShips: showShips,
+    resetCheat: resetCheat,
     init: init,
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,
