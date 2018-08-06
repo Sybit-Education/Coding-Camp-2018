@@ -89,7 +89,7 @@ node{
                     sh 'docker rm -f battleship-test'
                 } catch (e) { }
                 docker.withRegistry('https://coding-camp.artifactory.sybit.de', 'docker-artifactory-credentials') {
-                    sh "docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:${branchName}-${env.BUILD_NUMBER}"
+                    sh "docker run -d -p 12000:8080 --name battleship-test coding-camp.artifactory.sybit.de/battleship:develop"
                 }
             }
 
