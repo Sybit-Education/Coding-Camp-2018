@@ -37,7 +37,7 @@ let opponentGameZone = undefined;
 let countDownSeconds = 60;
 let intervalId = undefined;
 let ships = [];
-let showShipsBoolean;
+let showShipsBoolean = undefined;
 
 
 function init() {
