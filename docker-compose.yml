@@ -1,0 +1,8 @@
+version: '2'
+services:
+  battleship:
+    image: coding-camp.artifactory.sybit.de/battleship:latest
+    ports:
+      - "8181:8080"
+    volumes:
+      - "/home/docker/battleship/log:/app/log"
