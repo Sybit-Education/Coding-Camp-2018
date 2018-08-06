@@ -116,10 +116,9 @@ node{
                     remote.knownHosts = '/data/jenkins/secrets/known_hosts'
      
                     sshCommand remote: remote, command: "uname -a"
-                    sshCommand remote: remote, command: "docker rm -f battleship", failOnError: false
                     sshCommand remote: remote, command: "cd /home/docker/battleship"
-                    sshCommand remote: remote, command: "docker-compose.yml up -d"
-               
+                    sshCommand remote: remote, command: "docker-compose rm -f battleship", failOnError: false
+                    sshCommand remote: remote, command: "docker-compose up -d"
                 }            
                 
             }
