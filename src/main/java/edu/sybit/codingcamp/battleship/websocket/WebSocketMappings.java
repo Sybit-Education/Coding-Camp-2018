@@ -5,7 +5,6 @@
 package edu.sybit.codingcamp.battleship.websocket;
 
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
-import edu.sybit.codingcamp.battleship.exception.PlayerException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.objects.jsonObjects.Box;
@@ -15,9 +14,7 @@ import edu.sybit.codingcamp.battleship.service.JsonConverter;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
-import edu.sybit.codingcamp.battleship.service.GameOverTask;
 import java.util.Timer;
-import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +119,7 @@ public class WebSocketMappings {
             Match currentMatch = matchService.getMatchById(shot.getMatchId());
             this.timer = matchService.resetTimer(timer, currentMatch);
             Box box = JsonConverter.convertStringToBox(shot.getMessageContent());
-            Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box);
+            Player winnerPlayer = matchService.performShot(currentPlayerId,currentMatch, box, shot.isShowShips());
             if(winnerPlayer != null){
                 //Es hat jemand Gewonnen
                 messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
