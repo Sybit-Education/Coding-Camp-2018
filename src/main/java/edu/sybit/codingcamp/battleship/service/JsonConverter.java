@@ -50,6 +50,7 @@ public class JsonConverter {
         Gson gson = new Gson();
         return gson.fromJson(boxString, Box.class);
     }
+    
     public static GameField convertJsonFileToGameField(String path) throws FileNotFoundException{
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader(path));

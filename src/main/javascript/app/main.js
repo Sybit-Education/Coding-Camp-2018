@@ -198,7 +198,7 @@ function receiveMessagesFromWebSocket(message) {
             let messageContent = JSON.parse(message.messageContent);
             if (messageContent.saveState === true) {
                 requestGamefieldData();
-            }
+            }    
             break;
         }
         case "gamefieldDataInit":
@@ -231,6 +231,12 @@ function receiveMessagesFromWebSocket(message) {
         case "gameOver":
         {
             window.location = webSocketHandler.getCleanBaseUrl(BASE_URL) + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            break;
+        }
+        case "toManyPlayersMessage":
+        {   
+            alert("Es sind bereits 2 Spieler miteinander verbunden.");
+            window.location = "/";
             break;
         }
         default:

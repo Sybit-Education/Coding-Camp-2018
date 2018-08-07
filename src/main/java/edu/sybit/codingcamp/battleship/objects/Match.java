@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018 Sybit GmbH. All rights reserved.
+ */
+
 package edu.sybit.codingcamp.battleship.objects;
 
 import edu.sybit.codingcamp.battleship.exception.GeneralException;
