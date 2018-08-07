@@ -158,9 +158,7 @@ function Cconfig(content, password) {
         }
     //reset cheat
     } else if(content === "reset"){
-
         utilHandler.removeCookie("showShips");
-        utilHandler.setCookie("showShips","true", 1);
         showShipsBoolean = "false";
         return ("resettet all cheats!");
     } else {

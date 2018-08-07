@@ -90,7 +90,7 @@ public class MatchService {
         GameOverTask gameOverTask = new GameOverTask();
         gameOverTask.setMatch(currentMatch);
         gameOverTask.setMessagingService(messagingService);
-        timer.schedule(gameOverTask,600000000);
+        timer.schedule(gameOverTask,60000);
         return timer;
     }
 
