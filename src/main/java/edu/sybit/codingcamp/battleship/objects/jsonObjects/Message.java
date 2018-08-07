@@ -20,6 +20,8 @@ public class Message implements Serializable{
 
     private String matchId;
     
+    private boolean showShips;
+    
     private String playerName;
 
     public Message() {
@@ -65,6 +67,12 @@ public class Message implements Serializable{
     public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
+        
+    public boolean isShowShips() {
+        System.out.println("showShips: "+showShips);
+        return showShips;
+    }
+   
 
     public String getPlayerName() {
         return playerName;
