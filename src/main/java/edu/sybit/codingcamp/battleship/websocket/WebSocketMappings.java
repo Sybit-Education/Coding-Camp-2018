@@ -41,7 +41,7 @@ public class WebSocketMappings {
     private Timer timer;
 
     @MessageMapping("/match/gamefield")
-    public void gamefield(Message message) throws MatchNotFoundException, PlayerException {
+    public void gamefield(Message message) {
         LOGGER.debug("--> gamefield");
         
         Player player = message.getSendFrom();
@@ -63,7 +63,7 @@ public class WebSocketMappings {
 
         if(!(player.equals(match.getPlayer1())) && (match.getPlayer2() == null)) {
             //set second player
-            matchService.addNewPlayerToMatch(match, player);         
+            matchService.addOpponentPlayer(match, player);         
         } 
           
         if(!player.equals(match.getPlayer1()) && !player.equals(match.getPlayer2()) ) {          
