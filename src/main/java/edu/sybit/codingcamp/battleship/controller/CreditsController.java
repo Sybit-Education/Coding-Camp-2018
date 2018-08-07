@@ -1,8 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2018 Sybit GmbH. All rights reserved.
  */
+
 package edu.sybit.codingcamp.battleship.controller;
 
 import org.slf4j.Logger;
