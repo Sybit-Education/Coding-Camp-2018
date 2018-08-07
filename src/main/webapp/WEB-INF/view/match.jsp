@@ -86,15 +86,15 @@
   </div>
 </div>
 
-        <button id="toastShipPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht auf diese Position gesetzt werden">
+        <button id="toastShipPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht auf diese Position gesetzt werden" style="visibility: hidden;">
             Toast
         </button>
 
-        <button id="toastShipNonPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Alle Schiffe auf das Spielfeld setzen">
+        <button id="toastShipNonPlacement" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Alle Schiffe auf das Spielfeld setzen" style="visibility: hidden;">
             Toast
         </button>
 
-        <button id="toastShipRotation" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht gedreht werden">
+        <button id="toastShipRotation" type="button" class="btn btn-secondary" data-toggle="snackbar" data-style="toast" data-timeout="3000" data-content="Schiff kann nicht gedreht werden" style="visibility: hidden;">
             Toast
         </button>
 

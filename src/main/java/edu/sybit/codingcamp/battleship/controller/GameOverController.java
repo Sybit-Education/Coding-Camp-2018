@@ -1,23 +1,19 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (c) 2018 Sybit GmbH. All rights reserved.
  */
-package edu.sybit.codingcamp.battleship.controller;
 
+package edu.sybit.codingcamp.battleship.controller;
 
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.service.MatchService;
-import edu.sybit.codingcamp.battleship.service.PlayerService;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +31,6 @@ public class GameOverController {
     @Autowired
     protected MatchService matchService;
     
-    @Autowired
-    private PlayerService playerService;
-    
-
     /**
      * Show game over page with winner.
      * @param matchId
