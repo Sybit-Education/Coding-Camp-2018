@@ -82,6 +82,16 @@
             </div>
         </div>
     </div>
+  <audio id="waterSplash" preload="auto">
+      <source src="./../../resources/sound/waterSplash.wav" />
+  </audio>
+  <audio id="bomb" preload="auto">
+      <source src="./../../resources/sound/bomb.mp3" />
+  </audio>
+  <audio id="sunk" preload="auto">
+      <source src="./../../resources/sound/sunk.wav" />
+  </audio>
+  
 <template:footer/>
 
 <template:javascript/>
