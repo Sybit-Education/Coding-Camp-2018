@@ -124,10 +124,11 @@
 
 <script>
     window.onload = function () {
+        Battleship.utilHandler.removeCookie("showShips");
         window.localStorage.clear();
         Battleship.utilHandler.removeCookie("userId");
         Battleship.utilHandler.removeCookie("userName");
-        setUrlInModal()
+        setUrlInModal();
         Battleship.init();
         $("#NameModal").modal({backdrop: 'static', keyboard: false});
     };

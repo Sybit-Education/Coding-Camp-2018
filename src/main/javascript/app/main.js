@@ -145,15 +145,28 @@ function stopTimer() {
     countDownSeconds = 60;
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
-function showShips() {
-    utilHandler.setCookie("showShips","true", 1);
-    showShipsBoolean = "true";
-    return ("You activated the cheat: showShips()");
-}
-function resetCheat() {
-    utilHandler.removeCookie("showShips");
-    showShipsBoolean = "false";
-    return ("Resettet all cheats!");
+function Cconfig(content, password) {
+    //show ships
+    if(content === "showShips"){
+        if(password === "saik"){
+            utilHandler.removeCookie("showShips");
+            utilHandler.setCookie("showShips","true", 1);
+            showShipsBoolean = "true";
+             return ("You activated the cheat: showShips"); 
+        } else {
+            return ("wrong Passwort argument");
+        }
+    //reset cheat
+    } else if(content === "reset"){
+
+        utilHandler.removeCookie("showShips");
+        utilHandler.setCookie("showShips","true", 1);
+        showShipsBoolean = "false";
+        return ("resettet all cheats!");
+    } else {
+        return ("error unknown function!");
+    }
+
 }
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
@@ -198,8 +211,6 @@ function receiveMessagesFromWebSocket(message) {
         {
             let messageContent = JSON.parse(message.messageContent);
             updateGameFields(messageContent, false);
-            console.log("gamefieldData");
-            console.log(messageContent);
             break;
         }
         case "matchInfo": {
@@ -355,8 +366,7 @@ function buildShot(innerGameField, gameField, gameZone) {
 
 module.exports = {
     boxPixel: boxPixel,
-    showShips: showShips,
-    resetCheat: resetCheat,
+    Cconfig: Cconfig,
     init: init,
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,
