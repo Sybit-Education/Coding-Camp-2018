@@ -37,6 +37,7 @@ let opponentGameZone = undefined;
 let countDownSeconds = 60;
 let intervalId = undefined;
 let ships = [];
+let showShipsBoolean = undefined;
 
 
 function init() {
@@ -144,7 +145,27 @@ function stopTimer() {
     countDownSeconds = 60;
     document.getElementById("countDownSeconds").innerHTML = countDownSeconds;
 }
+function Cconfig(content, password) {
+    //show ships
+    if(content === "showShips"){
+        if(password === "saik"){
+            utilHandler.removeCookie("showShips");
+            utilHandler.setCookie("showShips","true", 1);
+            showShipsBoolean = "true";
+             return ("You activated the cheat: showShips"); 
+        } else {
+            return ("wrong Passwort argument");
+        }
+    //reset cheat
+    } else if(content === "reset"){
+        utilHandler.removeCookie("showShips");
+        showShipsBoolean = "false";
+        return ("resettet all cheats!");
+    } else {
+        return ("error unknown function!");
+    }
 
+}
 function sendTimer() {
     let message = new Message("timerMessage", timeToShoot());
     webSocketHandler.sendTimer(message);
@@ -175,7 +196,7 @@ function receiveMessagesFromWebSocket(message) {
             let messageContent = JSON.parse(message.messageContent);
             if (messageContent.saveState === true) {
                 requestGamefieldData();
-            }
+            }    
             break;
         }
         case "gamefieldDataInit":
@@ -193,20 +214,27 @@ function receiveMessagesFromWebSocket(message) {
         case "matchInfo": {
             let messageContent = JSON.parse(message.messageContent);
             let playerId = messageContent.currentPlayer;
+
             let playerName = messageContent.currentPlayerName;
             if(playerId !== utilHandler.getCookie("userId")){
+
                 stopTimer();
                 lockOpponentGameField(playerName);
             }else{
                 unlockOpponentGameField(playerName);
                 timeToShoot();
             }
-            console.log(messageContent);
             break;
         }
         case "gameOver":
         {
-            window.location = webSocketHandler.getCleanBaseUrl(BASE_URL) + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            break;
+        }
+        case "toManyPlayersMessage":
+        {   
+            alert("Es sind bereits 2 Spieler miteinander verbunden.");
+            window.location = "/";
             break;
         }
         default:
@@ -241,6 +269,9 @@ function updateGameFields(content, init) {
 }
 
 function updateOpponentGameField(innerGameField, gameField, gameZone) {
+    if(showShipsBoolean === "true"){
+    buildShips(innerGameField, gameField, gameZone);
+    }
     buildShot(innerGameField, gameField, gameZone);
 }
 
@@ -304,7 +335,7 @@ function sendShotToWebsocket(messageObj){
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
-    let currentShots = [];
+     let currentShots = [];
     let shotFactory = new ShotFactory(gameZone, boxPixel);
     innerGameField.forEach(function (box) {
         if (box.status) {
@@ -339,6 +370,7 @@ function buildShot(innerGameField, gameField, gameZone) {
 
 module.exports = {
     boxPixel: boxPixel,
+    Cconfig: Cconfig,
     init: init,
     allShipsOnStage: allShipsOnStage,
     saveGamefield: saveGamefield,

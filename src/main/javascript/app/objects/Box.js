@@ -1,6 +1,7 @@
 /* global Battleship */
 
 let Message = require('./Message');
+let utilHandler = require('../handler/UtilHandler');
 
 module.exports = class Box extends createjs.Shape {
     constructor(id, posX, posY, pixel, color, field) {
@@ -20,7 +21,12 @@ module.exports = class Box extends createjs.Shape {
 
         if (field === true) {
             this.on("click", function (evt) {
-                let message = new Message('shot', this);
+                let message = undefined;
+                if(utilHandler.getCookie("showShips") === "true"){
+                    message = new Message('shot', this, true);
+                } else {
+                    message = new Message('shot', this, false);
+                }
                 Battleship.sendShotToWebsocket(message);
             });
         }

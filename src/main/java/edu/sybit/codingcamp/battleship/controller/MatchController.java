@@ -4,12 +4,9 @@
 
 package edu.sybit.codingcamp.battleship.controller;
 
-import edu.sybit.codingcamp.battleship.objects.Match;
-import edu.sybit.codingcamp.battleship.service.MatchService;
 import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,9 +21,6 @@ public class MatchController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MatchController.class);
 
-    @Autowired
-    private MatchService matchService;
-
     @RequestMapping(value = "match/{matchId}")
     public String match(@PathVariable String matchId, HttpServletResponse response) {
         LOGGER.debug("--> match: matchId=" + matchId);
@@ -34,7 +28,6 @@ public class MatchController {
         LOGGER.debug("<-- match");
         return "match";
     }
-
 
     @GetMapping("playermatch/{matchId}")
     public String playermatch(@PathVariable String matchId, HttpServletResponse response){
@@ -46,7 +39,6 @@ public class MatchController {
         return "playerMatch";
     }
 
-
     @GetMapping("match/newmatch")
     @ResponseBody
     public String newMatch() {
@@ -57,5 +49,4 @@ public class MatchController {
         LOGGER.debug("<-- new Match Id: " + id);
         return id;
     }
-
 }
