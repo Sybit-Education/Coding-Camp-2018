@@ -45,9 +45,13 @@ public class GameOverController {
         response.addCookie(new Cookie("matchId", matchId));
         
         try {
-            Player winner = matchService.isMatchWon(matchId);
-            
+            Player winner = new Player();
             Match match= matchService.getMatchById(matchId);
+            Player player1 = match.getPlayer1();
+            Player player2 = match.getPlayer2();
+            if(match.getWinnerPlayer().equals(player1.getPlayerId()) || match.getWinnerPlayer().equals(player2.getPlayerId())){
+               winner = matchService.isMatchWon(matchId); 
+            }
             
             if(winner != null) {
                 String winnerName = winner.getPlayerName();

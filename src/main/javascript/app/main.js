@@ -171,6 +171,12 @@ function sendTimer() {
     webSocketHandler.sendTimer(message);
 }
 
+function giveUp(){
+    utilHandler.setCookie("giveUp","true","1");
+    let message = new Message("giveUp", "");
+    webSocketHandler.sendGiveUp(message);
+    }
+    
 function sendCurrentPlayer() {
     let message = new Message("currentPlayerMessage", 1);
     webSocketHandler.sendCurrentPlayer(message);
@@ -380,5 +386,6 @@ module.exports = {
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
     utilHandler: utilHandler,
-    sendShotToWebsocket: sendShotToWebsocket
+    sendShotToWebsocket: sendShotToWebsocket,
+    giveUp : giveUp
 };

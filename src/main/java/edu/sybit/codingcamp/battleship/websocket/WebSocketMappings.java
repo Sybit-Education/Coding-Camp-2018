@@ -15,6 +15,7 @@ import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
 import java.util.Timer;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,5 +131,32 @@ public class WebSocketMappings {
         }
 
         LOGGER.debug("<-- shoot");
+    }
+    @MessageMapping("/match/giveUp")
+    public void giveUp(Message giveUp) throws MatchNotFoundException {
+      Match currentMatch = matchService.getMatchById(giveUp.getMatchId());
+      String currentPlayerId = giveUp.getSendFrom().getPlayerId();
+      Player player1 = currentMatch.getPlayer1();
+      Player player2 = currentMatch.getPlayer2();
+        LOGGER.debug("Player ID aufgegebener spieler =" + currentPlayerId);
+        try {
+            currentMatch = matchService.getMatchById(giveUp.getMatchId());
+        } catch (MatchNotFoundException ex) {
+            java.util.logging.Logger.getLogger(WebSocketMappings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Player currentPlayer = currentMatch.getPlayerById(currentPlayerId);
+        if(currentPlayer == currentMatch.getPlayer1()){
+            String playerId = player1.getPlayerId();
+            currentMatch.setWinnerPlayer(playerId);
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));  
+        } else if(currentPlayer == currentMatch.getPlayer2()){
+            String playerId = player2.getPlayerId();
+            currentMatch.setWinnerPlayer(playerId);
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));  
+        } else {
+            LOGGER.debug("<<<<aufgegebender spieler nicht gefunden>>>>");
+        }
     }
 }
