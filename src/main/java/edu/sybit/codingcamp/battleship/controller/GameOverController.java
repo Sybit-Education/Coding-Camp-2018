@@ -49,10 +49,14 @@ public class GameOverController {
             Match match= matchService.getMatchById(matchId);
             Player player1 = match.getPlayer1();
             Player player2 = match.getPlayer2();
-            if(match.getWinnerPlayer().equals(player1.getPlayerId()) || match.getWinnerPlayer().equals(player2.getPlayerId())){
-               winner = matchService.isMatchWon(matchId); 
+            if(match.getWinnerPlayer().equals(player2.getPlayerId())){
+               match.setWinnerPlayer(player2.getPlayerId());
+            } else if(match.getWinnerPlayer().equals(player1.getPlayerId())){
+               match.setWinnerPlayer(player1.getPlayerId());
+            } else {
+                winner = matchService.isMatchWon(matchId); 
             }
-            
+            LOGGER.debug("<<<Gewinner ist "+winner+" >>>");
             if(winner != null) {
                 String winnerName = winner.getPlayerName();
                 model.addAttribute("winner", winnerName);
