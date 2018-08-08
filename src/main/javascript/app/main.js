@@ -11,6 +11,7 @@ let matchHandler = require('./handler/MatchHandler');
 let Message = require('./objects/Message');
 let utilHandler = require('./handler/UtilHandler');
 let collisionHandler = require('./handler/CollisionHandler');
+let box = require('./objects/Box');
 
 
 let gameZone;
@@ -228,7 +229,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "gameOver":
         {
-            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            //window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
         case "toManyPlayersMessage":
@@ -335,25 +336,49 @@ function sendShotToWebsocket(messageObj){
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
-     let currentShots = [];
-    let shotFactory = new ShotFactory(gameZone, boxPixel);
+    let currentShots = [];
+    let shotFactory = new ShotFactory(gameZone, boxPixel);  
     innerGameField.forEach(function (box) {
         if (box.status) {
             switch (box.status) {
                 case "x":
                 {
+                    if(box.sound === true) {
+                        console.log(box.sound);
+                        console.log(box);
+                        document.getElementById('bomb').play();
+                        box.sound = false;
+                        console.log(box);
+                        console.log(box.sound);
+                    }
                     currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
                     break;
                 }
                 case "v":
                 {
+                    if(box.sound === true) {
+                        console.log(box.sound);
+                        console.log(box);
+                        document.getElementById('sunk').play();
+                        box.sound = false;
+                        console.log(box);
+                        console.log(box.sound);
+                    }
                     currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
                     break;
                 }
                 case "o":
                 {
+                    if(box.sound === true) {
+                        console.log(box.sound);
+                        console.log(box);
+                        document.getElementById('waterSplash').play();
+                        box.sound = false;
+                        console.log(box);
+                        console.log(box.sound);
+                    }
                     currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
-                    break;
+                    break;            
                 }
                 default:
                 {

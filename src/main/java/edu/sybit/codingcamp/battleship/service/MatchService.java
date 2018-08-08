@@ -311,8 +311,11 @@ public class MatchService {
     /**
      * current Player has shot.
      *
+     * @param currentPlayerId
      * @param match
      * @param boxShot
+     * @param showShips
+     * @return winnerPlayer
      */
     public Player performShot(String currentPlayerId, Match match, Box boxShot, boolean showShips) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
@@ -324,6 +327,9 @@ public class MatchService {
         GameField currentGameField = JsonConverter.convertStringToGamefield(currentPlayer.getGamefield());
 
         Box fieldBox = opponentGameField.getBox(boxShot.getId());
+        fieldBox.setSound(true);
+        System.err.println("Setze sound auf true: " + fieldBox);
+        System.err.println(boxShot);
         if (fieldBox.getContent().getId() != null) {
 
             LOGGER.info("Treffer! -> " + fieldBox.getContent());
@@ -359,6 +365,8 @@ public class MatchService {
         switchPlayer(opponentPlayer, match);
 
         LOGGER.debug("--> performShot");
+        fieldBox.setSound(false);
+        System.err.println("Setze sound auf false: " + fieldBox);
         return winnerPlayer;
         
     }
@@ -485,7 +493,7 @@ public class MatchService {
                 return false;
             }
         }
-
+        
         setAllBoxesAsSunk(boxesOfShip);
 
         return true;
