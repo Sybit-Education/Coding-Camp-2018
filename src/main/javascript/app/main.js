@@ -11,8 +11,6 @@ let matchHandler = require('./handler/MatchHandler');
 let Message = require('./objects/Message');
 let utilHandler = require('./handler/UtilHandler');
 let collisionHandler = require('./handler/CollisionHandler');
-let box = require('./objects/Box');
-
 
 let gameZone;
 

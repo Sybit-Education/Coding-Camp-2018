@@ -362,7 +362,6 @@ public class MatchService {
         switchPlayer(opponentPlayer, match);
 
         LOGGER.debug("--> performShot");
-        System.err.println("Setze sound auf false: " + fieldBox);
         return winnerPlayer;
         
     }
