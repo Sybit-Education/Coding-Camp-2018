@@ -38,21 +38,22 @@ let countDownSeconds = 60;
 let intervalId = undefined;
 let ships = [];
 
+let field = false;
+let canvas = document.getElementById("canvas");
+let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
+gameZone = new HarbourZone(canvas, gamefield, harbour);
+
+let shipfactory = new ShipFactory (gameZone, boxPixel);
+let boxes = gamefield.getBoxes();
 
 function init() {
 
-    let field = false;
     let friendlyPlayerCanvas = document.getElementById("friendlyPlayer");
     let enemyPlayerCanvas = document.getElementById("enemyPlayer");
-    let canvas = document.getElementById("canvas");
 
 
     if (canvas){
-        let harbour = new Gamefield(harbourStartX, harbourStartY, boxPixel, boxCountXHarbour, boxCountYHarbour, color, field);
-        gameZone = new HarbourZone(canvas, gamefield, harbour);
-        
-        let shipfactory = new ShipFactory (gameZone, boxPixel);
-        
+
         ships.push(shipfactory.createSubmarineClass(0, 8*boxPixel, 0, false, undefined));
         ships.push(shipfactory.createSubmarineClass(2*boxPixel, 4*boxPixel, 0, false, undefined));
         ships.push(shipfactory.createSubmarineClass(2*boxPixel, 6*boxPixel, 0, false, undefined));
@@ -124,6 +125,72 @@ function allShipsOnStage() {
         showSnackbarNotAllShipsArePlaced();
     }
 }
+
+
+function setAllShips() {
+
+    if (harbour.content !== "") {
+//sub1 t {x: 4, y: 320, width: 36, height: 76}
+        ships[0].x = 4 * boxPixel;
+        let bound = ships[0].bound;
+        ships[0].setBounds(ships[0].x, ships[0].y, 36, 76);
+
+//sub2 t {x: 80, y: 160, width: 36, height: 76}
+        ships[1].x = 8 * boxPixel;
+        ships[1].y = 5 * boxPixel;
+        let bound1 = ships[1].bound;
+        ships[1].setBounds(ships[1].x, ships[1].y, 36, 76);
+
+//sub3 t {x: 80, y: 240, width: 36, height: 76}
+        ships[2].x = 11 * boxPixel;
+        let bound2 = ships[2].bound;
+        ships[2].setBounds(ships[2].x, ships[2].y, 36, 76);
+
+//sub4 t {x: 80, y: 320, width: 36, height: 76}
+        ships[3].x = 9 * boxPixel;
+        let bound3 = ships[3].bound;
+        ships[3].setBounds(ships[3].x, ships[3].y, 36, 76);
+
+//C1 {x: 0, y: 200, width: 36, height: 116.00000000000001}
+        ships[4].x = 6 * boxPixel;
+        ships[4].y = 7 * boxPixel;
+        let bound4 = ships[4].bound;
+        ships[4].setBounds(ships[4].x, ships[4].y, 36, 116.00000000000001);
+
+//C2 {x: 40, y: 160, width: 36, height: 116.00000000000001}
+        ships[5].x = 10 * boxPixel;
+        ships[5].y = 2 * boxPixel;
+        let bound5 = ships[5].bound;
+        ships[5].setBounds(ships[5].x, ships[5].y, 36, 116.00000000000001);
+
+// C3 {x: 40, y: 280, width: 36, height: 116.00000000000001}
+        ships[6].x = 13 * boxPixel;
+        let bound6 = ships[4].bound;
+        ships[6].setBounds(ships[6].x, ships[6].y, 36, 116.00000000000001);
+
+//Battelship  {x: 40, y: 0, width: 36, height: 156}
+        ships[7].x = 8 * boxPixel;
+        let bound7 = ships[7].bound;
+        ships[7].setBounds(ships[7].x, ships[7].y, 36, 156);
+
+//Battelship 2 t {x: 80, y: 0, width: 36, height: 156}
+        ships[8].x = 12 * boxPixel;
+        ships[8].y = 1 * boxPixel;
+        let bound8 = ships[8].bound;
+        ships[8].setBounds(ships[8].x, ships[8].y, 36, 156);
+
+//Carrier t {x: 160, y: 0, width: 36, height: 196}
+        ships[9].x = 5 * boxPixel;
+        ships[9].y = 1 * boxPixel;
+        let bound9 = ships[9].bound;
+        ships[9].setBounds(ships[9].x, ships[9].y, 36, 196);
+
+        for (let ship of ships) {
+            gameZone.addShip(ship);
+        }
+    }
+}
+
 
 function decrement() {
   
@@ -354,5 +421,6 @@ module.exports = {
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
     utilHandler: utilHandler,
-    sendShotToWebsocket: sendShotToWebsocket
+    sendShotToWebsocket: sendShotToWebsocket,
+    setAllShips: setAllShips
 };

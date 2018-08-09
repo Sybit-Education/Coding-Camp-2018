@@ -29,6 +29,7 @@
                 share link ...
             </button>
             <button id="checkShips" class="btn btn-default" onclick="Battleship.allShipsOnStage();" style=" color:#b51682">Weiter</button>
+            <button id="setAllShips" class="btn btn-default" onclick="Battleship.setAllShips();" style=" color:#b51682">Sezte Schifeee</button>
         </div>
         <div class="col">
             <div id="current-field" style="margin-top: 2%; font-weight: bold"></div>
