@@ -229,7 +229,7 @@ function receiveMessagesFromWebSocket(message) {
         }
         case "gameOver":
         {
-            //window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
         case "toManyPlayersMessage":
