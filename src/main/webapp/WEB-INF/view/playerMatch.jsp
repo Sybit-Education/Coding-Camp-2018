@@ -98,7 +98,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                    <p class="text-center">Sicher das du aufgeben möchtest?</p>
+                    <p class="text-center">Bist du sicher, dass du aufgeben möchtest?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
