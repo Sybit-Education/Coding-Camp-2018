@@ -173,7 +173,7 @@ function sendTimer() {
 
 function giveUp(){
     utilHandler.setCookie("giveUp","true","1");
-    let message = new Message("giveUp", "");
+    let message = new Message("gameOver", "");
     webSocketHandler.sendGiveUp(message);
     }
     
@@ -233,11 +233,6 @@ function receiveMessagesFromWebSocket(message) {
             break;
         }
         case "gameOver":
-        {
-            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
-            break;
-        }
-        case "giveUp":
         {
             window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;

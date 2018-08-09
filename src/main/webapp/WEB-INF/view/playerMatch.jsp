@@ -97,7 +97,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                    <p class="text-center">Sicher das du aufgeben Möchtest?</p>
+                    <p class="text-center">Sicher das du aufgeben möchtest?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -136,8 +136,6 @@
 </script>
 
 <script>
-    let url = localStorage.getItem("keyMatchLink");
-    console.log(url);
     document.getElementById("Url").value = localStorage.getItem("keyMatchLink");
     function copyUrl(){
         let copyUrl = document.getElementById("Url");

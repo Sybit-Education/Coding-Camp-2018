@@ -145,14 +145,13 @@ public class WebSocketMappings {
         if(giveUpPlayerID.equals(player1ID)){
             String winnerPlayerId = player2ID;
             currentMatch.setWinnerPlayer(winnerPlayerId);
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("giveUp", "End"));
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));  
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));  
+        } else if(giveUpPlayerID.equals(player2ID)){
             String winnerPlayerID = player1ID;
             currentMatch.setWinnerPlayer(winnerPlayerID);
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("giveUp", "End"));  
-        } else {
-            LOGGER.debug("<<<<aufgegebender spieler nicht gefunden>>>>");
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));  
         }
     }
     public Match getCurrentMatch (){
