@@ -135,26 +135,25 @@ public class WebSocketMappings {
     @MessageMapping("/match/giveUp")
     public void giveUp(Message giveUp) throws MatchNotFoundException {
       Match currentMatch = matchService.getMatchById(giveUp.getMatchId());
-      String currentPlayerId = giveUp.getSendFrom().getPlayerId();
+      String giveUpPlayerID = giveUp.getSendFrom().getPlayerId();
       Player player1 = currentMatch.getPlayer1();
       Player player2 = currentMatch.getPlayer2();
-        LOGGER.debug("Player ID aufgegebener spieler =" + currentPlayerId);
-        try {
-            currentMatch = matchService.getMatchById(giveUp.getMatchId());
-        } catch (MatchNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WebSocketMappings.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Player currentPlayer = currentMatch.getPlayerById(currentPlayerId);
-        if(currentPlayer == currentMatch.getPlayer1()){
-            String playerId = player1.getPlayerId();
-            currentMatch.setWinnerPlayer(playerId);
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));  
-        } else if(currentPlayer == currentMatch.getPlayer2()){
-            String playerId = player2.getPlayerId();
-            currentMatch.setWinnerPlayer(playerId);
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
-            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));  
+      String player1ID = player1.getPlayerId();
+      String player2ID = player2.getPlayerId();
+      LOGGER.debug("<<Player 1 = "+player1ID+"    Player 2 = "+player2ID+" >>");
+        LOGGER.debug("<<Player ID aufgegebener spieler = " + giveUpPlayerID+" >>");
+        if(giveUpPlayerID.equals(player1ID)){
+            LOGGER.debug(">>>Player1 was found<<<");
+            String winnerPlayerId = player2ID;
+            currentMatch.setWinnerPlayer(winnerPlayerId);
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("giveUp", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));  
+        } else if(giveUpPlayerID.equals(player2ID)){
+            LOGGER.debug(">>>Player2 was found<<<");
+            String winnerPlayerID = player1ID;
+            currentMatch.setWinnerPlayer(winnerPlayerID);
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));
+            messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("giveUp", "End"));  
         } else {
             LOGGER.debug("<<<<aufgegebender spieler nicht gefunden>>>>");
         }

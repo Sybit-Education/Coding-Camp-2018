@@ -237,6 +237,11 @@ function receiveMessagesFromWebSocket(message) {
             window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
             break;
         }
+        case "giveUp":
+        {
+            window.location = window.location.origin + '/playermatch/' + utilHandler.getCookie('matchId') + '/over';
+            break;
+        }
         case "toManyPlayersMessage":
         {   
             alert("Es sind bereits 2 Spieler miteinander verbunden.");
