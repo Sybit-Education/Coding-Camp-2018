@@ -85,6 +85,7 @@
             </div>
         </div>
     </div>
+
   <!-- Modal -->
       <div class="modal fade" id="giveUpModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -107,6 +108,7 @@
             </div>
         </div>
     </div>
+
 <template:footer/>
 
 <template:javascript/>
