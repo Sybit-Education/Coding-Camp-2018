@@ -25,6 +25,8 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class WebSocketMappings {
 
+    Match currentMatch = new Match();
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMappings.class);
 
     @Autowired
@@ -134,22 +136,17 @@ public class WebSocketMappings {
     }
     @MessageMapping("/match/giveUp")
     public void giveUp(Message giveUp) throws MatchNotFoundException {
-      Match currentMatch = matchService.getMatchById(giveUp.getMatchId());
+      currentMatch = matchService.getMatchById(giveUp.getMatchId());
       String giveUpPlayerID = giveUp.getSendFrom().getPlayerId();
       Player player1 = currentMatch.getPlayer1();
       Player player2 = currentMatch.getPlayer2();
       String player1ID = player1.getPlayerId();
       String player2ID = player2.getPlayerId();
-      LOGGER.debug("<<Player 1 = "+player1ID+"    Player 2 = "+player2ID+" >>");
-        LOGGER.debug("<<Player ID aufgegebener spieler = " + giveUpPlayerID+" >>");
         if(giveUpPlayerID.equals(player1ID)){
-            LOGGER.debug(">>>Player1 was found<<<");
             String winnerPlayerId = player2ID;
             currentMatch.setWinnerPlayer(winnerPlayerId);
             messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("giveUp", "End"));
             messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));  
-        } else if(giveUpPlayerID.equals(player2ID)){
-            LOGGER.debug(">>>Player2 was found<<<");
             String winnerPlayerID = player1ID;
             currentMatch.setWinnerPlayer(winnerPlayerID);
             messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("giveUp", "End"));
@@ -157,5 +154,8 @@ public class WebSocketMappings {
         } else {
             LOGGER.debug("<<<<aufgegebender spieler nicht gefunden>>>>");
         }
+    }
+    public Match getCurrentMatch (){
+        return currentMatch;
     }
 }

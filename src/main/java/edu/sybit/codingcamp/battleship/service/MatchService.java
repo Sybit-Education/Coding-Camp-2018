@@ -181,7 +181,7 @@ public class MatchService {
         }else if((match.getPlayer1()==null||match.getPlayer2()==null)&&(match.getPlayer1()!=null ||match.getPlayer2()==null)){
             match.setCurrentPlayer(1);
         }
-
+        
         
         return match;
     }

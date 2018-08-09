@@ -7,7 +7,9 @@ package edu.sybit.codingcamp.battleship.controller;
 import edu.sybit.codingcamp.battleship.exception.MatchNotFoundException;
 import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
+import edu.sybit.codingcamp.battleship.objects.jsonObjects.Message;
 import edu.sybit.codingcamp.battleship.service.MatchService;
+import edu.sybit.codingcamp.battleship.websocket.WebSocketMappings;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ public class GameOverController {
     @Autowired
     protected MatchService matchService;
     
+    @Autowired
+    protected WebSocketMappings webSocketMappings;
     /**
      * Show game over page with winner.
      * @param matchId
@@ -45,9 +49,18 @@ public class GameOverController {
         response.addCookie(new Cookie("matchId", matchId));
         
         try {
-            Player winner = matchService.isMatchWon(matchId);
+            Player winner = new Player();
+            Message giveUp = new Message();
+            giveUp.setMatchId(matchId);
+            Match currentMatch = webSocketMappings.getCurrentMatch();
+            String winnerPlayerID = currentMatch.getWinnerPlayer();
+            if(winnerPlayerID == null){
+                winner = matchService.isMatchWon(matchId);
+            } else {
+                    winner = currentMatch.getPlayerById(winnerPlayerID);
+            }
             
-            Match match= matchService.getMatchById(matchId);
+            Match match = matchService.getMatchById(matchId);
             
             if(winner != null) {
                 String winnerName = winner.getPlayerName();
