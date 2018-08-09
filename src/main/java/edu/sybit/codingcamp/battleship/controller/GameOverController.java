@@ -9,6 +9,7 @@ import edu.sybit.codingcamp.battleship.objects.Match;
 import edu.sybit.codingcamp.battleship.objects.Player;
 import edu.sybit.codingcamp.battleship.service.MatchService;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,12 +35,13 @@ public class GameOverController {
     /**
      * Show game over page with winner.
      * @param matchId
+     * @param request
      * @param response
      * @param model
      * @return 
      */
     @RequestMapping(value = "/playermatch/{matchId}/over")
-    public ModelAndView gameOver(@PathVariable String matchId, HttpServletResponse response, ModelMap model) {
+    public ModelAndView gameOver(@PathVariable String matchId, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
         LOGGER.debug("--> gameOver  matchId: " + matchId);
         
         response.addCookie(new Cookie("matchId", matchId));
@@ -68,7 +70,7 @@ public class GameOverController {
         } catch (MatchNotFoundException ex) {
             LOGGER.error(ex.getMessage(), ex);
             //on error go to startpage.
-            return new ModelAndView("redirect:/", model);
+            return new ModelAndView("redirect:/", request.getContextPath(), model);
         }
               
         LOGGER.debug("<-- gameOver");
