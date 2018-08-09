@@ -343,40 +343,16 @@ function buildShot(innerGameField, gameField, gameZone) {
             switch (box.status) {
                 case "x":
                 {
-                    if(box.sound === true) {
-                        console.log(box.sound);
-                        console.log(box);
-                        document.getElementById('bomb').play();
-                        box.sound = false;
-                        console.log(box);
-                        console.log(box.sound);
-                    }
                     currentShots.push(shotFactory.createFieldHit(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
                     break;
                 }
                 case "v":
                 {
-                    if(box.sound === true) {
-                        console.log(box.sound);
-                        console.log(box);
-                        document.getElementById('sunk').play();
-                        box.sound = false;
-                        console.log(box);
-                        console.log(box.sound);
-                    }
                     currentShots.push(shotFactory.createFieldSunk(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
                     break;
                 }
                 case "o":
                 {
-                    if(box.sound === true) {
-                        console.log(box.sound);
-                        console.log(box);
-                        document.getElementById('waterSplash').play();
-                        box.sound = false;
-                        console.log(box);
-                        console.log(box.sound);
-                    }
                     currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
                     break;            
                 }

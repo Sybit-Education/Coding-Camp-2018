@@ -327,9 +327,6 @@ public class MatchService {
         GameField currentGameField = JsonConverter.convertStringToGamefield(currentPlayer.getGamefield());
 
         Box fieldBox = opponentGameField.getBox(boxShot.getId());
-        fieldBox.setSound(true);
-        System.err.println("Setze sound auf true: " + fieldBox);
-        System.err.println(boxShot);
         if (fieldBox.getContent().getId() != null) {
 
             LOGGER.info("Treffer! -> " + fieldBox.getContent());
@@ -365,7 +362,6 @@ public class MatchService {
         switchPlayer(opponentPlayer, match);
 
         LOGGER.debug("--> performShot");
-        fieldBox.setSound(false);
         System.err.println("Setze sound auf false: " + fieldBox);
         return winnerPlayer;
         

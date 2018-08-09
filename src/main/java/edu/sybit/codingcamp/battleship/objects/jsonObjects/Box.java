@@ -12,11 +12,6 @@ public class Box implements Serializable, Cloneable {
     private String status;
     private Integer posX;
     private Integer posY;
-    boolean sound;
-
-    public void setSound(boolean sound) {
-        this.sound = sound;
-    }
     
     public String getStatus() {
         return status;
@@ -60,7 +55,7 @@ public class Box implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "Box{" + "id=" + id + ", content=" + content + ", status=" + status + ", posX=" + posX + ", posY=" + posY + ", sound=" + this.sound + "}";
+        return "Box{" + "id=" + id + ", content=" + content + ", status=" + status + ", posX=" + posX + ", posY=" + posY +"}";
     }
 
     @Override

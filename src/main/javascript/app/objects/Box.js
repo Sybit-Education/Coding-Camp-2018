@@ -15,7 +15,6 @@ module.exports = class Box extends createjs.Shape {
         this.field = field;
         this.status = "";
         this.content = "";
-        this.sound = undefined;
         this.graphics.beginFill("#37b6ee").drawRect(posX, posY, pixel, pixel);
         this.graphics.setStrokeStyle(1).beginStroke(color).rect(posX, posY, pixel, pixel);
         this.setBounds (posX, posY, pixel, pixel);
