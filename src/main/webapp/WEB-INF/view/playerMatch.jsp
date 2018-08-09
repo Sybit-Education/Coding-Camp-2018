@@ -50,6 +50,9 @@
                 <button type="button" class="btn btn-primary" style="color:#b51682" data-toggle="modal" data-target="#shareLinkModal">
                     share link ...
                 </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#giveUpModal">
+                Aufgeben
+            </button>
         </div>
         <div class="col-5" id="enemyPlayerDiv">
             <canvas id="enemyPlayer" width="420" height="420"></canvas>
@@ -82,7 +85,30 @@
             </div>
         </div>
     </div>
-  
+
+  <!-- Modal -->
+      <div class="modal fade" id="giveUpModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="text-center" class="modal-title" id="exampleModalLabel">Aufgeben?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <p class="text-center">Sicher das du aufgeben möchtest?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-succes" data-dismiss="modal" style="color:#b51682" onclick="Battleship.giveUp();">Aufgeben</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <template:footer/>
 
 <template:javascript/>
@@ -112,13 +138,11 @@
 </script>
 
 <script>
-    let test = localStorage.getItem("keyMatchLink");
-    console.log(test);
     document.getElementById("Url").value = localStorage.getItem("keyMatchLink");
     function copyUrl(){
-    let copyUrl = document.getElementById("Url");
-    copyUrl.select();
-    document.execCommand("copy");
+        let copyUrl = document.getElementById("Url");
+        copyUrl.select();
+        document.execCommand("copy");
     }
 </script>
 </body>

@@ -10,6 +10,7 @@ const shotEndpoint = 'battleships/match/shot';
 const currentPlayerEndpoint = 'battleships/match/currentplayer';
 const timerEndpoint = 'battleships/match/timer';
 const toManyPlayersEndpoint = 'battleships/match/gamefield';
+const giveUpEndpoint = 'battleships/match/giveUp';
 
 let stompClient;
 
@@ -74,5 +75,8 @@ module.exports = {
     
     sendToManyPlayers: function (messageObj) {
         stompClient.send(this.getCleanBaseUrl(BASE_URL) + toManyPlayersEndpoint, {}, JSON.stringify(messageObj));
+    },
+    sendGiveUp: function (messageObj) {
+        stompClient.send(this.getCleanBaseUrl(BASE_URL) + giveUpEndpoint, {}, JSON.stringify(messageObj));
     }
 };

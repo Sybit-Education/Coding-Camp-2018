@@ -124,6 +124,7 @@
 
 <script>
     window.onload = function () {
+        Battleship.utilHandler.removeCookie("giveUp");
         Battleship.utilHandler.removeCookie("showShips");
         window.localStorage.clear();
         Battleship.utilHandler.removeCookie("userId");
