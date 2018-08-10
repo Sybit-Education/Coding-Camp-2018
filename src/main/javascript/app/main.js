@@ -253,11 +253,13 @@ function receiveMessagesFromWebSocket(message) {
 
 function lockOpponentGameField(playerName){
     opponentGameZone.disableMouse();
+    document.getElementById("enemyFieldTxt").innerHTML = playerName+"s feld";
     document.getElementById("turn-field").innerHTML = "Dein Gegner ("+playerName+") ist am Zug!";
 }
 
 function unlockOpponentGameField(playerName){
     opponentGameZone.enableMouse();
+    document.getElementById("friendlyFieldTxt").innerHTML = playerName+"s feld";
     document.getElementById("turn-field").innerHTML = "Du ("+playerName+") bist am Zug!";
 }
 
