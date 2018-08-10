@@ -27,7 +27,7 @@
             <div id="friendly-current-field" style="font-weight: bold">A1</div>
         </div>
         <div class="col-3">
-            <h2 class="text-center" id="friedlyFieldTxt">Friendly Field</h2>
+            <h2 class="text-center" id="friendlyFieldTxt">Friendly Field</h2>
         </div>         
         <div class="col-4">
             <div class="text-center" id="turn-field" style="font-weight: bold">Warte auf Spieler</div>

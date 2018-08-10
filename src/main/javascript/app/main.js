@@ -259,7 +259,7 @@ function lockOpponentGameField(playerName){
 
 function unlockOpponentGameField(playerName){
     opponentGameZone.enableMouse();
-    document.getElementById("friedlyFieldTxt").innerHTML = playerName+"s feld";
+    document.getElementById("friendlyFieldTxt").innerHTML = playerName+"s feld";
     document.getElementById("turn-field").innerHTML = "Du ("+playerName+") bist am Zug!";
 }
 
