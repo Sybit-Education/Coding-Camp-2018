@@ -42,20 +42,20 @@
     
     <div class="row">
         <div class="col-5" id="friendlyPlayerDiv">
-            <canvas id="friendlyPlayer" width="420" height="420"></canvas>
+            <canvas id="friendlyPlayer" width="420" height="420" style="margin-bottom: 500px"></canvas>
         </div>
         <div class="col-2 center">
             <h3 id="countDownSeconds" class="text-center">60</h3>
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" style="color:#b51682" data-toggle="modal" data-target="#shareLinkModal">
+                <button type="button" class="btn btn-primary" style="color:#b51682; margin-left: 20px" data-toggle="modal" data-target="#shareLinkModal">
                     share link ...
                 </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#giveUpModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left: 25px" data-target="#giveUpModal">
                 Aufgeben
             </button>
         </div>
         <div class="col-5" id="enemyPlayerDiv">
-            <canvas id="enemyPlayer" width="420" height="420"></canvas>
+            <canvas id="enemyPlayer" width="420" height="420" style="margin-bottom: 500px"></canvas>
         </div>
     </div>
 </div>
@@ -74,7 +74,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <textarea rows="2" cols="55" id="Url" style="resize: none;"></textarea>
+                    <textarea rows="2" cols="55" id="Url" autocorrect="off" spellcheck="false" style="resize: none;"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
