@@ -42,7 +42,7 @@ module.exports = class Box extends createjs.Shape {
         });
 
     }
-
+    
     toJSON() {
         return '{"id":"' + this.id + '","content":' + (this.content ? this.content : '{}') + ',"status": "' + this.status + '", "posX":"' + this.posX + '","posY":"' + this.posY + '"}';
     }

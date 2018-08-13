@@ -15,6 +15,7 @@ import edu.sybit.codingcamp.battleship.service.MatchService;
 import edu.sybit.codingcamp.battleship.service.MessagingService;
 import edu.sybit.codingcamp.battleship.service.PlayerService;
 import java.util.Timer;
+import java.util.logging.Level;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class WebSocketMappings {
-
+    
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketMappings.class);
 
     @Autowired
@@ -35,6 +36,7 @@ public class WebSocketMappings {
     @Autowired
     private MessagingService messagingService;
     
+    Match currentMatch = new Match();
     private Timer timer;
 
     @MessageMapping("/match/gamefield")
@@ -130,5 +132,26 @@ public class WebSocketMappings {
         }
 
         LOGGER.debug("<-- shoot");
+    }
+    @MessageMapping("/match/giveUp")
+    public void giveUp(Message giveUp) throws MatchNotFoundException {
+      currentMatch = matchService.getMatchById(giveUp.getMatchId());
+      String giveUpPlayerID = giveUp.getSendFrom().getPlayerId();
+      Player player1 = currentMatch.getPlayer1();
+      Player player2 = currentMatch.getPlayer2();
+      String player1ID = player1.getPlayerId();
+      String player2ID = player2.getPlayerId();
+        if(giveUpPlayerID.equals(player1ID)){
+            String winnerPlayerId = player2ID;
+            currentMatch.setWinnerPlayer(winnerPlayerId);
+        } else if(giveUpPlayerID.equals(player2ID)){
+            String winnerPlayerID = player1ID;
+            currentMatch.setWinnerPlayer(winnerPlayerID);
+        }
+        messagingService.sendMessageToUser("/match", currentMatch.getPlayer2(), new Message("gameOver", "End"));
+        messagingService.sendMessageToUser("/match", currentMatch.getPlayer1(), new Message("gameOver", "End"));  
+    }
+    public Match getCurrentMatch (){
+        return currentMatch;
     }
 }

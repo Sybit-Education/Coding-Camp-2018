@@ -181,7 +181,7 @@ public class MatchService {
         }else if((match.getPlayer1()==null||match.getPlayer2()==null)&&(match.getPlayer1()!=null ||match.getPlayer2()==null)){
             match.setCurrentPlayer(1);
         }
-
+        
         
         return match;
     }
@@ -311,8 +311,11 @@ public class MatchService {
     /**
      * current Player has shot.
      *
+     * @param currentPlayerId
      * @param match
      * @param boxShot
+     * @param showShips
+     * @return winnerPlayer
      */
     public Player performShot(String currentPlayerId, Match match, Box boxShot, boolean showShips) {
         LOGGER.debug("--> performShot: match=" + match + ", box=" + boxShot);
@@ -485,7 +488,7 @@ public class MatchService {
                 return false;
             }
         }
-
+        
         setAllBoxesAsSunk(boxesOfShip);
 
         return true;

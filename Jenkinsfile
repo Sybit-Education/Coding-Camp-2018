@@ -25,8 +25,10 @@ node{
 
         stage('Test'){
             gradle 'test -Dspring.profiles.active=junit'
-            //gradle 'sonarqube -Dsonar.host.url=http://lysithea.sybit.de:9000 -Dsonar.login=6ac485962bd4416e600b8dc41c794e70ef621ea0'
+            
             step( [ $class: 'JacocoPublisher' ] )
+            gradle 'sonarqube -Dsonar.host.url=http://lysithea.sybit.de:9000 -Dsonar.login=6ac485962bd4416e600b8dc41c794e70ef621ea0'
+            //gradle 'sonarqube -Dsonar.host.url=https://sonar.sybit.de -Dsonar.login=980b851f02b884f8a14035b6d13a985199f7f627'
         }
 
         stage('Archive'){

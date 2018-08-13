@@ -27,13 +27,13 @@
             <div id="friendly-current-field" style="font-weight: bold">A1</div>
         </div>
         <div class="col-3">
-            <h2 class="text-center">Friendly Field</h2>
+            <h2 class="text-center" id="friendlyFieldTxt">Friendly Field</h2>
         </div>         
         <div class="col-4">
             <div class="text-center" id="turn-field" style="font-weight: bold">Warte auf Spieler</div>
         </div>
         <div class="col-3">
-            <h2 class="text-center">Enemy Field</h2>
+            <h2 class="text-center" id="enemyFieldTxt">Enemy Field</h2>
         </div>
         <div class="col-1">
             <div class="text-left" id="enemy-current-field" style="font-weight: bold">A1</div>
@@ -42,17 +42,20 @@
     
     <div class="row">
         <div class="col-5" id="friendlyPlayerDiv">
-            <canvas id="friendlyPlayer" width="420" height="420"></canvas>
+            <canvas id="friendlyPlayer" width="420" height="420" style="margin-bottom: 500px"></canvas>
         </div>
         <div class="col-2 center">
             <h3 id="countDownSeconds" class="text-center">60</h3>
             <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" style="color:#b51682" data-toggle="modal" data-target="#shareLinkModal">
+                <button type="button" class="btn btn-primary" style="color:#b51682; margin-left: 20px" data-toggle="modal" data-target="#shareLinkModal">
                     share link ...
                 </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left: 25px" data-target="#giveUpModal">
+                Aufgeben
+            </button>
         </div>
         <div class="col-5" id="enemyPlayerDiv">
-            <canvas id="enemyPlayer" width="420" height="420"></canvas>
+            <canvas id="enemyPlayer" width="420" height="420" style="margin-bottom: 500px"></canvas>
         </div>
     </div>
 </div>
@@ -71,7 +74,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <textarea rows="2" cols="55" id="Url" style="resize: none;"></textarea>
+                    <textarea rows="2" cols="55" id="Url" autocorrect="off" spellcheck="false" style="resize: none;"></textarea>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -82,6 +85,30 @@
             </div>
         </div>
     </div>
+
+  <!-- Modal -->
+      <div class="modal fade" id="giveUpModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="text-center" class="modal-title" id="exampleModalLabel">Aufgeben?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                    <p class="text-center">Bist du sicher, dass du aufgeben möchtest?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-succes" data-dismiss="modal" style="color:#b51682" onclick="Battleship.giveUp();">Aufgeben</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <template:footer/>
 
 <template:javascript/>
@@ -111,13 +138,11 @@
 </script>
 
 <script>
-    let test = localStorage.getItem("keyMatchLink");
-    console.log(test);
     document.getElementById("Url").value = localStorage.getItem("keyMatchLink");
     function copyUrl(){
-    let copyUrl = document.getElementById("Url");
-    copyUrl.select();
-    document.execCommand("copy");
+        let copyUrl = document.getElementById("Url");
+        copyUrl.select();
+        document.execCommand("copy");
     }
 </script>
 </body>

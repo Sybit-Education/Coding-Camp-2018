@@ -22,21 +22,19 @@
 <template:navigation/>
 
 <main class="container">
-    <div class="row">
+    <div class="row ">
         <div class="col">
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" style=" color:#b51682" data-target="#shareLinkModal">
-                share link ...
-            </button>
-            <button id="checkShips" class="btn btn-default" onclick="Battleship.allShipsOnStage();" style=" color:#b51682">Weiter</button>
+            <button type="button" class="btn btn-primary" style="margin-top: 50px; color:#b51682" data-toggle="modal" data-target="#shareLinkModal">share link ...</button>
+            <button id="checkShips" style="margin-top: 50px" class="btn btn-success" onclick="Battleship.allShipsOnStage();">Weiter</button>
         </div>
         <div class="col">
-            <div id="current-field" style="margin-top: 2%; font-weight: bold"></div>
+            <div id="current-field" style="margin-top: 60px; font-weight: bold; margin-left: -50px">A1</div>
         </div>
     </div>
     <div class="row">
         <div>
-            <canvas id="canvas" width="800" height="480"></canvas>
+            <canvas id="canvas" width="800" height="480"  style="margin-top: 30px"></canvas>
         </div>
     </div>
 </main>
@@ -52,7 +50,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <textarea rows="2" cols="55" id="Url" style="resize: none; width: 100%;"></textarea>
+                <textarea rows="2" cols="55" id="Url" spellcheck="false" autocorrect="off" style="resize: none; width: 100%;"></textarea>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -73,7 +71,7 @@
       </div>
       <form onSubmit="return getValue();" class="needs-validation">
         <div class="modal-body">
-            <input type="text" rows="1" cols="53" id="NameEingebenTextArea" class="form-control" style="resize: none;" required/>
+            <input type="text" rows="1" cols="53" id="NameEingebenTextArea" spellcheck="false" autocorrect="off" class="form-control" style="resize: none;" required/>
             <div class="invalid-feedback">
                 Bitte einen Namen eingeben!
             </div>
@@ -98,7 +96,7 @@
             Toast
         </button>
 
-        <template:footer />
+        <template:footer/>
         <template:javascript/>
 
 <script>
@@ -124,6 +122,7 @@
 
 <script>
     window.onload = function () {
+        Battleship.utilHandler.removeCookie("giveUp");
         Battleship.utilHandler.removeCookie("showShips");
         window.localStorage.clear();
         Battleship.utilHandler.removeCookie("userId");

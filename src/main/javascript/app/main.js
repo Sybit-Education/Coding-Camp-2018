@@ -12,7 +12,6 @@ let Message = require('./objects/Message');
 let utilHandler = require('./handler/UtilHandler');
 let collisionHandler = require('./handler/CollisionHandler');
 
-
 let gameZone;
 
 const boxPixel = 40;
@@ -171,6 +170,12 @@ function sendTimer() {
     webSocketHandler.sendTimer(message);
 }
 
+function giveUp(){
+    utilHandler.setCookie("giveUp","true","1");
+    let message = new Message("gameOver", "");
+    webSocketHandler.sendGiveUp(message);
+    }
+    
 function sendCurrentPlayer() {
     let message = new Message("currentPlayerMessage", 1);
     webSocketHandler.sendCurrentPlayer(message);
@@ -248,11 +253,13 @@ function receiveMessagesFromWebSocket(message) {
 
 function lockOpponentGameField(playerName){
     opponentGameZone.disableMouse();
+    document.getElementById("enemyFieldTxt").innerHTML = playerName+"s feld";
     document.getElementById("turn-field").innerHTML = "Dein Gegner ("+playerName+") ist am Zug!";
 }
 
 function unlockOpponentGameField(playerName){
     opponentGameZone.enableMouse();
+    document.getElementById("friendlyFieldTxt").innerHTML = playerName+"s feld";
     document.getElementById("turn-field").innerHTML = "Du ("+playerName+") bist am Zug!";
 }
 
@@ -335,8 +342,8 @@ function sendShotToWebsocket(messageObj){
 }
 
 function buildShot(innerGameField, gameField, gameZone) {
-     let currentShots = [];
-    let shotFactory = new ShotFactory(gameZone, boxPixel);
+    let currentShots = [];
+    let shotFactory = new ShotFactory(gameZone, boxPixel);  
     innerGameField.forEach(function (box) {
         if (box.status) {
             switch (box.status) {
@@ -353,7 +360,7 @@ function buildShot(innerGameField, gameField, gameZone) {
                 case "o":
                 {
                     currentShots.push(shotFactory.createFieldShot(box.posX - ((boxPixel * 4) - 12), box.posY + 2));
-                    break;
+                    break;            
                 }
                 default:
                 {
@@ -380,5 +387,6 @@ module.exports = {
     webSocketHandler: webSocketHandler,
     matchHandler: matchHandler,
     utilHandler: utilHandler,
-    sendShotToWebsocket: sendShotToWebsocket
+    sendShotToWebsocket: sendShotToWebsocket,
+    giveUp : giveUp
 };
